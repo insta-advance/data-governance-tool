@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System for data governance", "System for data governance\System for data governance.csproj", "{65E765BB-5566-49D9-814E-6B59B6E8829C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65E765BB-5566-49D9-814E-6B59B6E8829C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65E765BB-5566-49D9-814E-6B59B6E8829C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65E765BB-5566-49D9-814E-6B59B6E8829C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65E765BB-5566-49D9-814E-6B59B6E8829C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89E17EF2-FD01-4447-B042-75F21DA71F15}
+	EndGlobalSection
+EndGlobal
