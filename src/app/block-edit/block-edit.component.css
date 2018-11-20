@@ -1,0 +1,42 @@
+label{
+    display: grid;
+    grid-template-columns: 100px 200px;
+    grid-template-rows: 25px;
+    grid-column-gap: 15px;
+}
+
+p{
+    grid-column: 1;
+    display: flex;
+    align-items: center;  
+    justify-content: flex-end;
+}
+
+input{
+    grid-column: 2;
+    height: 25px;
+        display: flex;
+    align-items: center;  
+    border: 0;
+    background-color: #eee;
+}
+button{
+    border: 0;
+    margin: 10px 5px 0 0;
+    padding: 10px;
+}
+button:hover{
+    background-color: darkgray;
+    cursor: pointer;
+}
+button:active{
+    background-color: grey;
+}
+.edit-table{
+    background-color: darkgreen;
+    color:white;
+}
+.show-list{
+    background-color: grey;
+    color:white;
+}

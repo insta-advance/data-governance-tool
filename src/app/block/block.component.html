@@ -1,0 +1,23 @@
+
+    <h2>List of tables</h2>
+
+    <ul class="blocks">
+      <li *ngFor="let p of blocks; let i=index;">
+        <a routerLink="/block-details/{{i}}">
+          {{p.name}}
+            <div class="table-fields" *ngFor="let x of p.fields; let i=index;">
+              {{x.field_1}},
+              {{x.field_2}},
+              {{x.field_3}}
+            </div>
+        </a><button  class="list-delete" title="delete block"
+          (click)="delete(i)">x</button>
+      </li>
+    </ul>
+
+
+    <div>
+      <button class="list-add" (click)="add()">
+        + Add new table
+      </button>
+    </div>
