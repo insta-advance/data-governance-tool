@@ -6,7 +6,7 @@ This version works with the local `test.json` file to test CRUD calls from UI. C
 2. Clone the project
 3. Use Node.js command prompt and navigate to the project folder
 4. Install - `npm install`
-5. Run the server - `ng serve --host 0.0.0.0 --port 4200`
+5. Compile and run - `ng serve`
 6. Go to [http://localhost:4200/block](http://localhost:4200/block) to start work
 
 # Structure so far...
