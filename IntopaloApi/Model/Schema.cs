@@ -5,13 +5,9 @@ using System.Web;
 
 namespace IntopaloApi.System_for_data_governance
 {
-    public class Schema
+    public class Schema : Base
     {
-        public int SchemaId { get; set; }
-        public string TableType { get; set; }
-        public string SchemaName{ get; set; }
-        //public Database Databases { get; set; }
-        //public List<Table> Tables { get; set; }
-        //public List<RelationshipTable> RelationshipTables { get; set; }
+        public string SchemaName { get; set; }
+        public List<Table> Tables { get; set; }
     }
 }

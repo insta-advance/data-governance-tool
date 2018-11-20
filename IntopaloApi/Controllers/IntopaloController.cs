@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using IntopaloApi.System_for_data_governance;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+
 
 namespace IntopaloApi.Controllers
 {
@@ -19,73 +22,54 @@ namespace IntopaloApi.Controllers
             {
                 // Create a new IntopaloItem if collection is empty,
                 // which means you can't delete all IntopaloItems.
-                _context.Collections.Add(new Collection { TableType = "IntopaloCollection1" });
+                _context.Collections.Add(new Collection { CollectionName = "IntopaloCollection1" });
                 _context.SaveChanges();
             }
-            if (_context.Tables.Count() == 0)
+            if (_context.Schemas.Count() == 0)
             {
-                _context.Tables.Add(new Table { TableName = "IntopaloTable1" });
+                _context.Schemas.Add(
+                    new Schema {
+                        SchemaName = "private",
+                        Tables = new List<Table> {
+                            new Table { 
+                                TableName = "User",
+                                Fields = new List<Field> {
+                                    new Field {FieldName = "UserId", FieldType = "int" },
+                                    new Field {FieldName = "UserName", FieldType = "nvarchar(max)" }
+                                }
+
+                            },
+
+                            new Table {
+                                TableName = "Car",
+                                Fields = new List<Field> {
+                                    new Field {FieldName = "CarId", FieldType = "int" },
+                                    new Field {FieldName = "CarBrand", FieldType = "nvarchar(max)" }
+                                }
+                            }
+                        }
+                    }
+                );
                 _context.SaveChanges();
             }
    
             
         }
         [HttpGet]
-        public ActionResult<List<Table>> GetAll()
-        {
-            return _context.Tables.ToList();
+        public ActionResult<string> GetAll() {
+            List<Table> tables = _context.Tables
+                .Include(t => t.Fields)
+                .ToList();
+            string jasonTables = JsonConvert.SerializeObject(
+                tables,
+                Formatting.Indented,
+                /* Identing for debug purposes only */
+                new JsonSerializerSettings() {
+                    /* Allow loops since metadata is connected in a hierarchy. */
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }
+            );
+            return jasonTables;
         }
-/*
-        [HttpGet("{id}", Name = "GetIntopalo")]
-        public ActionResult<IntopaloItem> GetById(long id)
-        {
-            var item = _context.IntopaloItems.Find(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return item;
-        }
-
-        [HttpPost]
-        public IActionResult Create(IntopaloItem item)
-        {
-            _context.IntopaloItems.Add(item);
-            _context.SaveChanges();
-
-            return CreatedAtRoute("GetIntopalo", new { id = item.Id }, item);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Update(long id, IntopaloItem item)
-        {
-            var Intopalo = _context.IntopaloItems.Find(id);
-            if (Intopalo == null)
-            {
-                return NotFound();
-            }
-
-            Intopalo.IsComplete = item.IsComplete;
-            Intopalo.Name = item.Name;
-
-            _context.IntopaloItems.Update(Intopalo);
-            _context.SaveChanges();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
-        {
-            var Intopalo = _context.IntopaloItems.Find(id);
-            if (Intopalo == null)
-            {
-                return NotFound();
-            }
-
-            _context.IntopaloItems.Remove(Intopalo);
-            _context.SaveChanges();
-            return NoContent();
-        }
-        */
     }
 }
