@@ -44,12 +44,19 @@ namespace IntopaloApi.Controllers
                                 TableName = "Car",
                                 Fields = new List<Field> {
                                     new Field {FieldName = "CarId", FieldType = "int" },
+                                    new Field {FieldName = "OwnerId", FieldType = "int" },
                                     new Field {FieldName = "CarBrand", FieldType = "nvarchar(max)" }
                                 }
                             }
                         }
                     }
                 );
+                _context.SaveChanges();
+                _context.KeyRelationships.Add(new KeyRelationship{
+                    BaseFromId = _context.Fields.Single(f => f.FieldName == "UserId").BaseID,
+                    BaseToId = _context.Fields.Single(f => f.FieldName == "OwnerId").BaseID,
+                    Type = "exact"
+                });
                 _context.SaveChanges();
             }
    
@@ -59,17 +66,20 @@ namespace IntopaloApi.Controllers
         public ActionResult<string> GetAll() {
             List<Table> tables = _context.Tables
                 .Include(t => t.Fields)
+                .ThenInclude(f => f.KeyRelationshipFrom)
                 .ToList();
-            string jasonTables = JsonConvert.SerializeObject(
+            tables[0].Fields[0].KeyRelationshipFrom[0].BaseTo = null;
+            tables[1].Fields[1].KeyRelationshipTo[0].BaseFrom = null;
+            return JsonConvert.SerializeObject(
                 tables,
-                Formatting.Indented,
-                /* Identing for debug purposes only */
                 new JsonSerializerSettings() {
                     /* Allow loops since metadata is connected in a hierarchy. */
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    /* Identing for debug purposes only */
+                    Formatting = Formatting.Indented
                 }
             );
-            return jasonTables;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace IntopaloApi.System_for_data_governance
         /* Id for all tables containing metadata elements.*/
         public int BaseID { get; set; }
         /* Many-to-Many between PK and FK in metadata. */
-        public ICollection<KeyRelationship> KeyRelationshipFrom { get; set; }
-        public ICollection<KeyRelationship> KeyRelationshipTo { get; set; }
+        public List<KeyRelationship> KeyRelationshipFrom { get; set; }
+        public List<KeyRelationship> KeyRelationshipTo { get; set; }
     }
 }
