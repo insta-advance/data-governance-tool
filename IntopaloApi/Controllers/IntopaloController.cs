@@ -138,7 +138,7 @@ namespace IntopaloApi.Controllers
 
         // The function saves the new data to the database. The data can contain 
         // whole database, but also can be a single item. 
-        // Correct Json syntax can be found in the README-file.
+        // Correct Json syntax can be found in the guide.txt.
         [HttpPost]
         public ActionResult<string> Create(JsonData data)
         {
