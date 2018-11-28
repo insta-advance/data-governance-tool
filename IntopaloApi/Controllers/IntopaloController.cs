@@ -23,30 +23,30 @@ namespace IntopaloApi.Controllers
             {
                 // Create a new IntopaloItem if collection is empty,
                 // which means you can't delete all IntopaloItems.
-                _context.Collections.Add(new Collection { CollectionName = "IntopaloCollection1" });
+                _context.Collections.Add(new Collection { Name = "IntopaloCollection1" });
                 _context.SaveChanges();
             }
             if (_context.Schemas.Count() == 0)
             {
                 _context.Schemas.Add(
                     new Schema {
-                        SchemaName = "private",
+                        Name = "private",
                         Tables = new List<Table> {
                             new Table { 
-                                TableName = "User",
+                                Name = "User",
                                 Fields = new List<Field> {
-                                    new Field {FieldName = "UserId", FieldType = "int" },
-                                    new Field {FieldName = "UserName", FieldType = "nvarchar(max)" }
+                                    new Field {Name = "UserId", Type = "int" },
+                                    new Field {Name = "UserName", Type = "nvarchar(max)" }
                                 }
 
                             },
 
                             new Table {
-                                TableName = "Car",
+                                Name = "Car",
                                 Fields = new List<Field> {
-                                    new Field {FieldName = "CarId", FieldType = "int" },
-                                    new Field {FieldName = "OwnerId", FieldType = "int" },
-                                    new Field {FieldName = "CarBrand", FieldType = "nvarchar(max)" }
+                                    new Field {Name = "CarId", Type = "int" },
+                                    new Field {Name = "OwnerId", Type = "int" },
+                                    new Field {Name = "CarBrand", Type = "nvarchar(max)" }
                                 }
                             }
                         }
@@ -54,8 +54,8 @@ namespace IntopaloApi.Controllers
                 );
                 _context.SaveChanges();
                 _context.KeyRelationships.Add(new KeyRelationship{
-                    BaseFromId = _context.Fields.Single(f => f.FieldName == "UserId").BaseID,
-                    BaseToId = _context.Fields.Single(f => f.FieldName == "OwnerId").BaseID,
+                    FromId = _context.Fields.Single(f => f.Name == "UserId").Id,
+                    ToId = _context.Fields.Single(f => f.Name == "OwnerId").Id,
                     Type = "exact"
                 });
                 _context.SaveChanges();
@@ -68,10 +68,10 @@ namespace IntopaloApi.Controllers
         public ActionResult<string> GetAll() {
             List<Table> tables = _context.Tables
                 .Include(t => t.Fields)
-                .ThenInclude(f => f.KeyRelationshipFrom)
+                .ThenInclude(f => f.PrimaryKeyTo)
                 .ToList();
-            tables[0].Fields[0].KeyRelationshipFrom[0].BaseTo = null;
-            tables[1].Fields[1].KeyRelationshipTo[0].BaseFrom = null;
+            //tables[0].Fields[0].PrimaryKeyTo[0].To = null;
+            //tables[1].Fields[1].ForeignKeyTo[0].From = null;
             return JsonConvert.SerializeObject(
                 tables,
                 new JsonSerializerSettings() {
@@ -97,10 +97,10 @@ namespace IntopaloApi.Controllers
             
             List<Table> tables = _context.Tables
                 .Include(t => t.Fields)
-                .ThenInclude(f => f.KeyRelationshipFrom)
+                .ThenInclude(f => f.PrimaryKeyTo)
                 .ToList();
-            tables[0].Fields[0].KeyRelationshipFrom[0].BaseTo = null;
-            tables[1].Fields[1].KeyRelationshipTo[0].BaseFrom = null;
+            tables[0].Fields[0].PrimaryKeyTo[0].To = null;
+            tables[1].Fields[1].ForeignKeyTo[0].From = null;
             //database.Add(tables);
             List<KeyValuePair<string,List<object>>> database = new List<KeyValuePair<string,List<object>>>(){
                 new KeyValuePair<string,List<object>>("Collections",new List<object>(_context.Collections.ToList())),
@@ -199,11 +199,11 @@ namespace IntopaloApi.Controllers
         {
             if(data.jsonCollections != null){
                 for(int i = 0; i<data.jsonCollections.Count;i++){
-                    var item = _context.Collections.Find(data.jsonCollections.ElementAt(i).BaseID);
+                    var item = _context.Collections.Find(data.jsonCollections.ElementAt(i).Id);
                     if(item != null){
-                        item.CollectionName = data.jsonCollections.ElementAt(i).CollectionName;
-                        item.KeyRelationshipFrom = data.jsonCollections.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonCollections.ElementAt(i).KeyRelationshipTo;
+                        item.Name = data.jsonCollections.ElementAt(i).Name;
+                        item.PrimaryKeyTo = data.jsonCollections.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonCollections.ElementAt(i).ForeignKeyTo;
                         //item.Fields = data.jsonTables.ElementAt(i).Fields;
                         _context.Collections.Update(item);
                         _context.SaveChanges();
@@ -212,12 +212,12 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonDatabases != null){
                 for(int i = 0; i<data.jsonDatabases.Count;i++){
-                    var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).BaseID);
+                    var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).Id);
                     if(item != null){
-                        item.DBName = data.jsonDatabases.ElementAt(i).DBName;
-                        item.DBType = data.jsonDatabases.ElementAt(i).DBType;
-                        item.KeyRelationshipFrom = data.jsonDatabases.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonDatabases.ElementAt(i).KeyRelationshipTo;
+                        item.Name = data.jsonDatabases.ElementAt(i).Name;
+                        item.Type = data.jsonDatabases.ElementAt(i).Type;
+                        item.PrimaryKeyTo = data.jsonDatabases.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonDatabases.ElementAt(i).ForeignKeyTo;
                         _context.Databases.Update(item);
                         _context.SaveChanges();
                     }
@@ -225,13 +225,13 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonFields != null){
                 for(int i = 0; i<data.jsonFields.Count;i++){
-                    var item = _context.Fields.Find(data.jsonFields.ElementAt(i).BaseID);
+                    var item = _context.Fields.Find(data.jsonFields.ElementAt(i).Id);
                     if(item != null){
-                        item.FieldName = data.jsonFields.ElementAt(i).FieldName;
-                        item.FieldType = data.jsonFields.ElementAt(i).FieldType;
+                        item.Name = data.jsonFields.ElementAt(i).Name;
+                        item.Type = data.jsonFields.ElementAt(i).Type;
                         item.StructuredBase = data.jsonFields.ElementAt(i).StructuredBase;
-                        item.KeyRelationshipFrom = data.jsonFields.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonFields.ElementAt(i).KeyRelationshipTo;
+                        item.PrimaryKeyTo = data.jsonFields.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonFields.ElementAt(i).ForeignKeyTo;
                         _context.Fields.Update(item);
                         _context.SaveChanges();
                     }
@@ -239,12 +239,12 @@ namespace IntopaloApi.Controllers
             }
             /*if(data.jsonKeyRelationships != null){
                 for(int i = 0; i<data.jsonKeyRelationships.Count;i++){
-                    var item = _context.KeyRelationships.Find(data.jsonKeyRelationships.ElementAt(i).BaseID);
+                    var item = _context.KeyRelationships.Find(data.jsonKeyRelationships.ElementAt(i).Id);
                     if(item != null){
-                        item.BaseFromId = data.jsonKeyRelationships.ElementAt(i).BaseFromId;
-                        item.BaseFrom = data.jsonKeyRelationships.ElementAt(i).BaseFrom;
-                        item.BaseToId = data.jsonKeyRelationships.ElementAt(i).BaseToId;
-                        item.BaseTo = data.jsonKeyRelationships.ElementAt(i).BaseTo;
+                        item.FromId = data.jsonKeyRelationships.ElementAt(i).FromId;
+                        item.From = data.jsonKeyRelationships.ElementAt(i).From;
+                        item.ToId = data.jsonKeyRelationships.ElementAt(i).ToId;
+                        item.To = data.jsonKeyRelationships.ElementAt(i).To;
                         item.Type = data.jsonKeyRelationships.ElementAt(i).Type;
                         _context.KeyRelationships.Update(item);
                         _context.SaveChanges();
@@ -253,12 +253,12 @@ namespace IntopaloApi.Controllers
             }*/
             if(data.jsonSchemas != null){
                 for(int i = 0; i<data.jsonSchemas.Count;i++){
-                    var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).BaseID);
+                    var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).Id);
                     if(item != null){
                         item.SchemaName = data.jsonSchemas.ElementAt(i).SchemaName;
                         item.Tables = data.jsonSchemas.ElementAt(i).Tables;
-                        item.KeyRelationshipFrom = data.jsonSchemas.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonSchemas.ElementAt(i).KeyRelationshipTo;
+                        item.PrimaryKeyTo = data.jsonSchemas.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonSchemas.ElementAt(i).ForeignKeyTo;
                         _context.Schemas.Update(item);
                         _context.SaveChanges();
                     }
@@ -266,11 +266,11 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonStructuredFiles != null){
                 for(int i = 0; i<data.jsonStructuredFiles.Count;i++){
-                    var item = _context.StructuredFiles.Find(data.jsonStructuredFiles.ElementAt(i).BaseID);
+                    var item = _context.StructuredFiles.Find(data.jsonStructuredFiles.ElementAt(i).Id);
                     if(item != null){
                         item.FilePath = data.jsonStructuredFiles.ElementAt(i).FilePath;
-                        item.KeyRelationshipFrom = data.jsonStructuredFiles.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonStructuredFiles.ElementAt(i).KeyRelationshipTo;
+                        item.PrimaryKeyTo = data.jsonStructuredFiles.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonStructuredFiles.ElementAt(i).ForeignKeyTo;
                         //item.Fields = data.jsonTables.ElementAt(i).Fields;
                         _context.StructuredFiles.Update(item);
                         _context.SaveChanges();
@@ -279,12 +279,12 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonTables != null){
                 for(int i = 0; i<data.jsonTables.Count;i++){
-                    var item = _context.Tables.Find(data.jsonTables.ElementAt(i).BaseID);
+                    var item = _context.Tables.Find(data.jsonTables.ElementAt(i).Id);
                     if(item != null){
                         item.TableName = data.jsonTables.ElementAt(i).TableName;
                         item.Schema = data.jsonTables.ElementAt(i).Schema;
-                        item.KeyRelationshipFrom = data.jsonTables.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonTables.ElementAt(i).KeyRelationshipTo;
+                        item.PrimaryKeyTo = data.jsonTables.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonTables.ElementAt(i).ForeignKeyTo;
                         //item.Fields = data.jsonTables.ElementAt(i).Fields;
                         _context.Tables.Update(item);
                         _context.SaveChanges();
@@ -293,11 +293,11 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonUnstructuredFiles != null){
                 for(int i = 0; i<data.jsonUnstructuredFiles.Count;i++){
-                    var item = _context.UnstructuredFiles.Find(data.jsonUnstructuredFiles.ElementAt(i).BaseID);
+                    var item = _context.UnstructuredFiles.Find(data.jsonUnstructuredFiles.ElementAt(i).Id);
                     if(item != null){
                         item.FilePath = data.jsonUnstructuredFiles.ElementAt(i).FilePath;
-                        item.KeyRelationshipFrom = data.jsonUnstructuredFiles.ElementAt(i).KeyRelationshipFrom;
-                        item.KeyRelationshipTo = data.jsonUnstructuredFiles.ElementAt(i).KeyRelationshipTo;
+                        item.PrimaryKeyTo = data.jsonUnstructuredFiles.ElementAt(i).PrimaryKeyTo;
+                        item.ForeignKeyTo = data.jsonUnstructuredFiles.ElementAt(i).ForeignKeyTo;
                         _context.UnstructuredFiles.Update(item);
                         _context.SaveChanges();
                     }
@@ -310,7 +310,7 @@ namespace IntopaloApi.Controllers
         {
             if(data.jsonCollections != null){
                 for(int i = 0; i<data.jsonCollections.Count;i++){
-                    var item = _context.Collections.Find(data.jsonCollections.ElementAt(i).BaseID);
+                    var item = _context.Collections.Find(data.jsonCollections.ElementAt(i).Id);
                     if(item != null){
                         _context.Collections.Remove(item);
                         _context.SaveChanges();
@@ -319,7 +319,7 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonDatabases != null){
                 for(int i = 0; i<data.jsonDatabases.Count;i++){
-                    var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).BaseID);
+                    var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).Id);
                     if(item != null){
                         _context.Databases.Remove(item);
                         _context.SaveChanges();
@@ -328,7 +328,7 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonFields != null){
                 for(int i = 0; i<data.jsonFields.Count;i++){
-                    var item = _context.Fields.Find(data.jsonFields.ElementAt(i).BaseID);
+                    var item = _context.Fields.Find(data.jsonFields.ElementAt(i).Id);
                     if(item != null){
                         _context.Fields.Remove(item);
                         _context.SaveChanges();
@@ -337,7 +337,7 @@ namespace IntopaloApi.Controllers
             }
             /*if(data.jsonKeyRelationships != null){
                 for(int i = 0; i<data.jsonKeyRelationships.Count;i++){
-                    var item = _context.KeyRelationships.Find(data.jsonKeyRelationships.ElementAt(i).BaseID);
+                    var item = _context.KeyRelationships.Find(data.jsonKeyRelationships.ElementAt(i).Id);
                     if(item != null){
                         _context.KeyRelationships.Remove(item);
                         _context.SaveChanges();
@@ -346,7 +346,7 @@ namespace IntopaloApi.Controllers
             }*/
             if(data.jsonSchemas != null){
                 for(int i = 0; i<data.jsonSchemas.Count;i++){
-                    var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).BaseID);
+                    var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).Id);
                     if(item != null){
                         _context.Schemas.Remove(item);
                         _context.SaveChanges();
@@ -355,7 +355,7 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonStructuredFiles != null){
                 for(int i = 0; i<data.jsonStructuredFiles.Count;i++){
-                    var item = _context.StructuredFiles.Find(data.jsonStructuredFiles.ElementAt(i).BaseID);
+                    var item = _context.StructuredFiles.Find(data.jsonStructuredFiles.ElementAt(i).Id);
                     if(item != null){
                         _context.StructuredFiles.Remove(item);
                         _context.SaveChanges();
@@ -364,7 +364,7 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonTables != null){
                 for(int i = 0; i<data.jsonTables.Count;i++){
-                    var item = _context.Tables.Find(data.jsonTables.ElementAt(i).BaseID);
+                    var item = _context.Tables.Find(data.jsonTables.ElementAt(i).Id);
                     if(item != null){
                         _context.Tables.Remove(item);
                         _context.SaveChanges();
@@ -373,7 +373,7 @@ namespace IntopaloApi.Controllers
             }
             if(data.jsonUnstructuredFiles != null){
                 for(int i = 0; i<data.jsonUnstructuredFiles.Count;i++){
-                    var item = _context.UnstructuredFiles.Find(data.jsonUnstructuredFiles.ElementAt(i).BaseID);
+                    var item = _context.UnstructuredFiles.Find(data.jsonUnstructuredFiles.ElementAt(i).Id);
                     if(item != null){
                         _context.UnstructuredFiles.Remove(item);
                         _context.SaveChanges();
@@ -403,7 +403,7 @@ namespace IntopaloApi.Controllers
             dynamic jObject = new JObject();
             if(objData.GetType() == typeof(Collection)){
                 var i = 5;
-            //jObject.CollectionName = objData.Value<string>("CollectionName");
+            //jObject.Name = objData.Value<string>("Name");
             //jObject.Address = objData.Value<string>("Address");
             //jObject.TABLE2 = objData.Value<JArray>("TABLE2");
             }
@@ -416,7 +416,7 @@ namespace IntopaloApi.Controllers
                 var wot = test.ElementAt(0);
                 var wot2 = test.ElementAt(1);
                 var woot = wot.Children();
-                var wuf = woot[0]["CollectionName"];
+                var wuf = woot[0]["Name"];
                 if(wot.First().GetType() == typeof(Collection)){
                     var test1 = 5;
                 /* if(list.First().GetType() == typeof(Collection)){

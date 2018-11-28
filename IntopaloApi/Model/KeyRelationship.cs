@@ -9,12 +9,12 @@ namespace IntopaloApi.System_for_data_governance
     public class KeyRelationship
     {
         /* PK in metadata */
-        public int BaseFromId { get; set; }
-        public Base BaseFrom { get; set; }
+        public int FromId { get; set; }
+        public Base From { get; set; }
 
         /* FK in metadata */
-        public int BaseToId { get; set; }
-        public Base BaseTo { get; set; }
+        public int ToId { get; set; }
+        public Base To { get; set; }
 
         /* "exact" or "regex" */
         public string Type { get; set; }

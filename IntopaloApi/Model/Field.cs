@@ -9,9 +9,9 @@ namespace IntopaloApi.System_for_data_governance
 {
     public class Field : Base
     {
-        public string FieldName { get; set; }
-        public string FieldType { get; set; }
+        public string Type { get; set; }
         /* Field is either part of Collection, Table or StructuredFile. */
         public StructuredBase StructuredBase { get; set; }
+        public List<CompositeKeyField> CompositeKeyFields { get; set; }
     }
 }
