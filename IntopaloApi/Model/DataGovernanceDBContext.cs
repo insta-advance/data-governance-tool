@@ -25,22 +25,38 @@ namespace IntopaloApi.System_for_data_governance
         public DbSet<UnstructuredFile> UnstructuredFiles { get; set; }
         public DbSet<Database> Databases { get; set; }
         public DbSet<KeyRelationship> KeyRelationships { get; set; }
+        public DbSet<Annotation> Annotations { get; set; }
+        public DbSet<CompositeKeyField> CompositeKeyFields { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             /* Configure many-to-many manually. */
             modelBuilder.Entity<KeyRelationship>()
-                .HasKey(r => new { r.BaseFromId, r.BaseToId });
+                .HasKey(r => new { r.FromId, r.ToId });
             modelBuilder.Entity<KeyRelationship>()
-                .HasOne(r => r.BaseFrom)
-                .WithMany(r => r.KeyRelationshipFrom)
-                .HasForeignKey(r => r.BaseFromId)
+                .HasOne(r => r.From)
+                .WithMany(r => r.PrimaryKeyTo)
+                .HasForeignKey(r => r.FromId)
                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<KeyRelationship>()
-                .HasOne(r => r.BaseTo)
-                .WithMany(r => r.KeyRelationshipTo)
-                .HasForeignKey(r => r.BaseToId)
-                /* For now RESTRICT: cascading doesn't work on SQL server. */
+                .HasOne(r => r.To)
+                .WithMany(r => r.ForeignKeyTo)
+                .HasForeignKey(r => r.ToId)
+                /* For now RESTRICT: Cascading doesn't work on SQL server. */
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            /* Composite key is a subset of fields. Configure many-to-many. */
+            modelBuilder.Entity<CompositeKeyField>()
+                .HasKey(c => new { c.FieldId, c.CompositeKeyId });
+            modelBuilder.Entity<CompositeKeyField>()
+                .HasOne(c => c.Field)
+                .WithMany(c => c.CompositeKeyFields)
+                .HasForeignKey(c => c.FieldId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<CompositeKeyField>()
+                .HasOne(c => c.CompositeKey)
+                .WithMany(c => c.CompositeKeyFields)
+                .HasForeignKey(c => c.CompositeKeyId)
                 .OnDelete(DeleteBehavior.Restrict); 
         }
     }

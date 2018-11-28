@@ -22,30 +22,30 @@ namespace IntopaloApi.Controllers
             {
                 // Create a new IntopaloItem if collection is empty,
                 // which means you can't delete all IntopaloItems.
-                _context.Collections.Add(new Collection { CollectionName = "IntopaloCollection1" });
+                _context.Collections.Add(new Collection { Name = "IntopaloCollection1" });
                 _context.SaveChanges();
             }
             if (_context.Schemas.Count() == 0)
             {
                 _context.Schemas.Add(
                     new Schema {
-                        SchemaName = "private",
+                        Name = "private",
                         Tables = new List<Table> {
                             new Table { 
-                                TableName = "User",
+                                Name = "User",
                                 Fields = new List<Field> {
-                                    new Field {FieldName = "UserId", FieldType = "int" },
-                                    new Field {FieldName = "UserName", FieldType = "nvarchar(max)" }
+                                    new Field {Name = "UserId", Type = "int" },
+                                    new Field {Name = "UserName", Type = "nvarchar(max)" }
                                 }
 
                             },
 
                             new Table {
-                                TableName = "Car",
+                                Name = "Car",
                                 Fields = new List<Field> {
-                                    new Field {FieldName = "CarId", FieldType = "int" },
-                                    new Field {FieldName = "OwnerId", FieldType = "int" },
-                                    new Field {FieldName = "CarBrand", FieldType = "nvarchar(max)" }
+                                    new Field {Name = "CarId", Type = "int" },
+                                    new Field {Name = "OwnerId", Type = "int" },
+                                    new Field {Name = "CarBrand", Type = "nvarchar(max)" }
                                 }
                             }
                         }
@@ -53,8 +53,8 @@ namespace IntopaloApi.Controllers
                 );
                 _context.SaveChanges();
                 _context.KeyRelationships.Add(new KeyRelationship{
-                    BaseFromId = _context.Fields.Single(f => f.FieldName == "UserId").BaseID,
-                    BaseToId = _context.Fields.Single(f => f.FieldName == "OwnerId").BaseID,
+                    FromId = _context.Fields.Single(f => f.Name == "UserId").Id,
+                    ToId = _context.Fields.Single(f => f.Name == "OwnerId").Id,
                     Type = "exact"
                 });
                 _context.SaveChanges();
@@ -66,10 +66,10 @@ namespace IntopaloApi.Controllers
         public ActionResult<string> GetAll() {
             List<Table> tables = _context.Tables
                 .Include(t => t.Fields)
-                .ThenInclude(f => f.KeyRelationshipFrom)
+                .ThenInclude(f => f.PrimaryKeyTo)
                 .ToList();
-            tables[0].Fields[0].KeyRelationshipFrom[0].BaseTo = null;
-            tables[1].Fields[1].KeyRelationshipTo[0].BaseFrom = null;
+            //tables[0].Fields[0].KeyRelationshipFrom[0].BaseTo = null;
+            //tables[1].Fields[1].KeyRelationshipTo[0].BaseFrom = null;
             return JsonConvert.SerializeObject(
                 tables,
                 new JsonSerializerSettings() {

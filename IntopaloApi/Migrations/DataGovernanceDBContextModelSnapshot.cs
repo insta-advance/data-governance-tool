@@ -19,44 +19,84 @@ namespace IntopaloApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Annotation", b =>
+                {
+                    b.Property<int>("AnnotationId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BaseId");
+
+                    b.Property<string>("Description");
+
+                    b.HasKey("AnnotationId");
+
+                    b.HasIndex("BaseId");
+
+                    b.ToTable("Annotations");
+                });
+
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Base", b =>
                 {
-                    b.Property<int>("BaseID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.HasKey("BaseID");
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Bases");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Base");
                 });
 
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.CompositeKeyField", b =>
+                {
+                    b.Property<int>("FieldId");
+
+                    b.Property<int>("CompositeKeyId");
+
+                    b.HasKey("FieldId", "CompositeKeyId");
+
+                    b.HasIndex("CompositeKeyId");
+
+                    b.ToTable("CompositeKeyFields");
+                });
+
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.KeyRelationship", b =>
                 {
-                    b.Property<int>("BaseFromId");
+                    b.Property<int>("FromId");
 
-                    b.Property<int>("BaseToId");
+                    b.Property<int>("ToId");
 
                     b.Property<string>("Type");
 
-                    b.HasKey("BaseFromId", "BaseToId");
+                    b.HasKey("FromId", "ToId");
 
-                    b.HasIndex("BaseToId");
+                    b.HasIndex("ToId");
 
                     b.ToTable("KeyRelationships");
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.CompositeKey", b =>
+                {
+                    b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
+
+
+                    b.ToTable("CompositeKey");
+
+                    b.HasDiscriminator().HasValue("CompositeKey");
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Database", b =>
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
-                    b.Property<string>("DBName");
-
-                    b.Property<string>("DBType");
+                    b.Property<string>("Type");
 
                     b.ToTable("Database");
 
@@ -67,13 +107,12 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
-                    b.Property<string>("FieldName");
+                    b.Property<int?>("StructuredBaseId");
 
-                    b.Property<string>("FieldType");
+                    b.Property<string>("Type")
+                        .HasColumnName("Field_Type");
 
-                    b.Property<int?>("StructuredBaseBaseID");
-
-                    b.HasIndex("StructuredBaseBaseID");
+                    b.HasIndex("StructuredBaseId");
 
                     b.ToTable("Field");
 
@@ -84,7 +123,12 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
+                    b.Property<int?>("DatabaseId")
+                        .HasColumnName("Schema_DatabaseId");
+
                     b.Property<string>("SchemaName");
+
+                    b.HasIndex("DatabaseId");
 
                     b.ToTable("Schema");
 
@@ -117,7 +161,9 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.StructuredBase");
 
-                    b.Property<string>("CollectionName");
+                    b.Property<int?>("DatabaseId");
+
+                    b.HasIndex("DatabaseId");
 
                     b.ToTable("Collection");
 
@@ -139,27 +185,47 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.StructuredBase");
 
-                    b.Property<int?>("SchemaBaseID");
+                    b.Property<int?>("SchemaId");
 
                     b.Property<string>("TableName");
 
-                    b.HasIndex("SchemaBaseID");
+                    b.HasIndex("SchemaId");
 
                     b.ToTable("Table");
 
                     b.HasDiscriminator().HasValue("Table");
                 });
 
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Annotation", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.Base", "Base")
+                        .WithMany("Annotations")
+                        .HasForeignKey("BaseId");
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.CompositeKeyField", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.CompositeKey", "CompositeKey")
+                        .WithMany("CompositeKeyFields")
+                        .HasForeignKey("CompositeKeyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("IntopaloApi.System_for_data_governance.Field", "Field")
+                        .WithMany("CompositeKeyFields")
+                        .HasForeignKey("FieldId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.KeyRelationship", b =>
                 {
-                    b.HasOne("IntopaloApi.System_for_data_governance.Base", "BaseFrom")
-                        .WithMany("KeyRelationshipFrom")
-                        .HasForeignKey("BaseFromId")
+                    b.HasOne("IntopaloApi.System_for_data_governance.Base", "From")
+                        .WithMany("PrimaryKeyTo")
+                        .HasForeignKey("FromId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("IntopaloApi.System_for_data_governance.Base", "BaseTo")
-                        .WithMany("KeyRelationshipTo")
-                        .HasForeignKey("BaseToId")
+                    b.HasOne("IntopaloApi.System_for_data_governance.Base", "To")
+                        .WithMany("ForeignKeyTo")
+                        .HasForeignKey("ToId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -167,14 +233,28 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasOne("IntopaloApi.System_for_data_governance.StructuredBase", "StructuredBase")
                         .WithMany("Fields")
-                        .HasForeignKey("StructuredBaseBaseID");
+                        .HasForeignKey("StructuredBaseId");
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Schema", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.Database", "Database")
+                        .WithMany("Schemas")
+                        .HasForeignKey("DatabaseId");
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Collection", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.Database", "Database")
+                        .WithMany("Collections")
+                        .HasForeignKey("DatabaseId");
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Table", b =>
                 {
                     b.HasOne("IntopaloApi.System_for_data_governance.Schema", "Schema")
                         .WithMany("Tables")
-                        .HasForeignKey("SchemaBaseID");
+                        .HasForeignKey("SchemaId");
                 });
 #pragma warning restore 612, 618
         }

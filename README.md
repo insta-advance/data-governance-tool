@@ -15,8 +15,7 @@ From vscode install extensions:
   * Dotnet core commands
   * NuGet Packet Manager
 
-[Install SQL Server for linux] [l0].  
-[l0]: https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-2017
+[Install SQL Server for linux](https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-2017).
 
 You need to create your own database and modify "DefaultConnection" -string found 
 in file appsettings.json to match your own database or setup your database with 
@@ -53,8 +52,5 @@ The metadata can be read from:
   * https://localhost:5001/api/intopalo
 
 ### Development
-  * [Basic guide to REST Api][l1].
-[l1]: https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1#create-the-database-context
-  
-  * [Entity Framework Core][l2].
-[l2]: https://docs.microsoft.com/en-us/ef/#pivot=efcore
+  * [Basic guide to REST Api](https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1#create-the-database-context).
+  * [Entity Framework Core](https://docs.microsoft.com/en-us/ef/#pivot=efcore).

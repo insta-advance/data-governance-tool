@@ -7,6 +7,6 @@ namespace IntopaloApi.System_for_data_governance
 {
     public class Collection : StructuredBase
     {
-        public string CollectionName { get; set; }
+        public Database Database { get; set; }
     }
 }
