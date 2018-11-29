@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   {
-    path: 'block',
+    path: '',
     component: BlockComponent,
     data: { title: 'Block List' }
   },
@@ -25,7 +25,7 @@ const appRoutes: Routes = [
     component: BlockDetailsComponent,
     data: { title: 'Block Details' }
   },
-  {
+  /*{
     path: 'block-add',
     component: BlockAddComponent,
     data: { title: 'Block Add' }
@@ -38,7 +38,7 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: '/view',
     pathMatch: 'full'
-  }
+  }*/
 ];
 
 @NgModule({

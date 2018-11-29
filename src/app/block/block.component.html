@@ -1,23 +1,38 @@
-
-    <h2>List of tables</h2>
-
-    <ul class="blocks">
-      <li *ngFor="let p of blocks; let i=index;">
-        <a routerLink="/block-details/{{i}}">
-          {{p.name}}
-            <div class="table-fields" *ngFor="let x of p.fields; let i=index;">
-              {{x.field_1}},
-              {{x.field_2}},
-              {{x.field_3}}
-            </div>
-        </a><button  class="list-delete" title="delete block"
-          (click)="delete(i)">x</button>
-      </li>
-    </ul>
-
-
-    <div>
-      <button class="list-add" (click)="add()">
-        + Add new table
-      </button>
+<h2>Nonrelational DB</h2>
+<div *ngFor="let p of blocks; let i=index;"> 
+    <div *ngFor="let x of p.Value; let u=index;"> 
+        <p *ngIf="i==0" >{{x.CollectionName}}</p>
     </div>
+</div>
+
+<h2>Relational DB</h2>
+<div *ngFor="let p of blocks; let i=index;">
+    <div *ngFor="let x of p.Value; let u=index;"> 
+        <p *ngIf="i==2" class="schema-name">Schema - {{x.SchemaName}}</p>
+        <div class="table" *ngFor="let y of x.Tables; let k=index;">
+            <p class="table-name">{{y.TableName}}</p>
+            <div class="table-fields" *ngFor="let z of y.Fields; let j=index;">
+                <p class="field-id">[{{z.BaseID}}] </p>
+                <p class="field-name">, {{z.FieldName}}</p>
+                <p class="field-type">, {{z.FieldType}}</p>
+                <div class="rel-from" *ngFor="let r of z.KeyRelationshipFrom; let j=index;">
+                        , FK to [{{r.BaseToId}}]
+                </div>
+                <div class="rel-to" *ngFor="let r of z.KeyRelationshipTo; let j=index;">
+                        , FK from [{{r.BaseFromId}}]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Structural files</h2>
+
+<h2>Unstructural files</h2>
+<div *ngFor="let p of blocks; let u=index;"> 
+    <div class="unstruct-files" *ngFor="let x of p.Value; let i=index;">
+        <p *ngIf="u==5" class="file-title">Unstructured file</p>
+        <p *ngIf="u==5" class="file-path">{{x.FilePath}}</p>
+    </div>
+</div>
+

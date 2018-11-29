@@ -16,17 +16,17 @@ export class BlockEditComponent implements OnInit {
   ngOnInit() {
     this.rest.getBlock(this.route.snapshot.params['id']).subscribe((data: {}) => {
       console.log(data);
-      this.blockData = this.block = data[this.route.snapshot.params['id']];
+      this.blockData =  data[this.route.snapshot.params['id']];
     });
   }
 
-  updateBlock() {
+  /*updateBlock() {
     this.rest.updateBlock(this.route.snapshot.params['id'], this.blockData).subscribe((result) => {
       this.router.navigate(['/block-details/'+result._id]);
     }, (err) => {
       console.log(err);
     });
-  }
+  }*/
     showList() {
     this.router.navigate(['/block']);
   }

@@ -16,13 +16,13 @@ export class BlockAddComponent implements OnInit {
   ngOnInit() {
   }
 
-  addBlock() {
+ /* addBlock() {
     this.rest.addBlock(this.blockData).subscribe((result) => {
       this.router.navigate(['/block-details/'+result.id]);
     }, (err) => {
       console.log(err);
     });
-  }
+  }*/
   showList() {
     this.router.navigate(['/block']);
   }

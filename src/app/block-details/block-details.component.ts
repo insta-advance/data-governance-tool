@@ -22,7 +22,7 @@ export class BlockDetailsComponent implements OnInit {
     
     
     showList() {
-        this.router.navigate(['/block']);
+        this.router.navigate(['/']);
       }    
     
     editTable() {

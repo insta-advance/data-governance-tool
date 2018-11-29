@@ -10,18 +10,18 @@
       <input [(ngModel)]="blockData.block_name" placeholder={{block.name}}/>
 
     </label><br>   
-<div class="table-fields" *ngFor="let x of block.fields; let i=index;">
-      <label><p>Table Field 1</p>
-      <input [(ngModel)]="blockData.block_field1" placeholder={{x.field_1}}/>
-    </label><br>    
-      <label><p>Table Field 2</p>
-      <input [(ngModel)]="blockData.block_field2" placeholder={{x.field_2}}/>
-    </label><br>    
-      <label><p>Table Field 3</p>
-      <input [(ngModel)]="blockData.block_field3" placeholder={{x.field_3}}/>
-    </label><br>
+      <div class="table-fields" *ngFor="let x of block.fields; let i=index;">
+          <label><p>Table Field 1</p>
+          <input [(ngModel)]="block_field1" placeholder={{x.field_1}}/>
+        </label><br>    
+          <label><p>Table Field 2</p>
+          <input [(ngModel)]="x.block_field2" placeholder={{x.field_2}}/>
+        </label><br>    
+          <label><p>Table Field 3</p>
+          <input [(ngModel)]="x.block_field3" placeholder={{x.field_3}}/>
+        </label><br>
 
-  </div>
+    </div>
   </div>
 
   <button class="edit-table" (click)="updatBlock()">Update</button>

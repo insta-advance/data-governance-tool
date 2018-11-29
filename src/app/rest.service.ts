@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 //setup for restapi
-const endpoint = 'http://localhost:4200/assets/test.json';
+const endpoint = 'http://localhost:4200/assets/get.json';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -37,7 +37,7 @@ getBlock(id): Observable<any> {
 }
 
 //post call
-addBlock (product): Observable<any> {
+/*addBlock (product): Observable<any> {
   console.log(product);
   return this.http.post<any>(endpoint, JSON.stringify(product), httpOptions).pipe(
     tap((product) => console.log(`added block w/ id=${product.id}`)),
@@ -59,7 +59,7 @@ deleteBlock (id): Observable<any> {
     tap(_ => console.log(`deleted block id=${id}`)),
     catchError(this.handleError<any>('deleteProduct'))
   );
-}
+}*/
 
 private handleError<T> (operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
