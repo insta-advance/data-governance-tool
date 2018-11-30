@@ -16,10 +16,10 @@
                 <p class="field-name">, {{z.FieldName}}</p>
                 <p class="field-type">, {{z.FieldType}}</p>
                 <div class="rel-from" *ngFor="let r of z.KeyRelationshipFrom; let j=index;">
-                        , FK to [{{r.BaseToId}}]
+                        , PK
                 </div>
                 <div class="rel-to" *ngFor="let r of z.KeyRelationshipTo; let j=index;">
-                        , FK from [{{r.BaseFromId}}]
+                        , FK to [{{r.BaseFromId}}]
                 </div>
             </div>
         </div>
