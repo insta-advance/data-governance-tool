@@ -63,35 +63,8 @@ namespace IntopaloApi.Controllers
    
             
         }
-/*
-        [HttpGet]
-        public ActionResult<string> GetAll() {
-            List<Table> tables = _context.Tables
-                .Include(t => t.Fields)
-                .ThenInclude(f => f.PrimaryKeyTo)
-                .ToList();
-            //tables[0].Fields[0].PrimaryKeyTo[0].To = null;
-            //tables[1].Fields[1].ForeignKeyTo[0].From = null;
-            return JsonConvert.SerializeObject(
-                tables,
-                new JsonSerializerSettings() {
-                    // Allow loops since metadata is connected in a hierarchy.
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    NullValueHandling = NullValueHandling.Ignore,
-                    // Identing for debug purposes only
-                    Formatting = Formatting.Indented
-                }
-            );
-        }
 
         [HttpGet]
-        public ActionResult<List<StructuredBase>> GetAll()
-        {
-            return _context.StructuredBases.ToList();
-        }
-*/
-        [HttpGet]
-        //public ObjectResult GetAll()
         public ActionResult<string> GetAll() 
         {
             
@@ -110,19 +83,9 @@ namespace IntopaloApi.Controllers
                 new KeyValuePair<string,List<object>>("Schemas",new List<object>(_context.Schemas.ToList())),
                 new KeyValuePair<string,List<object>>("StructuredFiles",new List<object>(_context.StructuredFiles.ToList())),
                 new KeyValuePair<string,List<object>>("Tables",new List<object>(_context.Tables.ToList())),
-                new KeyValuePair<string,List<object>>("Unstructuredfiles",new List<object>(_context.UnstructuredFiles.ToList())),
+                new KeyValuePair<string,List<object>>("UnstructuredFiles",new List<object>(_context.UnstructuredFiles.ToList())),
             };
-            /*
-            List<List<object>> database = new List<List<object>>();
-            database.Add(new List<object>(_context.Collections.ToList()));
-            database.Add(new List<object>(_context.Databases.ToList()));
-            database.Add(new List<object>(_context.Fields.ToList()));
-            database.Add(new List<object>(_context.KeyRelationships.ToList()));
-            database.Add(new List<object>(_context.Schemas.ToList()));
-            database.Add(new List<object>(_context.StructuredFiles.ToList()));
-            database.Add(new List<object>(_context.Tables.ToList()));
-            database.Add(new List<object>(_context.UnstructuredFiles.ToList()));
-            */
+        
 
             return JsonConvert.SerializeObject(
                 database,
@@ -134,6 +97,294 @@ namespace IntopaloApi.Controllers
                     Formatting = Formatting.Indented
                 }
             );
+        }
+
+        [HttpGet("Collections/{id?}")]
+
+        public ActionResult<string> GetCollection (int id){
+            
+            if (id == 0){
+                List<Collection> list = new List<Collection>(_context.Collections.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.Collections.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+        }
+
+        [HttpGet("Databases/{id?}")]
+
+        public ActionResult<string> GetDatabase (int id){
+            
+            if (id == 0){
+                List<Database> list = new List<Database>(_context.Databases.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.Databases.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+        }
+
+        [HttpGet("Fields/{id?}")]
+
+        public ActionResult<string> GetFields (int id){
+            
+            if (id == 0){
+                List<Field> list = new List<Field>(_context.Fields.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.Fields.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+        }
+        
+        [HttpGet("KeyRelationships/{id?}")]
+
+        public ActionResult<string> GetKeyRelationship (int id){
+            
+            if (id == 0){
+                List<KeyRelationship> list = new List<KeyRelationship>(_context.KeyRelationships.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.KeyRelationships.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+        }
+
+        [HttpGet("Schemas/{id?}")]
+
+        public ActionResult<string> GetSchema (int id){
+            
+            if (id == 0){
+                List<Schema> list = new List<Schema>(_context.Schemas.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.Schemas.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }   
+        }
+
+        [HttpGet("StructureFiles/{id?}")]
+
+        public ActionResult<string> GetStructuredFile (int id){
+            
+            if (id == 0){
+                List<StructuredFile> list = new List<StructuredFile>(_context.StructuredFiles.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.StructuredFiles.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+        }
+
+        [HttpGet("Tables/{id?}")]
+
+        public ActionResult<string> GetTable (int id){
+            
+            if (id == 0){
+                List<Table> list = new List<Table>(_context.Tables.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.Tables.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }     
+        }
+
+        [HttpGet("UnstructuredFiles/{id?}")]
+
+        public ActionResult<string> GetUnstructuredFile (int id){
+            
+            if (id == 0){
+                List<UnstructuredFile> list = new List<UnstructuredFile>(_context.UnstructuredFiles.ToList());
+                
+                return JsonConvert.SerializeObject(
+                list,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
+            else {
+                var item = _context.UnstructuredFiles.Find(id);
+                if (item == null)
+                    return NotFound();
+
+                return JsonConvert.SerializeObject(
+                item,
+                new JsonSerializerSettings() {
+                    // Allow loops since metadata is connected in a hierarchy.
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    // Identing for debug purposes only
+                    Formatting = Formatting.Indented
+                }
+            );
+            }
         }
 
         // The function saves the new data to the database. The data can contain 

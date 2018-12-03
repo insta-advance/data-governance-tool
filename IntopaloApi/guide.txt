@@ -1,3 +1,17 @@
+For Docker:   // Not tested in another computer
+
+Install Docker and Docker-compose
+
+Modify Startup.cs file according to the comments.
+
+Run following commands in IntopaloApi folder:
+
+docker-compose build
+docker-compose up
+
+
+
+
 Http request body needs to have following JSON structure:
 
 {

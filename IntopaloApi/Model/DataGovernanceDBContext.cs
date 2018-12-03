@@ -13,6 +13,7 @@ namespace IntopaloApi.System_for_data_governance
         public DataGovernanceDBContext(DbContextOptions<DataGovernanceDBContext> options)
             : base(options /*"name=DataGovernanceDBContext"*/)
         {
+            this.Database.EnsureCreated();
         }
         /* Implement tables. */
         public DbSet<Base> Bases { get; set; }
