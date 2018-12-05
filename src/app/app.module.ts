@@ -13,6 +13,9 @@ import { GlobalViewComponent } from './global-view/global-view.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+import { RelationalViewComponent } from './relational-view/relational-view.component';
+import { NonrelationalViewComponent } from './nonrelational-view/nonrelational-view.component';
+
 
 const appRoutes: Routes = [
   {
@@ -50,7 +53,9 @@ const appRoutes: Routes = [
     BlockEditComponent,*/
     SchemaViewComponent,
     DatabaseViewComponent,
-    GlobalViewComponent
+    GlobalViewComponent,
+    RelationalViewComponent,
+    NonrelationalViewComponent
   ],
   imports: [
       RouterModule.forRoot(appRoutes),

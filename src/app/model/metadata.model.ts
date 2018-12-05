@@ -4,6 +4,7 @@ export interface Field{
     type: string;
     isPrimary: number;
     isForeignKeyTo: number;
+    relationshipType:string;
 }
 
 export interface Table{
@@ -45,7 +46,7 @@ export interface StructuredFiles{
     path: string;
 }
 
-export interface Datastore{
+export interface Metadata{
     id:string;
     name:string;
     schemas: Schema[];

@@ -13,28 +13,58 @@ This version works with the local `test.json` file to test GET calls from UI.
 
 ### Services
 
-* `rest.service` - service for currently fetching data (WIP)
+* `rest.service` - service for fetching and mapping the data (WIP)
 
 ### Interfaces
 
-* `metadata.model` - set of interfaces that are used for metadata mapping (WIP)
+* `metadata.model` - set of interfaces that are used for mapping of the metadata (WIP)
 
 ### Components
 
 * `global-view` - gets the test JSON and displays the list of schemas, databases, their tables and collections and files (WIP)
-* `schema-view` - finishing view to schema (WIP)
-* `database-view` - finishing view to database (WIP)
+* `schema-view` - view to singular schema (WIP)
+* `database-view` - view to singular database (WIP)
+* `relational-view` - view to all schemas in relational datastore (WIP)
+* `nonrelational-view` - view to all databases in nonrelational datastore (WIP)
 
 # To-Do
 
 ### Services
 
-* `rest.service` - finish up data mapping
+* `rest.service` - data mapping
 
 ### Components
 
+* POST, PUT and DELETE calls
 * views to add and edit schemas/databases, tables/collections, fields
-* item deletion
+* view to item deletion
+* routing
+
+# Proposed routing structure
+
+`/api/intopalo/` - global view (`global-view` component)
+
+`/api/intopalo/schemas` - schemas view  (`relational-view` component)
+`/api/intopalo/schemas/add` - to add new schema
+`/api/intopalo/schemas/1` - schema 1 view  (`schema-view` component)
+`/api/intopalo/schemas/1/edit` - to edit schema 1
+`/api/intopalo/schemas/1/add` - to add one table in schema 1
+`/api/intopalo/schemas/1/1/edit` - to edit table 1 in schema 1
+
+`/api/intopalo/databases` - databases view  (`nonrelational-view` component)
+`/api/intopalo/collections/add` - to add new database
+`/api/intopalo/collections/1` - database 1 view  (`database-view` component)
+`/api/intopalo/collections/1/edit` - to edit database 1
+`/api/intopalo/collections/1/add `- to add one collection to database 1
+`/api/intopalo/collections/1/1/edit` - to edit collection 1 in database 1
+
+`/api/intopalo/unstrcutured` - unstructured files view
+`/api/intopalo/unstrcutured/add` - to add a file
+`/api/intopalo/unstrcutured/1/edit` - to edit file 1
+
+`/api/intopalo/strcutured` - structured files view
+`/api/intopalo/strcutured/add` - to add a file
+`/api/intopalo/strcutured/1/edit` - to edit file 1
 
 # Current JSON structure
 

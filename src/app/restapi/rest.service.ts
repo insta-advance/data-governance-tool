@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Datastore } from '../model/metadata.model'
+import { Metadata } from '../model/metadata.model'
 
 //endpoints
 const endpoint = 'http://localhost:4200/assets/get.json';
@@ -25,7 +25,7 @@ const httpOptions = {
 
 export class RestService {
 
-metadata: Datastore[]=[];  
+metadata: Metadata[]=[];  
     
 constructor(private http: HttpClient) { }
 
