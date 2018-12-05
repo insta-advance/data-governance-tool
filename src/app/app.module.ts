@@ -6,26 +6,26 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { BlockComponent } from './block/block.component';
-import { BlockAddComponent } from './block-add/block-add.component';
-import { BlockDetailsComponent } from './block-details/block-details.component';
-import { BlockEditComponent } from './block-edit/block-edit.component';
+import { SchemaViewComponent } from './schema-view/schema-view.component';
+import { DatabaseViewComponent } from './database-view/database-view.component';
+import { GlobalViewComponent } from './global-view/global-view.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+
 const appRoutes: Routes = [
   {
     path: '',
-    component: BlockComponent,
-    data: { title: 'Block List' }
+    component: GlobalViewComponent,
+    data: { title: 'Global View' }
   },
-  {
+  /*{
     path: 'block-details/:id',
     component: BlockDetailsComponent,
     data: { title: 'Block Details' }
   },
-  /*{
+  {
     path: 'block-add',
     component: BlockAddComponent,
     data: { title: 'Block Add' }
@@ -44,10 +44,13 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BlockComponent,
-    BlockAddComponent,
+    GlobalViewComponent,
+    /*BlockAddComponent,
     BlockDetailsComponent,
-    BlockEditComponent
+    BlockEditComponent,*/
+    SchemaViewComponent,
+    DatabaseViewComponent,
+    GlobalViewComponent
   ],
   imports: [
       RouterModule.forRoot(appRoutes),

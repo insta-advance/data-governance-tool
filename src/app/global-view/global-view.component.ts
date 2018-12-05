@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../rest.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Table } from '../table.model';
 
 @Component({
-  selector: 'app-block',
-  templateUrl: './block.component.html',
-  styleUrls: ['./block.component.css']
+  selector: 'app-global-view',
+  templateUrl: './global-view.component.html',
+  styleUrls: ['./global-view.component.css']
 })
-export class BlockComponent implements OnInit {
+export class GlobalViewComponent implements OnInit {
 
   blocks:any = [];
 
@@ -18,7 +15,7 @@ export class BlockComponent implements OnInit {
     this.getBlocks();
   }
 
-  getBlocks() {
+    getBlocks() {
     this.blocks = [];
     this.rest.getBlocks().subscribe((data: {}) => {
       console.log(data);
@@ -29,8 +26,8 @@ export class BlockComponent implements OnInit {
   add() {
     this.router.navigate(['/block-add']);
   }
-
-  /*delete(id) {
+    
+      /*delete(id) {
     this.rest.deleteBlock(id)
       .subscribe(res => {
           this.getBlocks();
@@ -39,5 +36,4 @@ export class BlockComponent implements OnInit {
         }
       );
   }*/
-
 }
