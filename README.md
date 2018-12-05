@@ -42,28 +42,28 @@ This version works with the local `test.json` file to test GET calls from UI.
 # Proposed routing structure
 
 * `/api/intopalo/` - global view (`global-view` component)
-
+&nbsp;
 * `/api/intopalo/schemas` - schemas view  (`relational-view` component)
 * `/api/intopalo/schemas/add` - to add new schema
 * `/api/intopalo/schemas/1` - schema 1 view  (`schema-view` component)
 * `/api/intopalo/schemas/1/edit` - to edit schema 1
 * `/api/intopalo/schemas/1/add` - to add one table in schema 1
 * `/api/intopalo/schemas/1/1/edit` - to edit table 1 in schema 1
-
+&nbsp;
 * `/api/intopalo/databases` - databases view  (`nonrelational-view` component)
-* `/api/intopalo/collections/add` - to add new database
-* `/api/intopalo/collections/1` - database 1 view  (`database-view` component)
-* `/api/intopalo/collections/1/edit` - to edit database 1
-* `/api/intopalo/collections/1/add `- to add one collection to database 1
-* `/api/intopalo/collections/1/1/edit` - to edit collection 1 in database 1
-
-* `/api/intopalo/unstrcutured` - unstructured files view
-* `/api/intopalo/unstrcutured/add` - to add a file
-* `/api/intopalo/unstrcutured/1/edit` - to edit file 1
-
-* `/api/intopalo/strcutured` - structured files view
-* `/api/intopalo/strcutured/add` - to add a file
-* `/api/intopalo/strcutured/1/edit` - to edit file 1
+* `/api/intopalo/databases/add` - to add new database
+* `/api/intopalo/databases/1` - database 1 view  (`database-view` component)
+* `/api/intopalo/databases/1/edit` - to edit database 1
+* `/api/intopalo/databases/1/add `- to add one collection to database 1
+* `/api/intopalo/databases/1/1/edit` - to edit collection 1 in database 1
+&nbsp;
+* `/api/intopalo/unstructured` - unstructured files view
+* `/api/intopalo/unstructured/add` - to add a file
+* `/api/intopalo/unstructured/1/edit` - to edit file 1
+&nbsp;
+* `/api/intopalo/structured` - structured files view
+* `/api/intopalo/structured/add` - to add a file
+* `/api/intopalo/structured/1/edit` - to edit file 1
 
 # Current JSON structure
 
