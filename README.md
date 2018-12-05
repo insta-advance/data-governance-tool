@@ -5,7 +5,7 @@ This version works with the local `test.json` file to test GET calls from UI.
 1. Install [Node.js](https://nodejs.org/en/)
 2. Clone the project
 3. Use Node.js command prompt and navigate to the project folder
-4. Install - `npm install`
+4. Install npm - `npm install`
 5. Compile and run - `ng serve`
 6. Go to [http://localhost:4200](http://localhost:4200) to start work
 
@@ -17,7 +17,7 @@ This version works with the local `test.json` file to test GET calls from UI.
 
 ### Interfaces
 
-* `metadata.model` - set of interfaces that are used for mapping of the metadata (WIP)
+* `metadata.model` - set of interfaces that are used for mapping the metadata (WIP)
 
 ### Components
 
@@ -35,36 +35,35 @@ This version works with the local `test.json` file to test GET calls from UI.
 
 ### Components
 
-* POST, PUT and DELETE calls
 * views to add and edit schemas/databases, tables/collections, fields
 * view to item deletion
 * routing
 
 # Proposed routing structure
 
-`/api/intopalo/` - global view (`global-view` component)
+*`/api/intopalo/` - global view (`global-view` component)
 
-`/api/intopalo/schemas` - schemas view  (`relational-view` component)
-`/api/intopalo/schemas/add` - to add new schema
-`/api/intopalo/schemas/1` - schema 1 view  (`schema-view` component)
-`/api/intopalo/schemas/1/edit` - to edit schema 1
-`/api/intopalo/schemas/1/add` - to add one table in schema 1
-`/api/intopalo/schemas/1/1/edit` - to edit table 1 in schema 1
+*`/api/intopalo/schemas` - schemas view  (`relational-view` component)
+*`/api/intopalo/schemas/add` - to add new schema
+*`/api/intopalo/schemas/1` - schema 1 view  (`schema-view` component)
+*`/api/intopalo/schemas/1/edit` - to edit schema 1
+*`/api/intopalo/schemas/1/add` - to add one table in schema 1
+*`/api/intopalo/schemas/1/1/edit` - to edit table 1 in schema 1
 
-`/api/intopalo/databases` - databases view  (`nonrelational-view` component)
-`/api/intopalo/collections/add` - to add new database
-`/api/intopalo/collections/1` - database 1 view  (`database-view` component)
-`/api/intopalo/collections/1/edit` - to edit database 1
-`/api/intopalo/collections/1/add `- to add one collection to database 1
-`/api/intopalo/collections/1/1/edit` - to edit collection 1 in database 1
+*`/api/intopalo/databases` - databases view  (`nonrelational-view` component)
+*`/api/intopalo/collections/add` - to add new database
+*`/api/intopalo/collections/1` - database 1 view  (`database-view` component)
+*`/api/intopalo/collections/1/edit` - to edit database 1
+*`/api/intopalo/collections/1/add `- to add one collection to database 1
+*`/api/intopalo/collections/1/1/edit` - to edit collection 1 in database 1
 
-`/api/intopalo/unstrcutured` - unstructured files view
-`/api/intopalo/unstrcutured/add` - to add a file
-`/api/intopalo/unstrcutured/1/edit` - to edit file 1
+*`/api/intopalo/unstrcutured` - unstructured files view
+*`/api/intopalo/unstrcutured/add` - to add a file
+*`/api/intopalo/unstrcutured/1/edit` - to edit file 1
 
-`/api/intopalo/strcutured` - structured files view
-`/api/intopalo/strcutured/add` - to add a file
-`/api/intopalo/strcutured/1/edit` - to edit file 1
+*`/api/intopalo/strcutured` - structured files view
+*`/api/intopalo/strcutured/add` - to add a file
+*`/api/intopalo/strcutured/1/edit` - to edit file 1
 
 # Current JSON structure
 
