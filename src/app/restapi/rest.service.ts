@@ -6,8 +6,8 @@ import { Metadata } from '../model/metadata.model'
 
 //endpoints
 const endpoint = 'http://localhost:4200/assets/get.json';
-/*const endpointSchema = ;
-const endpointDatabase = ;
+const endpointSchemas = 'http://localhost:4200/assets/getSchemas.json';
+/*const endpointDatabase = ;
 const endpointTable = ;
 const endpointCollection = ;
 const endpointStructFiles = ;
@@ -31,15 +31,25 @@ constructor(private http: HttpClient) { }
 
 
 private extractData(res: Response) {
-  let body = res;
-  return body || { };
+  let meta = res;
+  return meta || { };
     //to do mapping for the model
 }
 
+private extractSchemasData(res: Response) {
+  let schemas = res;
+  return schemas || { };
+    //to do mapping for the model
+}
 //get call
-getBlocks(): Observable<any> {
+getMeta(): Observable<any> {
   return this.http.get(endpoint).pipe(
     map(this.extractData));
+}
+//get call for schemas
+getSchemas(): Observable<any> {
+  return this.http.get(endpointSchemas).pipe(
+    map(this.extractSchemasData));
 }
 
 //get call for a singular id

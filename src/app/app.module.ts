@@ -23,17 +23,27 @@ const appRoutes: Routes = [
     component: GlobalViewComponent,
     data: { title: 'Global View' }
   },
+  {
+    path: 'schemas',
+    component: RelationalViewComponent,
+    data: { title: 'All schemas View' }
+  },
+  {
+    path: 'databases',
+    component: NonrelationalViewComponent,
+    data: { title: 'All databases View' }
+  },
+  {
+    path: 'schemas/:id',
+    component: SchemaViewComponent,
+    data: { title: 'Schema view' }
+  },
+  {
+    path: 'databases/:id',
+    component: DatabaseViewComponent,
+    data: { title: 'Database view' }
+  },
   /*{
-    path: 'block-details/:id',
-    component: BlockDetailsComponent,
-    data: { title: 'Block Details' }
-  },
-  {
-    path: 'block-add',
-    component: BlockAddComponent,
-    data: { title: 'Block Add' }
-  },
-  {
     path: 'block-edit/:id',
     component: BlockEditComponent,
     data: { title: 'Block Edit' }

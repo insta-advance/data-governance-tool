@@ -1,0 +1,21 @@
+[
+  {
+    "Database": {
+      "Type": "SqlServer",
+      "Schemas": [],
+      "Id": 10
+    },
+    "Tables": [
+      {
+        "Id": 3,
+        "Name": "User"
+      },
+      {
+        "Id": 4,
+        "Name": "Car"
+      }
+    ],
+    "Id": 2,
+    "Name": "private"
+  }
+]

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from '../restapi/rest.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-global-view',
@@ -7,27 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GlobalViewComponent implements OnInit {
 
-  blocks:any = [];
+  metadata:any = [];
 
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.getBlocks();
+    this.getData();
   }
 
-    getBlocks() {
-    this.blocks = [];
-    this.rest.getBlocks().subscribe((data: {}) => {
+    getData() {
+    this.metadata = [];
+    this.rest.getMeta().subscribe((data: {}) => {
       console.log(data);
-      this.blocks = data;
+      this.metadata = data;
     });
   }
 
-  add() {
+  /*add() {
     this.router.navigate(['/block-add']);
   }
     
-      /*delete(id) {
+      delete(id) {
     this.rest.deleteBlock(id)
       .subscribe(res => {
           this.getBlocks();

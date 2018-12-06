@@ -1,3 +1,22 @@
-<p>
-  relational-view works!
-</p>
+<div class="homelink">
+    <button (click)="backToHome()">My new DB </button>
+    <span class="breadcrumbs-divider">►</span>
+    <p>Relational DB</p>
+    <span class="breadcrumbs-divider">|</span>
+    <p class="add">+ Add new schema</p>
+
+</div>
+
+<div *ngFor="let p of schemasData; let i=index;">
+    <p class="schema-name">{{p.Name}}</p>
+    <div class="table" *ngFor="let n of p.Tables; let j=index;">
+        <p class="table-name">{{n.Name}}</p>
+        <div class="table-fields">        
+            <p class="field-id"> </p>
+            <p class="field-name"></p>
+            <p class="field-type"></p>
+            <div class="rel-from"></div>
+            <div class="rel-to"></div>
+        </div>
+    </div>
+</div>

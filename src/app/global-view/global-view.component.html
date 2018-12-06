@@ -1,14 +1,28 @@
-<h2>Nonrelational DB</h2>
-<div *ngFor="let p of blocks; let i=index;"> 
-    <div *ngFor="let x of p.Value; let u=index;"> 
-        <p *ngIf="i==0" >{{x.CollectionName}}</p>
+<div class="homelink">
+    <p>My new DB</p>
+    <span class="breadcrumbs-divider">|</span>
+    <p class="add">+ Add new datastore</p>
+</div>
+
+<ul>
+    <li> <a href="#nonrel"> Nonrelational DB</a></li>
+    <li> <a href="#rel"> Relational DB</a></li>
+    <li> <a href="#struct"> Structural files</a></li>
+    <li> <a href="#nonstruct"> Nonstructured files</a></li>
+</ul>
+ 
+<h2 id="nonrel">Nonrelational DB</h2> 
+<div *ngFor="let p of metadata; let i=index;"> 
+    <div *ngFor="let x of p.Value; let u=index;" class="collection"> 
+        <p *ngIf="i==0" class="collection-name">{{x.CollectionName}}</p>
+        <p *ngIf="i==0" class="collection-fields">No fields</p>
     </div>
 </div>
 
-<h2>Relational DB</h2>
-<div *ngFor="let p of blocks; let i=index;">
-    <div *ngFor="let x of p.Value; let u=index;"> 
-        <p *ngIf="i==2" class="schema-name">Schema - {{x.SchemaName}}</p>
+<h2 id="rel">Relational DB  <a href="/schemas">(more)</a></h2>
+<div *ngFor="let p of metadata; let i=index;">
+    <div *ngFor="let x of p.Value; let u=index;" class="schema"> 
+        <p *ngIf="i==2" class="schema-name"> {{x.SchemaName}}</p>
         <div class="table" *ngFor="let y of x.Tables; let k=index;">
             <p class="table-name">{{y.TableName}}</p>
             <div class="table-fields" *ngFor="let z of y.Fields; let j=index;">
@@ -26,13 +40,15 @@
     </div>
 </div>
 
-<h2>Structural files</h2>
+<h2  id="struct">Structured files</h2>
+None
 
-<h2>Unstructural files</h2>
-<div *ngFor="let p of blocks; let u=index;"> 
+<h2 id="nonstruct">Nonstructured files</h2>
+<div *ngFor="let p of metadata; let u=index;"> 
     <div class="unstruct-files" *ngFor="let x of p.Value; let i=index;">
         <p *ngIf="u==5" class="file-title">Unstructured file</p>
         <p *ngIf="u==5" class="file-path">{{x.FilePath}}</p>
     </div>
 </div>
+
 

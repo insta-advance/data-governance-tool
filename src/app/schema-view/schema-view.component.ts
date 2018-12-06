@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-schema-view',
   templateUrl: './schema-view.component.html',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchemaViewComponent implements OnInit {
 
+
+
   constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+
+    }
 
 }
