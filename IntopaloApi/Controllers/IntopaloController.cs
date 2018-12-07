@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System;
 
 namespace IntopaloApi.Controllers
 {
@@ -23,35 +24,44 @@ namespace IntopaloApi.Controllers
             {
                 // Create a new IntopaloItem if collection is empty,
                 // which means you can't delete all IntopaloItems.
-                _context.Collections.Add(new Collection { Name = "IntopaloCollection1" });
-                _context.SaveChanges();
+                //_context.Collections.Add(new Collection { Name = "IntopaloCollection1" });
+                //_context.SaveChanges();
             }
+            
             if (_context.Schemas.Count() == 0)
             {
-                _context.Schemas.Add(
-                    new Schema {
-                        Name = "private",
-                        Tables = new List<Table> {
-                            new Table { 
-                                Name = "User",
-                                Fields = new List<Field> {
-                                    new Field {Name = "UserId", Type = "int" },
-                                    new Field {Name = "UserName", Type = "nvarchar(max)" }
-                                }
+                _context.Datastores.Add( new Datastore {
+                    Name = "Store1",
+                    Databases = new List<Database> {
+                        new Database {
+                            Name = "UserDB",
+                            Type = "PostgreSQL",
+                            Schemas = new List<Schema> {
+                                new Schema {
+                                    Name = "private",
+                                    Tables = new List<Table> {
+                                        new Table { 
+                                            Name = "User",
+                                            Fields = new List<Field> {
+                                                new Field {Name = "UserId", Type = "int" },
+                                                new Field {Name = "UserName", Type = "nvarchar(max)" }
+                                            }
+                                        },
 
-                            },
-
-                            new Table {
-                                Name = "Car",
-                                Fields = new List<Field> {
-                                    new Field {Name = "CarId", Type = "int" },
-                                    new Field {Name = "OwnerId", Type = "int" },
-                                    new Field {Name = "CarBrand", Type = "nvarchar(max)" }
+                                        new Table {
+                                            Name = "Car",
+                                            Fields = new List<Field> {
+                                                new Field {Name = "CarId", Type = "int" },
+                                                new Field {Name = "OwnerId", Type = "int" },
+                                                new Field {Name = "CarBrand", Type = "nvarchar(max)" }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                );
+                });
                 _context.SaveChanges();
                 _context.KeyRelationships.Add(new KeyRelationship{
                     FromId = _context.Fields.Single(f => f.Name == "UserId").Id,
@@ -67,15 +77,7 @@ namespace IntopaloApi.Controllers
         [HttpGet]
         public ActionResult<string> GetAll() 
         {
-            
-            List<Table> tables = _context.Tables
-                .Include(t => t.Fields)
-                .ThenInclude(f => f.PrimaryKeyTo)
-                .ToList();
-            tables[0].Fields[0].PrimaryKeyTo[0].To = null;
-            tables[1].Fields[1].ForeignKeyTo[0].From = null;
-            //database.Add(tables);
-            List<KeyValuePair<string,List<object>>> database = new List<KeyValuePair<string,List<object>>>(){
+             List<KeyValuePair<string,List<object>>> database = new List<KeyValuePair<string,List<object>>>(){
                 new KeyValuePair<string,List<object>>("Collections",new List<object>(_context.Collections.ToList())),
                 new KeyValuePair<string,List<object>>("Databases",new List<object>(_context.Databases.ToList())),
                 new KeyValuePair<string,List<object>>("Fields",new List<object>(_context.Fields.ToList())),
@@ -84,8 +86,34 @@ namespace IntopaloApi.Controllers
                 new KeyValuePair<string,List<object>>("StructuredFiles",new List<object>(_context.StructuredFiles.ToList())),
                 new KeyValuePair<string,List<object>>("Tables",new List<object>(_context.Tables.ToList())),
                 new KeyValuePair<string,List<object>>("UnstructuredFiles",new List<object>(_context.UnstructuredFiles.ToList())),
+                //new KeyValuePair<string,List<object>>("Bases",new List<object>(_context.Bases.ToList()))
             };
-        
+            /* Null unecessary navigation properties so that serialized json doesn't explode in size. */
+            foreach(KeyRelationship k in _context.KeyRelationships.ToList()) {
+                k.To = null;
+                k.From = null;    
+            }
+            foreach(Field f in _context.Fields.ToList()) {
+                f.Structured = null;    
+            }
+            foreach(Collection c in _context.Collections.ToList()) {
+                c.Database = null;
+            }
+            foreach(Database d in _context.Databases.ToList()) {
+                d.Datastore = null;
+            }
+            foreach(Schema s in _context.Schemas.ToList()) {
+                s.Database = null;
+            }
+            foreach(StructuredFile s in _context.StructuredFiles.ToList()) {
+                s.Datastore = null;
+            }
+            foreach(UnstructuredFile u in _context.UnstructuredFiles.ToList()) {
+                u.Datastore = null;
+            }
+            foreach(Table t in _context.Tables.ToList()) {
+                t.Schema = null;
+            }
 
             return JsonConvert.SerializeObject(
                 database,
@@ -480,7 +508,7 @@ namespace IntopaloApi.Controllers
                     if(item != null){
                         item.Name = data.jsonFields.ElementAt(i).Name;
                         item.Type = data.jsonFields.ElementAt(i).Type;
-                        item.StructuredBase = data.jsonFields.ElementAt(i).StructuredBase;
+                        item.Structured = data.jsonFields.ElementAt(i).Structured;
                         item.PrimaryKeyTo = data.jsonFields.ElementAt(i).PrimaryKeyTo;
                         item.ForeignKeyTo = data.jsonFields.ElementAt(i).ForeignKeyTo;
                         _context.Fields.Update(item);

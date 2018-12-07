@@ -19,7 +19,7 @@ namespace IntopaloApi
         {
             // Comment next 2 lines for Docker, otherwise uncomment
             services.AddDbContext<DataGovernanceDBContext>(opt => 
-            opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             
             
 
