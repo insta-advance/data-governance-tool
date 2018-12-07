@@ -21,7 +21,11 @@ body{
     padding-left: 30px;
     font-weight: 300;
     font-size: 1.5em;
+    grid-row:1;
+    grid-column: 1;
 }
 .content-body{
     margin: 20px;
+    grid-column: 1;
+    grid-row:2;
 }
