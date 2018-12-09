@@ -26,6 +26,7 @@ namespace IntopaloApi.Controllers
                 _context.Collections.Add(new Collection { Name = "IntopaloCollection1" });
                 _context.SaveChanges();
             }
+            
             if (_context.Schemas.Count() == 0)
             {
                 _context.Schemas.Add(
@@ -61,7 +62,17 @@ namespace IntopaloApi.Controllers
                 _context.SaveChanges();
             }
    
-            
+            if (_context.Databases.Count() == 0)
+            {
+                _context.Databases.Add( 
+                    new Database
+                    {
+                        Type = "SqlServer",
+                        Schemas = new List<Schema>(_context.Schemas.ToList()),
+                        Collections = new List<Collection>(_context.Collections.ToList()),
+                    });
+                _context.SaveChanges();
+            }
         }
 
         [HttpGet]
@@ -85,7 +96,6 @@ namespace IntopaloApi.Controllers
                 new KeyValuePair<string,List<object>>("Tables",new List<object>(_context.Tables.ToList())),
                 new KeyValuePair<string,List<object>>("UnstructuredFiles",new List<object>(_context.UnstructuredFiles.ToList())),
             };
-        
 
             return JsonConvert.SerializeObject(
                 database,
@@ -97,6 +107,7 @@ namespace IntopaloApi.Controllers
                     Formatting = Formatting.Indented
                 }
             );
+
         }
 
         [HttpGet("Collections/{id?}")]
@@ -105,6 +116,8 @@ namespace IntopaloApi.Controllers
             
             if (id == 0){
                 List<Collection> list = new List<Collection>(_context.Collections.ToList());
+                //list[0].Fields[0].PrimaryKeyTo[0].To = null;
+                //list[1].Fields[1].ForeignKeyTo[0].From = null;
                 
                 return JsonConvert.SerializeObject(
                 list,
@@ -245,13 +258,22 @@ namespace IntopaloApi.Controllers
 
         [HttpGet("Schemas/{id?}")]
 
-        public ActionResult<string> GetSchema (int id){
+       public ActionResult<string> GetSchema (int id){
             
             if (id == 0){
-                List<Schema> list = new List<Schema>(_context.Schemas.ToList());
+                //List<KeyValuePair<string,List<object>>> database = new List<KeyValuePair<string,List<object>>>(){
+                //new KeyValuePair<string,List<object>>("Schemas",new List<object>(_context.Schemas.ToList())),
+                //new KeyValuePair<string,List<object>>("Tables",new List<object>(_context.Tables.ToList())),
+                //};
+                //List<Schema> list = new List<Schema>(_context.Schemas.ToList());
+                List<Schema> schemas = _context.Schemas
+                .Include(t => t.Database)
+                .Include(t => t.Tables)
+                .ToList();
                 
                 return JsonConvert.SerializeObject(
-                list,
+                //list,
+                schemas,
                 new JsonSerializerSettings() {
                     // Allow loops since metadata is connected in a hierarchy.
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -262,9 +284,16 @@ namespace IntopaloApi.Controllers
             );
             }
             else {
-                var item = _context.Schemas.Find(id);
+                List<Schema> list = _context.Schemas
+                .Include(t => t.Database)
+                .Include(t => t.Tables)
+                .ToList();
+
+                var item = list.Find(t =>t.Id == id);
+                
                 if (item == null)
                     return NotFound();
+
 
                 return JsonConvert.SerializeObject(
                 item,
@@ -278,7 +307,6 @@ namespace IntopaloApi.Controllers
             );
             }   
         }
-
         [HttpGet("StructureFiles/{id?}")]
 
         public ActionResult<string> GetStructuredFile (int id){
@@ -455,7 +483,7 @@ namespace IntopaloApi.Controllers
                         item.Name = data.jsonCollections.ElementAt(i).Name;
                         item.PrimaryKeyTo = data.jsonCollections.ElementAt(i).PrimaryKeyTo;
                         item.ForeignKeyTo = data.jsonCollections.ElementAt(i).ForeignKeyTo;
-                        //item.Fields = data.jsonTables.ElementAt(i).Fields;
+                        item.Fields = data.jsonTables.ElementAt(i).Fields;
                         _context.Collections.Update(item);
                         _context.SaveChanges();
                     }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntopaloApi.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
-    [Migration("20181128013936_initial")]
+    [Migration("20181206155858_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

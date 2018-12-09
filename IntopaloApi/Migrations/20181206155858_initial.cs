@@ -7,6 +7,7 @@ namespace IntopaloApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            /*
             migrationBuilder.CreateTable(
                 name: "Bases",
                 columns: table => new
@@ -158,6 +159,7 @@ namespace IntopaloApi.Migrations
                 name: "IX_KeyRelationships_ToId",
                 table: "KeyRelationships",
                 column: "ToId");
+        */
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

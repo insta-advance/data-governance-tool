@@ -1,5 +1,5 @@
 FROM microsoft/dotnet:latest
-ENV http_proxy 'http://87.254.212.120:8080'
+#ENV http_proxy 'http://87.254.212.120:8080'
 COPY . /DataGovernanceTool
 WORKDIR /DataGovernanceTool
 
