@@ -5,7 +5,7 @@ using System.Web;
 
 namespace IntopaloApi.System_for_data_governance
 {
-    public class StructuredBase : Base
+    public class Structured : Base
     {
         public List<Field> Fields { get; set; }
     }

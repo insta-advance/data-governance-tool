@@ -3,29 +3,25 @@ using System;
 using IntopaloApi.System_for_data_governance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IntopaloApi.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
-    [Migration("20181206155858_initial")]
-    partial class initial
+    [Migration("20181209115339_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Annotation", b =>
                 {
                     b.Property<int>("AnnotationId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("BaseId");
 
@@ -41,8 +37,7 @@ namespace IntopaloApi.Migrations
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Base", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
@@ -67,6 +62,21 @@ namespace IntopaloApi.Migrations
                     b.HasIndex("CompositeKeyId");
 
                     b.ToTable("CompositeKeyFields");
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Datastore", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("Name");
+
+                    b.ToTable("Datastores");
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.KeyRelationship", b =>
@@ -98,7 +108,14 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
+                    b.Property<int>("DatastoreId");
+
                     b.Property<string>("Type");
+
+                    b.HasIndex("DatastoreId");
+
+                    b.HasIndex("Name", "DatastoreId")
+                        .IsUnique();
 
                     b.ToTable("Database");
 
@@ -109,12 +126,15 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
-                    b.Property<int?>("StructuredBaseId");
+                    b.Property<int>("StructuredId");
 
                     b.Property<string>("Type")
                         .HasColumnName("Field_Type");
 
-                    b.HasIndex("StructuredBaseId");
+                    b.HasIndex("StructuredId");
+
+                    b.HasIndex("Name", "StructuredId")
+                        .IsUnique();
 
                     b.ToTable("Field");
 
@@ -125,34 +145,45 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
-                    b.Property<int?>("DatabaseId")
+                    b.Property<int>("DatabaseId")
                         .HasColumnName("Schema_DatabaseId");
 
                     b.Property<string>("SchemaName");
 
                     b.HasIndex("DatabaseId");
 
+                    b.HasIndex("Name", "DatabaseId")
+                        .IsUnique();
+
                     b.ToTable("Schema");
 
                     b.HasDiscriminator().HasValue("Schema");
                 });
 
-            modelBuilder.Entity("IntopaloApi.System_for_data_governance.StructuredBase", b =>
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Structured", b =>
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
 
-                    b.ToTable("StructuredBase");
+                    b.ToTable("Structured");
 
-                    b.HasDiscriminator().HasValue("StructuredBase");
+                    b.HasDiscriminator().HasValue("Structured");
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.UnstructuredFile", b =>
                 {
                     b.HasBaseType("IntopaloApi.System_for_data_governance.Base");
 
+                    b.Property<int>("DatastoreId")
+                        .HasColumnName("UnstructuredFile_DatastoreId");
+
                     b.Property<string>("FilePath")
                         .HasColumnName("UnstructuredFile_FilePath");
+
+                    b.HasIndex("DatastoreId");
+
+                    b.HasIndex("FilePath", "DatastoreId")
+                        .IsUnique();
 
                     b.ToTable("UnstructuredFile");
 
@@ -161,11 +192,14 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Collection", b =>
                 {
-                    b.HasBaseType("IntopaloApi.System_for_data_governance.StructuredBase");
+                    b.HasBaseType("IntopaloApi.System_for_data_governance.Structured");
 
-                    b.Property<int?>("DatabaseId");
+                    b.Property<int>("DatabaseId");
 
                     b.HasIndex("DatabaseId");
+
+                    b.HasIndex("Name", "DatabaseId")
+                        .IsUnique();
 
                     b.ToTable("Collection");
 
@@ -174,9 +208,17 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.StructuredFile", b =>
                 {
-                    b.HasBaseType("IntopaloApi.System_for_data_governance.StructuredBase");
+                    b.HasBaseType("IntopaloApi.System_for_data_governance.Structured");
+
+                    b.Property<int>("DatastoreId")
+                        .HasColumnName("StructuredFile_DatastoreId");
 
                     b.Property<string>("FilePath");
+
+                    b.HasIndex("DatastoreId");
+
+                    b.HasIndex("FilePath", "DatastoreId")
+                        .IsUnique();
 
                     b.ToTable("StructuredFile");
 
@@ -185,11 +227,15 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Table", b =>
                 {
-                    b.HasBaseType("IntopaloApi.System_for_data_governance.StructuredBase");
+                    b.HasBaseType("IntopaloApi.System_for_data_governance.Structured");
 
-                    b.Property<int?>("SchemaId");
+                    b.Property<int?>("KeyId");
+
+                    b.Property<int>("SchemaId");
 
                     b.Property<string>("TableName");
+
+                    b.HasIndex("KeyId");
 
                     b.HasIndex("SchemaId");
 
@@ -210,7 +256,7 @@ namespace IntopaloApi.Migrations
                     b.HasOne("IntopaloApi.System_for_data_governance.CompositeKey", "CompositeKey")
                         .WithMany("CompositeKeyFields")
                         .HasForeignKey("CompositeKeyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("IntopaloApi.System_for_data_governance.Field", "Field")
                         .WithMany("CompositeKeyFields")
@@ -228,35 +274,67 @@ namespace IntopaloApi.Migrations
                     b.HasOne("IntopaloApi.System_for_data_governance.Base", "To")
                         .WithMany("ForeignKeyTo")
                         .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.Database", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.Datastore", "Datastore")
+                        .WithMany("Databases")
+                        .HasForeignKey("DatastoreId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Field", b =>
                 {
-                    b.HasOne("IntopaloApi.System_for_data_governance.StructuredBase", "StructuredBase")
+                    b.HasOne("IntopaloApi.System_for_data_governance.Structured", "Structured")
                         .WithMany("Fields")
-                        .HasForeignKey("StructuredBaseId");
+                        .HasForeignKey("StructuredId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Schema", b =>
                 {
                     b.HasOne("IntopaloApi.System_for_data_governance.Database", "Database")
                         .WithMany("Schemas")
-                        .HasForeignKey("DatabaseId");
+                        .HasForeignKey("DatabaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.UnstructuredFile", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.Datastore", "Datastore")
+                        .WithMany("UnstructuredFiles")
+                        .HasForeignKey("DatastoreId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Collection", b =>
                 {
                     b.HasOne("IntopaloApi.System_for_data_governance.Database", "Database")
                         .WithMany("Collections")
-                        .HasForeignKey("DatabaseId");
+                        .HasForeignKey("DatabaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("IntopaloApi.System_for_data_governance.StructuredFile", b =>
+                {
+                    b.HasOne("IntopaloApi.System_for_data_governance.Datastore", "Datastore")
+                        .WithMany("StructuredFiles")
+                        .HasForeignKey("DatastoreId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.Table", b =>
                 {
+                    b.HasOne("IntopaloApi.System_for_data_governance.CompositeKey", "Key")
+                        .WithMany()
+                        .HasForeignKey("KeyId");
+
                     b.HasOne("IntopaloApi.System_for_data_governance.Schema", "Schema")
                         .WithMany("Tables")
-                        .HasForeignKey("SchemaId");
+                        .HasForeignKey("SchemaId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

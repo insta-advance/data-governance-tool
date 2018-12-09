@@ -18,16 +18,21 @@ namespace IntopaloApi
         public void ConfigureServices(IServiceCollection services)
         {
             // Comment next 2 lines for Docker, otherwise uncomment
+
             //services.AddDbContext<DataGovernanceDBContext>(opt => 
             //opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<DataGovernanceDBContext>(opt => 
+            opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
             
             
 
         // Docker SQL SERVER  Comment next 3 lines if you don't run in Docker
         
-        var connection = @"Server=db;Database=master;User=sa;Password=Intopal0;";
-        services.AddDbContext<DataGovernanceDBContext>(
-            options => options.UseSqlServer(connection));
+        //var connection = @"Server=db;Database=master;User=sa;Password=Intopal0;";
+        //services.AddDbContext<DataGovernanceDBContext>(
+        //    options => options.UseSqlServer(connection));
         
 
             services.AddMvc()

@@ -9,6 +9,7 @@ namespace IntopaloApi.System_for_data_governance
     {
         public string SchemaName { get; set; }
         public Database Database { get; set; }
+        public int DatabaseId { get; set; }
         public List<Table> Tables { get; set; }
     }
 }
