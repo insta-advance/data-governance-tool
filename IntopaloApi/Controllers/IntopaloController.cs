@@ -570,15 +570,11 @@ namespace IntopaloApi.Controllers
                 for(int i = 0; i<data.jsonSchemas.Count;i++){
                     var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).Id);
                     if(item != null){
-                        item.Annotations = data.jsonSchemas.ElementAt(i).Annotations;
-                        item.Database = data.jsonSchemas.ElementAt(i).Database;
+                        
                         item.DatabaseId = data.jsonSchemas.ElementAt(i).DatabaseId;
-                        item.ForeignKeyTo = data.jsonSchemas.ElementAt(i).ForeignKeyTo;
-                        item.Id = data.jsonSchemas.ElementAt(i).Id;
+                        //if(data.jsonSchemas.ElementAt(i).Name == "")
+                         //   return BadRequest("The name of the schema cannot be empty");
                         item.Name = data.jsonSchemas.ElementAt(i).Name;
-                        item.PrimaryKeyTo = data.jsonSchemas.ElementAt(i).PrimaryKeyTo;
-                        item.SchemaName = data.jsonSchemas.ElementAt(i).SchemaName;
-                        item.Tables = data.jsonSchemas.ElementAt(i).Tables;
                         _context.Schemas.Update(item);
                         _context.SaveChanges();
                     }

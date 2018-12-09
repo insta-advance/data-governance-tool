@@ -2,12 +2,12 @@ For Docker:   // Not tested in another computer
 
 Install Docker and Docker-compose
 
-Modify Startup.cs file according to the comments.
+You probably need to comment out the content of Up function in Migration/201812091111_initial.cs file
 
 Run following commands in IntopaloApi folder:
 
-docker-compose build
-docker-compose up
+docker build -t datagt .
+docker build -it -p 5000:5000 datagt
 
 
 
