@@ -4,19 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using IntopaloApi.System_for_data_governance;
 using Microsoft.Extensions.Configuration;
-using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace IntopaloApi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
+
             // Comment next 2 lines for Docker, otherwise uncomment
 
             //services.AddDbContext<DataGovernanceDBContext>(opt => 
@@ -36,11 +38,16 @@ namespace IntopaloApi
         
 
             services.AddMvc()
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseMvc();
         }
     }

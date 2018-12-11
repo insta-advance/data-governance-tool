@@ -137,7 +137,6 @@ namespace IntopaloApi.Controllers
             );
 
         }
-
         [HttpGet("Collections/{id?}")]
 
         public ActionResult<string> GetCollection (int id){
@@ -177,7 +176,6 @@ namespace IntopaloApi.Controllers
         }
 
         [HttpGet("Databases/{id?}")]
-
         public ActionResult<string> GetDatabase (int id){
             
             if (id == 0){
@@ -213,7 +211,6 @@ namespace IntopaloApi.Controllers
         }
 
         [HttpGet("Fields/{id?}")]
-
         public ActionResult<string> GetFields (int id){
             
             if (id == 0){
@@ -249,7 +246,6 @@ namespace IntopaloApi.Controllers
         }
         
         [HttpGet("KeyRelationships/{id?}")]
-
         public ActionResult<string> GetKeyRelationship (int id){
             
             if (id == 0){
@@ -285,8 +281,7 @@ namespace IntopaloApi.Controllers
         }
 
         [HttpGet("Schemas/{id?}")]
-
-       public ActionResult<string> GetSchema (int id){
+        public ActionResult<string> GetSchema (int id){
             
             if (id == 0){
                 //List<KeyValuePair<string,List<object>>> database = new List<KeyValuePair<string,List<object>>>(){
@@ -372,7 +367,6 @@ namespace IntopaloApi.Controllers
         }
 
         [HttpGet("Tables/{id?}")]
-
         public ActionResult<string> GetTable (int id){
             
             if (id == 0){
@@ -408,7 +402,6 @@ namespace IntopaloApi.Controllers
         }
 
         [HttpGet("UnstructuredFiles/{id?}")]
-
         public ActionResult<string> GetUnstructuredFile (int id){
             
             if (id == 0){
