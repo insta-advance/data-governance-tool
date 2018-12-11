@@ -5,17 +5,24 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Metadata } from '../model/metadata.model'
 
 //endpoints
-const endpoint = 'http://localhost:4200/assets/get.json';
-const endpointSchemas = 'http://localhost:4200/assets/getSchemas.json';
+const endpoint = 'http://localhost:5000/api/intopalo';
+
+const endpointSchemas = 'http://localhost:5000/api/intopalo/schemas';
 /*const endpointDatabase = ;
+
+const endpointSingleShema = ;
+const endpointSingleDatabase = ;
+
 const endpointTable = ;
 const endpointCollection = ;
+
 const endpointStructFiles = ;
 const endpointUnstructFiles = ;*/
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json'
+    'Content-Type':  'application/json',
+
   })
 };
 
@@ -51,8 +58,12 @@ getSchemas(): Observable<any> {
   return this.http.get(endpointSchemas).pipe(
     map(this.extractSchemasData));
 }
+//get call for a single schema
+getSingleSchema(id): Observable<any> {
+  return this.http.get(endpointSchemas + '/' + id).pipe(
+    map(this.extractData));
+}
 
-//get call for a singular id
 /*getBlock(id): Observable<any> {
   return this.http.get(endpoint).pipe(
     map(this.extractData));
@@ -62,15 +73,15 @@ getSchemas(): Observable<any> {
 addBlock (product): Observable<any> {
   console.log(product);
   return this.http.post<any>(endpoint, JSON.stringify(product), httpOptions).pipe(
-    tap((product) => console.log(`added block w/ id=${product.id}`)),
+    tap((product) => console.log(`added item w/ id=${some.id}`)),
     catchError(this.handleError<any>('addProduct'))
   );
 }
 
 //put call
 updateBlock (id, product): Observable<any> {
-  return this.http.put(endpoint + '/' + id, JSON.stringify(product), httpOptions).pipe(
-    tap(_ => console.log(`updated block id=${id}`)),
+  return this.http.put(endpoint + '/' + id, JSON.stringify(some), httpOptions).pipe(
+    tap(_ => console.log(`updated item id=${id}`)),
     catchError(this.handleError<any>('updateProduct'))
   );
 }
@@ -78,7 +89,7 @@ updateBlock (id, product): Observable<any> {
 //delete call
 deleteBlock (id): Observable<any> {
   return this.http.delete<any>(endpoint + '/' + id, httpOptions).pipe(
-    tap(_ => console.log(`deleted block id=${id}`)),
+    tap(_ => console.log(`deleted item id=${id}`)),
     catchError(this.handleError<any>('deleteProduct'))
   );
 }*/

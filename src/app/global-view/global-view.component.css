@@ -43,6 +43,12 @@
     background-color: #d1d1d1;
 }
 
+.side .title{
+    font-size: 0.8em;
+    padding: 3px;
+    color:grey;
+}
+
 .container .global h2{
     background-color: #343434;
     padding: 12px;
@@ -109,6 +115,20 @@
 .homelink .add:hover{
     cursor: pointer;
     background-color: darkgreen;
+    color:white;
+    transition: 200ms;
+}
+.homelink .edit{
+    font-size: 0.8em;
+    background-color: white;
+    border-radius: 15px;
+    color: darkblue;
+    display:flex;
+    align-items: center;
+}
+.homelink .edit:hover{
+    cursor: pointer;
+    background-color: darkblue;
     color:white;
     transition: 200ms;
 }

@@ -58,6 +58,22 @@
     color:white;
     transition: 200ms;
 }
+.homelink .edit{
+    font-size: 0.8em;
+    background-color: white;
+    border-radius: 15px;
+    color: darkblue;
+    display:flex;
+    align-items: center;
+}
+.homelink .edit:hover{
+    cursor: pointer;
+    background-color: darkblue;
+    color:white;
+    transition: 200ms;
+}
+
+
 /*tables*/
 .table{
     width: max-content;

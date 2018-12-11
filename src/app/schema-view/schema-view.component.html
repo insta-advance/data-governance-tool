@@ -1,1 +1,26 @@
-schema view works
+<div *ngFor="let p of singleSchemaData; let i=index;">
+    <div class="homelink">
+        <button (click)="backToHome()">[PH] My new storage </button>
+        <span class="breadcrumbs-divider">►</span>
+        <button (click)="backToSchemas()">{{p.Database.Name}} ({{p.Database.Type}})</button>    
+        <span class="breadcrumbs-divider">►</span>
+        <p>{{p.Name}}</p>
+        <span class="breadcrumbs-divider">|</span>
+        <p class="add">+ Add new table</p>
+        <span class="breadcrumbs-divider">|</span>
+        <p class="edit">Edit</p>
+    </div>
+</div>
+
+<div *ngFor="let p of singleSchemaData; let i=index;">
+    <div class="table" *ngFor="let n of p.Tables; let j=index;">
+        <p class="table-name">{{n.Name}}</p>
+        <div class="table-fields">        
+            <p class="field-id"> </p>
+            <p class="field-name"></p>
+            <p class="field-type"></p>
+            <div class="rel-from"></div>
+            <div class="rel-to"></div>
+        </div>
+    </div>
+</div>

@@ -9,15 +9,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RelationalViewComponent implements OnInit {
 
-   schemasData:any = [];
+    schemasData:any = [];
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        this.getBlocks();
+        this.getData();
     }
 
-    getBlocks() {
+    getData() {
         this.schemasData = [];
         this.rest.getSchemas().subscribe((data: {}) => {
           console.log(data);

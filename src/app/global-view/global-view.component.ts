@@ -9,33 +9,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GlobalViewComponent implements OnInit {
 
-  metadata:any = [];
+    metadata:any = [];
 
-  constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
-    this.getData();
-  }
+    ngOnInit() {
+        this.getData();
+    }
 
     getData() {
-    this.metadata = [];
-    this.rest.getMeta().subscribe((data: {}) => {
-      console.log(data);
-      this.metadata = data;
+        this.metadata = [];
+        this.rest.getMeta().subscribe((data: {}) => {
+          console.log(data);
+          this.metadata = data;
     });
   }
-
-  /*add() {
-    this.router.navigate(['/block-add']);
-  }
-    
-      delete(id) {
-    this.rest.deleteBlock(id)
-      .subscribe(res => {
-          this.getBlocks();
-        }, (err) => {
-          console.log(err);
-        }
-      );
-  }*/
 }

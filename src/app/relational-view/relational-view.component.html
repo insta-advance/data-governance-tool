@@ -1,16 +1,19 @@
-<div class="homelink">
-    <button (click)="backToHome()">My new storage </button>
-    <span class="breadcrumbs-divider">►</span>
-    <p>My new PosgreSQL</p>
-    <span class="breadcrumbs-divider">|</span>
-    <p class="add">+ Add new schema</p>
-
+<div *ngFor="let p of schemasData; let i=index;">
+    <div class="homelink">
+        <button (click)="backToHome()">[PH] My new storage </button>
+        <span class="breadcrumbs-divider">►</span>
+        <p>{{p.Database.Name}}  ({{p.Database.Type}})</p>
+        <span class="breadcrumbs-divider">|</span>
+        <p class="add">+ Add new schema</p>
+        <span class="breadcrumbs-divider">|</span>
+        <p class="edit">Edit</p>
+    </div>
 </div>
 
 <div *ngFor="let p of schemasData; let i=index;">
-    <p class="schema-name">{{p.Name}}</p>
+    <p class="schema-name">{{p.Name}} | <a href="http://localhost:4200/schemas/2">Details</a>  | <a href="">Edit</a></p>
     <div class="table" *ngFor="let n of p.Tables; let j=index;">
-        <p class="table-name">{{n.Name}}</p>
+        <p class="table-name">{{n.Name}}</p> 
         <div class="table-fields">        
             <p class="field-id"> </p>
             <p class="field-name"></p>
