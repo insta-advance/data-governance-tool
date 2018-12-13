@@ -506,19 +506,18 @@ namespace IntopaloApi.Controllers
             return GetAll();
         } 
 
+
         [HttpPut]
         public ActionResult<string> Update(JsonData data)
         {
             if(data.jsonCollections != null){
-                for(int i = 0; i<data.jsonCollections.Count;i++){
+                for(int i = 0; i < data.jsonCollections.Count; i++){
                     var item = _context.Collections.Find(data.jsonCollections.ElementAt(i).Id);
                     if(item != null){
-                        item.Name = data.jsonCollections.ElementAt(i).Name;
-                        item.PrimaryKeyTo = data.jsonCollections.ElementAt(i).PrimaryKeyTo;
-                        item.ForeignKeyTo = data.jsonCollections.ElementAt(i).ForeignKeyTo;
-                        item.Fields = data.jsonTables.ElementAt(i).Fields;
+                        item.Name = data.jsonCollections.ElementAt(i).Name ?? item.Name;
+                        item.DatabaseId = data.jsonCollections.ElementAt(i).DatabaseId ? 
+                            data.jsonCollections.ElementAt(i).DatabaseId : item.DatabaseId;
                         _context.Collections.Update(item);
-                        _context.SaveChanges();
                     }
                 }
             }
@@ -526,78 +525,56 @@ namespace IntopaloApi.Controllers
                 for(int i = 0; i<data.jsonDatabases.Count;i++){
                     var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).Id);
                     if(item != null){
-                        item.Name = data.jsonDatabases.ElementAt(i).Name;
-                        item.Type = data.jsonDatabases.ElementAt(i).Type;
-                        item.PrimaryKeyTo = data.jsonDatabases.ElementAt(i).PrimaryKeyTo;
-                        item.ForeignKeyTo = data.jsonDatabases.ElementAt(i).ForeignKeyTo;
+                        item.Name = data.jsonDatabases.ElementAt(i).Name ?? item.Name;
+                        item.Type = data.jsonDatabases.ElementAt(i).Type ?? item.Type;
+                        item.DatastoreId = data.jsonDatabases.ElementAt(i).DatastoreId ? 
+                            data.jsonDatabases.ElementAt(i).DatastoreId : item.DatastoreId;
                         _context.Databases.Update(item);
-                        _context.SaveChanges();
                     }
                 }
             }
             if(data.jsonFields != null){
-                for(int i = 0; i<data.jsonFields.Count;i++){
+                for(int i = 0; i < data.jsonFields.Count ; i++){
                     var item = _context.Fields.Find(data.jsonFields.ElementAt(i).Id);
                     if(item != null){
-                        item.Name = data.jsonFields.ElementAt(i).Name;
-                        item.Type = data.jsonFields.ElementAt(i).Type;
-                        item.Structured = data.jsonFields.ElementAt(i).Structured;
-                        item.PrimaryKeyTo = data.jsonFields.ElementAt(i).PrimaryKeyTo;
-                        item.ForeignKeyTo = data.jsonFields.ElementAt(i).ForeignKeyTo;
+                        item.Name = data.jsonFields.ElementAt(i).Name ?? item.Name;
+                        item.Type = data.jsonFields.ElementAt(i).Type ?? item.Type;
+                        item.StructuredId = data.jsonFields.ElementAt(i).StructuredId ?
+                            data.jsonFields.ElementAt(i).StructuredId : item.StructuredId;
                         _context.Fields.Update(item);
-                        _context.SaveChanges();
                     }
                 }
             }
-            /*if(data.jsonKeyRelationships != null){
+           /* if(data.jsonKeyRelationships != null){
                 for(int i = 0; i<data.jsonKeyRelationships.Count;i++){
                     var item = _context.KeyRelationships.Find(data.jsonKeyRelationships.ElementAt(i).Id);
-                    if(item != null){
+                    if(item != null) {
                         item.FromId = data.jsonKeyRelationships.ElementAt(i).FromId;
-                        item.From = data.jsonKeyRelationships.ElementAt(i).From;
                         item.ToId = data.jsonKeyRelationships.ElementAt(i).ToId;
-                        item.To = data.jsonKeyRelationships.ElementAt(i).To;
                         item.Type = data.jsonKeyRelationships.ElementAt(i).Type;
                         _context.KeyRelationships.Update(item);
                         _context.SaveChanges();
                     }
                 }
             }*/
-            try{
-                
-            
             if(data.jsonSchemas != null){
                 for(int i = 0; i<data.jsonSchemas.Count;i++){
                     var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).Id);
                     if(item != null){
-                        item.Annotations = data.jsonSchemas.ElementAt(i).Annotations;
-                        item.Database = data.jsonSchemas.ElementAt(i).Database;
-                        item.DatabaseId = data.jsonSchemas.ElementAt(i).DatabaseId;
-                        item.ForeignKeyTo = data.jsonSchemas.ElementAt(i).ForeignKeyTo;
-                        item.Id = data.jsonSchemas.ElementAt(i).Id;
-                        item.Name = data.jsonSchemas.ElementAt(i).Name;
-                        item.PrimaryKeyTo = data.jsonSchemas.ElementAt(i).PrimaryKeyTo;
-                        item.SchemaName = data.jsonSchemas.ElementAt(i).SchemaName;
-                        item.Tables = data.jsonSchemas.ElementAt(i).Tables;
+                        item.DatabaseId = data.jsonSchemas.ElementAt(i).DatabaseId ?
+                            data.jsonSchemas.ElementAt(i).DatabaseId : item.DatabaseId;
+                        item.Name = data.jsonSchemas.ElementAt(i).Name ?? item.Name;
                         _context.Schemas.Update(item);
-                        _context.SaveChanges();
                     }
                 }
-            }
-            }
-            catch(DbUpdateException e){
-                return BadRequest(e.InnerException.Message);
             }
             if(data.jsonStructuredFiles != null){
                 for(int i = 0; i<data.jsonStructuredFiles.Count;i++){
                     var item = _context.StructuredFiles.Find(data.jsonStructuredFiles.ElementAt(i).Id);
                     if(item != null){
-                        item.FilePath = data.jsonStructuredFiles.ElementAt(i).FilePath;
-                        item.PrimaryKeyTo = data.jsonStructuredFiles.ElementAt(i).PrimaryKeyTo;
-                        item.ForeignKeyTo = data.jsonStructuredFiles.ElementAt(i).ForeignKeyTo;
+                        item.FilePath = data.jsonStructuredFiles.ElementAt(i).FilePath ?? item.FilePath;
                         //item.Fields = data.jsonTables.ElementAt(i).Fields;
                         _context.StructuredFiles.Update(item);
-                        _context.SaveChanges();
                     }
                 }
             }
@@ -607,11 +584,7 @@ namespace IntopaloApi.Controllers
                     if(item != null){
                         item.TableName = data.jsonTables.ElementAt(i).TableName;
                         item.Schema = data.jsonTables.ElementAt(i).Schema;
-                        item.PrimaryKeyTo = data.jsonTables.ElementAt(i).PrimaryKeyTo;
-                        item.ForeignKeyTo = data.jsonTables.ElementAt(i).ForeignKeyTo;
-                        //item.Fields = data.jsonTables.ElementAt(i).Fields;
                         _context.Tables.Update(item);
-                        _context.SaveChanges();
                     }
                 }
             }
@@ -623,9 +596,14 @@ namespace IntopaloApi.Controllers
                         item.PrimaryKeyTo = data.jsonUnstructuredFiles.ElementAt(i).PrimaryKeyTo;
                         item.ForeignKeyTo = data.jsonUnstructuredFiles.ElementAt(i).ForeignKeyTo;
                         _context.UnstructuredFiles.Update(item);
-                        _context.SaveChanges();
                     }
                 }
+            }
+            /* Error handling. */
+            do {
+                _context.SaveChanges();
+            } catch(DbUpdateException e){
+                return BadRequest(e.InnerException.Message);
             }
             return GetAll();
         }

@@ -79,13 +79,18 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.KeyRelationship", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("FromId");
 
                     b.Property<int>("ToId");
 
                     b.Property<string>("Type");
 
-                    b.HasKey("FromId", "ToId");
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("FromId", "ToId");
 
                     b.HasIndex("ToId");
 

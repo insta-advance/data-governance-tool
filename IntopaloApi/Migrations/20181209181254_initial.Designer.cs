@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntopaloApi.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
-    [Migration("20181209115339_Initial")]
-    partial class Initial
+    [Migration("20181209181254_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,13 +81,18 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.KeyRelationship", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("FromId");
 
                     b.Property<int>("ToId");
 
                     b.Property<string>("Type");
 
-                    b.HasKey("FromId", "ToId");
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("FromId", "ToId");
 
                     b.HasIndex("ToId");
 

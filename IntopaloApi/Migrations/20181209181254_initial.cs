@@ -2,11 +2,11 @@
 
 namespace IntopaloApi.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            /*migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "Datastores",
                 columns: table => new
                 {
@@ -144,13 +144,16 @@ namespace IntopaloApi.Migrations
                 name: "KeyRelationships",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     FromId = table.Column<int>(nullable: false),
                     ToId = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KeyRelationships", x => new { x.FromId, x.ToId });
+                    table.PrimaryKey("PK_KeyRelationships", x => x.Id);
+                    table.UniqueConstraint("AK_KeyRelationships_FromId_ToId", x => new { x.FromId, x.ToId });
                     table.ForeignKey(
                         name: "FK_KeyRelationships_Bases_FromId",
                         column: x => x.FromId,
@@ -254,7 +257,7 @@ namespace IntopaloApi.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_KeyRelationships_ToId",
                 table: "KeyRelationships",
-                column: "ToId");*/
+                column: "ToId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
