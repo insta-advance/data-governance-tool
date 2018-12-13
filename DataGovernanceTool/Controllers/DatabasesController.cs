@@ -42,7 +42,7 @@ namespace DataGovernanceTool.Controllers
             return await manager.ReplaceAsync(id, database);
         }
 
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
         public async Task Replace(int id)
         {
             await manager.DeleteAsync(id);

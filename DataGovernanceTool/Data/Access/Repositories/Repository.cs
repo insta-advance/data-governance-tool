@@ -115,7 +115,7 @@ namespace DataGovernanceTool.Data.Access.Repositories
             await DbContext.SaveChangesAsync();
         }
 
-        protected async Task DeleteAsync(TEntity entity)
+        protected virtual async Task DeleteAsync(TEntity entity)
         {
             if (DbContext.Entry(entity).State == EntityState.Detached)
             {
