@@ -8,7 +8,7 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 namespace DataGovernanceTool.Data.Access.IRepositories
 {
 
-    public interface IRepository<TEntity> where TEntity : Base
+    public interface IRepository<TEntity>// where TEntity : Base
     {
         /// <summary>
         ///   Get the total objects count.

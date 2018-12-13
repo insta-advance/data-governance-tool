@@ -7,7 +7,7 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 namespace DataGovernanceTool.BusinessLogic.Managers
 {
 
-    public abstract class RepositoryManager<TEntity> : IRepositoryManager<TEntity> where TEntity : Base
+    public abstract class RepositoryManager<TEntity> : IRepositoryManager<TEntity>//where TEntity : Base
     {
         protected readonly IRepository<TEntity> Repository;
 

@@ -1,7 +1,7 @@
 README
 =======
 
-### Installation
+### Install dotnet core 2.1+
 Install following software:
 
   * dotnet-host    – A generic driver for the .NET Core Command Line Interface.
@@ -15,28 +15,49 @@ From vscode install extensions:
   * Dotnet core commands
   * NuGet Packet Manager
 
-[Install SQL Server for linux](https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-2017).
+### Install PostgreSQL
+Following packages:
 
-You need to create your own database and modify "DefaultConnection" -string found 
-in file appsettings.json to match your own database or setup your database with 
-user SA and password Intopal0. 
+  * postgresql
+  * postgresql-libs
+  * (pgadmin)
 
-mssql-tools will crash if you for some reason don't have a locale `en_US.utf-8` in 
-your locales to fall back on. Add it into `/etc/locale.gen` or equivalent and run 
-`locale-gen`.
+ Installation should create a user for pg. Change to it and configure pg. (May depend on distro.)  
+`$ sudo -u postgres -i`  
+`$ initdb -d '/var/lib/postgres/data'`  
 
-Remember to open ports locally in iptables.rules (should be there on default):  
-`-A INPUT -i lo -j ACCEPT`
+Create user DataGovernanceTool and set it as superuser:   
+`$ createuser --interactive`  
+`$ createdb DataGovernanceToolDb`  
 
-Create database (it will automatically create IntopaloDB not only tables):  
-`$ dotnet ef database update`
+As a normal user set pg up as a system service.  
+`$ systemctl enable postgresql`
+`$ systemctl start postgresql`
+
+Check if service is active (running).  
+`$ systemctl status postgresql`
+
+### Install SQLite (Not for production)
+Install SQLite libraries and uncomment the `UseSqlite(...)` in the Startup.cs.
+
+### Create migrations 
+Create database (it will automatically create Db not only tables):  
+`$ dotnet ef database update --context DataGovernanceDBContext`
 
 If database script has changed run first:  
-`$ dotnet ef database drop`
+`$ dotnet ef database drop --context DataGovernanceDBContext`
 
 Show SQL script used to create DB:  
-`$ dotnet ef migrations script`
+`$ dotnet ef migrations script --context DataGovernanceDBContext`
 
+Make life easy:  
+`dotnet ef migrations remove --context DataGovernanceDBContext \`  
+`&& dotnet ef migrations add initial --context DataGovernanceDBContext \`  
+`&& dotnet ef database drop --context DataGovernanceDBContext \`  
+`&& dotnet ef database update --context DataGovernanceDBContext \`  
+`/`
+
+### Compilation
 Compile and run the project  
 `$ dotnet run`
 
@@ -46,10 +67,10 @@ Installing from NuGet (ctrl+P+>nuget) will automatically update the project file
 If tools for making the dev certificate fail. Don't waste your time & remove
 the https://localhost:5001 from your launchSettings.json and use http for development.
 
-The metadata can be read from:
+The metadata can be accessed from from:
 
   * http://localhost:5000/api/intopalo
-  * https://localhost:5001/api/intopalo
+  * http://localhost:5000/api/\<Controller\>\[/\<id\>\]
 
 ### Development
   * [Basic guide to REST Api](https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1#create-the-database-context).

@@ -29,11 +29,10 @@ namespace DataGovernanceTool
             services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
             // Comment next 2 lines for Docker, otherwise uncomment
 
-            //services.AddDbContext<DataGovernanceDBContext>(opt => 
-            //opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<DataGovernanceDBContext>(opt => 
-            opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //Use in development if sql if pg is too much hassle.
+            //opt.UseSqlite("Data source=DataGovernanceTool.db");
 
             
             

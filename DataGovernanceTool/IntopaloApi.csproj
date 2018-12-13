@@ -3,33 +3,34 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-    <Folder Include="Data\" />
-    <Folder Include="Data\Models\" />
-    <Folder Include="Data\Access\" />
-    <Folder Include="Data\Access\Repositories\" />
-    <Folder Include="Data\Access\IRepositories\" />
-    <Folder Include="BusinessLogic\" />
-    <Folder Include="Data\Models\Exceptions\" />
-    <Folder Include="Data\Models\Metadata\" />
-    <Folder Include="Data\Models\Metadata\Structure\" />
-    <Folder Include="Data\Models\Metadata\Relationships\" />
-    <Folder Include="BusinessLogic\IManagers\" />
-    <Folder Include="BusinessLogic\Managers\" />
+    <Folder Include="wwwroot\"/>
+    <Folder Include="Data\"/>
+    <Folder Include="Data\Models\"/>
+    <Folder Include="Data\Access\"/>
+    <Folder Include="Data\Access\Repositories\"/>
+    <Folder Include="Data\Access\IRepositories\"/>
+    <Folder Include="BusinessLogic\"/>
+    <Folder Include="Data\Models\Exceptions\"/>
+    <Folder Include="Data\Models\Metadata\"/>
+    <Folder Include="Data\Models\Metadata\Structure\"/>
+    <Folder Include="Data\Models\Metadata\Relationships\"/>
+    <Folder Include="BusinessLogic\IManagers\"/>
+    <Folder Include="BusinessLogic\Managers\"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4"/>
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4"/>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2"/>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final"/>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Data\Models\BaseEntity.cs" />
+    <Compile Remove="Data\Models\BaseEntity.cs"/>
   </ItemGroup>
 </Project>

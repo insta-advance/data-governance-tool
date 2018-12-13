@@ -5,7 +5,7 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 
 namespace DataGovernanceTool.BusinessLogic.IManagers
 {
-    public interface IRepositoryManager<TEntity> : IManager where TEntity : Base
+    public interface IRepositoryManager<TEntity> : IManager
     {
         Task<IEnumerable<TEntity>> GetAsync();
         Task<TEntity> GetAsync(int id);
