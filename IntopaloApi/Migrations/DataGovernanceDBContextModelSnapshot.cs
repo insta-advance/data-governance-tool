@@ -40,7 +40,9 @@ namespace IntopaloApi.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -79,18 +81,13 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("IntopaloApi.System_for_data_governance.KeyRelationship", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
                     b.Property<int>("FromId");
 
                     b.Property<int>("ToId");
 
                     b.Property<string>("Type");
 
-                    b.HasKey("Id");
-
-                    b.HasAlternateKey("FromId", "ToId");
+                    b.HasKey("FromId", "ToId");
 
                     b.HasIndex("ToId");
 

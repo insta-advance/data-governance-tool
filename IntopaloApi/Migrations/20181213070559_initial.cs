@@ -26,7 +26,7 @@ namespace IntopaloApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     Type = table.Column<string>(nullable: true),
                     DatastoreId = table.Column<int>(nullable: true),
@@ -144,16 +144,13 @@ namespace IntopaloApi.Migrations
                 name: "KeyRelationships",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     FromId = table.Column<int>(nullable: false),
                     ToId = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KeyRelationships", x => x.Id);
-                    table.UniqueConstraint("AK_KeyRelationships_FromId_ToId", x => new { x.FromId, x.ToId });
+                    table.PrimaryKey("PK_KeyRelationships", x => new { x.FromId, x.ToId });
                     table.ForeignKey(
                         name: "FK_KeyRelationships_Bases_FromId",
                         column: x => x.FromId,

@@ -515,7 +515,7 @@ namespace IntopaloApi.Controllers
                     var item = _context.Collections.Find(data.jsonCollections.ElementAt(i).Id);
                     if(item != null){
                         item.Name = data.jsonCollections.ElementAt(i).Name ?? item.Name;
-                        item.DatabaseId = data.jsonCollections.ElementAt(i).DatabaseId ? 
+                        item.DatabaseId = data.jsonCollections.ElementAt(i).DatabaseId > 0? 
                             data.jsonCollections.ElementAt(i).DatabaseId : item.DatabaseId;
                         _context.Collections.Update(item);
                     }
@@ -527,7 +527,7 @@ namespace IntopaloApi.Controllers
                     if(item != null){
                         item.Name = data.jsonDatabases.ElementAt(i).Name ?? item.Name;
                         item.Type = data.jsonDatabases.ElementAt(i).Type ?? item.Type;
-                        item.DatastoreId = data.jsonDatabases.ElementAt(i).DatastoreId ? 
+                        item.DatastoreId = data.jsonDatabases.ElementAt(i).DatastoreId > 0 ? 
                             data.jsonDatabases.ElementAt(i).DatastoreId : item.DatastoreId;
                         _context.Databases.Update(item);
                     }
@@ -539,7 +539,7 @@ namespace IntopaloApi.Controllers
                     if(item != null){
                         item.Name = data.jsonFields.ElementAt(i).Name ?? item.Name;
                         item.Type = data.jsonFields.ElementAt(i).Type ?? item.Type;
-                        item.StructuredId = data.jsonFields.ElementAt(i).StructuredId ?
+                        item.StructuredId = data.jsonFields.ElementAt(i).StructuredId > 0 ?
                             data.jsonFields.ElementAt(i).StructuredId : item.StructuredId;
                         _context.Fields.Update(item);
                     }
@@ -561,7 +561,7 @@ namespace IntopaloApi.Controllers
                 for(int i = 0; i<data.jsonSchemas.Count;i++){
                     var item = _context.Schemas.Find(data.jsonSchemas.ElementAt(i).Id);
                     if(item != null){
-                        item.DatabaseId = data.jsonSchemas.ElementAt(i).DatabaseId ?
+                        item.DatabaseId = data.jsonSchemas.ElementAt(i).DatabaseId > 0 ?
                             data.jsonSchemas.ElementAt(i).DatabaseId : item.DatabaseId;
                         item.Name = data.jsonSchemas.ElementAt(i).Name ?? item.Name;
                         _context.Schemas.Update(item);
@@ -600,7 +600,7 @@ namespace IntopaloApi.Controllers
                 }
             }
             /* Error handling. */
-            do {
+            try {
                 _context.SaveChanges();
             } catch(DbUpdateException e){
                 return BadRequest(e.InnerException.Message);
