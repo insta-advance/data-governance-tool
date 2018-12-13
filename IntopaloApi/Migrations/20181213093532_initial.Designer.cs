@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntopaloApi.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
-    [Migration("20181213070559_initial")]
+    [Migration("20181213093532_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,9 +42,7 @@ namespace IntopaloApi.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

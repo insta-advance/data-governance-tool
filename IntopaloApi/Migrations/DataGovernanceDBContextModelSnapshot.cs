@@ -40,9 +40,7 @@ namespace IntopaloApi.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

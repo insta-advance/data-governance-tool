@@ -5,6 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using IntopaloApi.System_for_data_governance;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using IntopaloApi.BusinessLogic.IManagers;
+using IntopaloApi.BusinessLogic.Managers;
+using IntopaloApi.Data.Access.IRepositories;
+using IntopaloApi.Data.Access.Repositories;
+using IntopaloApi.Data.Access;
 
 namespace IntopaloApi
 {
@@ -19,6 +24,10 @@ namespace IntopaloApi
         public void ConfigureServices(IServiceCollection services)
         {
 
+            // Configure dependency injections.
+            services.AddTransient<IDatabasesManager, DatabasesManager>();
+            services.AddTransient<IDatabasesRepository, DatabasesRepository>();
+            services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
             // Comment next 2 lines for Docker, otherwise uncomment
 
             //services.AddDbContext<DataGovernanceDBContext>(opt => 

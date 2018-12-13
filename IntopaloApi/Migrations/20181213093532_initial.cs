@@ -26,7 +26,7 @@ namespace IntopaloApi.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
                     Type = table.Column<string>(nullable: true),
                     DatastoreId = table.Column<int>(nullable: true),
