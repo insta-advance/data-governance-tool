@@ -14,5 +14,14 @@ namespace DataGovernanceTool.BusinessLogic.Managers
         {
         }
        
+        public new async Task<Field> ReplaceAsync(int id, Field entity)
+        {
+            var existing = await GetAsync(id);
+            existing.Name = entity.Name ?? existing.Name;
+            existing.Type = entity.Type ?? existing.Type;
+            existing.StructuredId = entity.StructuredId > 0 ? 
+            entity.StructuredId : existing.StructuredId;
+            return await Repository.ReplaceAsync(id, existing);
+        }
     }
 }

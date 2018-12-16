@@ -7,7 +7,6 @@ namespace DataGovernanceTool.Data.Models.Metadata.Structure
 {
     public class Datastore : SuperBase
     {   
-        public int Id { get; set; }
         public string Name { get; set; }
         public List<Database> Databases { get; set; }
         public List<StructuredFile> StructuredFiles  { get; set; }

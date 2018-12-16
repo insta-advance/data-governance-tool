@@ -13,6 +13,11 @@ namespace DataGovernanceTool.BusinessLogic.Managers
             : base(repository)
         {
         }
-       
+        public new async Task<StructuredFile> ReplaceAsync(int id, StructuredFile entity)
+        {
+            var existing = await GetAsync(id);
+            existing.Name = entity.Name ?? existing.Name;
+            return await Repository.ReplaceAsync(id, existing);
+        }
     }
 }

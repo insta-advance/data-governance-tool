@@ -13,6 +13,13 @@ namespace DataGovernanceTool.BusinessLogic.Managers
             : base(repository)
         {
         }
-       
+        public new async Task<Collection> ReplaceAsync(int id, Collection entity)
+        {
+            var existing = await GetAsync(id);
+            existing.Name = entity.Name ?? existing.Name;
+            existing.DatabaseId = entity.DatabaseId > 0 ? 
+            entity.DatabaseId : existing.DatabaseId;
+            return await Repository.ReplaceAsync(id, existing);
+        }
     }
 }

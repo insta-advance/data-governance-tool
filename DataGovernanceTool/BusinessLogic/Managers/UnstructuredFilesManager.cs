@@ -13,6 +13,15 @@ namespace DataGovernanceTool.BusinessLogic.Managers
             : base(repository)
         {
         }
+        public new async Task<UnstructuredFile> ReplaceAsync(int id, UnstructuredFile entity)
+        {
+            var existing = await GetAsync(id);
+            existing.Name = entity.Name ?? existing.Name;
+            existing.FilePath = entity.FilePath ?? existing.FilePath;
+            existing.DatastoreId = entity.DatastoreId > 0 ? 
+            entity.DatastoreId : existing.DatastoreId;
+            return await Repository.ReplaceAsync(id, existing);
+        }
        
     }
 }
