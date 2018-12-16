@@ -10,7 +10,7 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 
 namespace DataGovernanceTool.Data.Access.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Base 
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : SuperBase 
     {
         protected readonly BaseDbContext DbContext;
         protected readonly DbSet<TEntity> DbSet;

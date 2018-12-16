@@ -6,11 +6,9 @@ using DataGovernanceTool.Data.Models;
 
 namespace DataGovernanceTool.Data.Models.Metadata.Structure
 {
-    public abstract class Base
+    public abstract class Base : SuperBase
     {
-        /* Id for all tables containing metadata elements.*/
-        [Key]
-        public int Id { get; set; }
+        
         public string Name { get; set; }
         /* Many-to-Many between PK and FK in metadata. */
         public List<KeyRelationship> PrimaryKeyTo { get; set; }

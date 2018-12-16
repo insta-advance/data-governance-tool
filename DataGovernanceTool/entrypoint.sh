@@ -3,7 +3,7 @@
 set -e
 run_cmd="dotnet run --server.urls http://*:80"
 
-until dotnet ef database update; do
+until dotnet ef database update --context DataGovernanceDBContext; do
 >&2 echo "SQL Server is starting up"
 sleep 1
 done

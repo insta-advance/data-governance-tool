@@ -26,13 +26,26 @@ namespace DataGovernanceTool
             // Configure dependency injections.
             services.AddTransient<IDatabasesManager, DatabasesManager>();
             services.AddTransient<IDatabasesRepository, DatabasesRepository>();
+            services.AddTransient<ISchemasManager, SchemasManager>();
+            services.AddTransient<ISchemasRepository, SchemasRepository>();
+            services.AddTransient<ICollectionsManager, CollectionsManager>();
+            services.AddTransient<ICollectionsRepository, CollectionsRepository>();
+            services.AddTransient<IDatastoresManager, DatastoresManager>();
+            services.AddTransient<IDatastoresRepository, DatastoresRepository>();
+            services.AddTransient<IUnstructuredFilesManager, UnstructuredFilesManager>();
+            services.AddTransient<IUnstructuredFilesRepository, UnstructuredFilesRepository>();
+            services.AddTransient<IStructuredFilesManager, StructuredFilesManager>();
+            services.AddTransient<IStructuredFilesRepository, StructuredFilesRepository>();
+            services.AddTransient<ITablesManager, TablesManager>();
+            services.AddTransient<ITablesRepository, TablesRepository>();
             services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
             // Comment next 2 lines for Docker, otherwise uncomment
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 
-            opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
             //Use in development if sql if pg is too much hassle.
-            //opt.UseSqlite("Data source=DataGovernanceTool.db");
+            opt.UseSqlite("Data source=DataGovernanceTool.db"));
 
             
             
