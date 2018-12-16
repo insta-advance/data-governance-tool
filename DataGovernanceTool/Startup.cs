@@ -42,10 +42,13 @@ namespace DataGovernanceTool
             // Comment next 2 lines for Docker, otherwise uncomment
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 
+            // NOT Docker
             //opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            //opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+            // Docker
+            opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+
             //Use in development if sql if pg is too much hassle.
-            opt.UseSqlite("Data source=DataGovernanceTool.db"));
+            //opt.UseSqlite("Data source=DataGovernanceTool.db"));
 
             
             

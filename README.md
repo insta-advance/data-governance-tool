@@ -26,9 +26,13 @@ Following packages:
 `$ sudo -u postgres -i`  
 `$ initdb -d '/var/lib/postgres/data'`  
 
-Create user DataGovernanceTool and set it as superuser:   
+Create user 'datagovernancetool' and set it as superuser:   
 `$ createuser --interactive`  
-`$ createdb DataGovernanceToolDb`  
+`$ createdb DataGovernanceToolDB`  
+
+Connect to database and set password for the user:   
+`$ pqsl DataGovernanceToolDB`  
+`$ alter user datagovernancetool with password 'datagovernancetool';`  
 
 As a normal user set pg up as a system service.  
 `$ systemctl enable postgresql`
@@ -71,6 +75,19 @@ The metadata can be accessed from from:
 
   * http://localhost:5000/api/intopalo
   * http://localhost:5000/api/\<Controller\>\[/\<id\>\]
+
+
+### Docker
+Run the following commands in the folder '/DataGovernanceTool'.
+
+Starts up Postgresql in a separate container:
+`$ docker run -d --name my-postgres -e POSTGRES_PASSWORD=password postgres`
+
+Builds the image of DataGovernanceTool called datagt:
+`$ docker build -t datagt .`
+
+Starts the DataGovernanceTool docker and links it to Postgresql container:
+`$ docker run -it -p 5000:5000 --link my-postgres:postgres datagt`
 
 ### Development
   * [Basic guide to REST Api](https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1#create-the-database-context).
