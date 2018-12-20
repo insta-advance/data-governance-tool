@@ -33,5 +33,17 @@ export class SchemaViewComponent implements OnInit {
     backToSchemas() {
         this.router.navigate(['/schemas']);
     } 
+    
+    /*addNewSchema(){
+        this.rest.addSchema(this.singleSchemaData);
+    }    
+    
+    editThisSchema(){
+        this.rest.deleteSchema(this.singleSchemaData);
+    } */
+    
+    deleteThisSchema(){
+        this.rest.deleteSchema(this.singleSchemaData);
+    }
 
 }

@@ -6,9 +6,11 @@
         <span class="breadcrumbs-divider">►</span>
         <p>{{p.Name}}</p>
         <span class="breadcrumbs-divider">|</span>
-        <p class="add">+ Add new table</p>
+        <button class="add" (click)="addNewSchema()">+ Add new table</button>
         <span class="breadcrumbs-divider">|</span>
-        <p class="edit">Edit</p>
+        <button class="edit" (click)="editThisSchema()">Edit</button>      
+        <span class="breadcrumbs-divider">|</span>
+        <button class="delete" (click)="deleteThisSchema()">Delete</button>
     </div>
 </div>
 

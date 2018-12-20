@@ -48,52 +48,41 @@ private extractSchemasData(res: Response) {
   return schemas || { };
     //to do mapping for the model
 }
-//get call
+    
+/*------------------------META------------------------*/
 getMeta(): Observable<any> {
   return this.http.get(endpoint).pipe(
     map(this.extractData));
 }
-//get call for schemas
+/*------------------------SCHEMAS------------------------*/
 getSchemas(): Observable<any> {
   return this.http.get(endpointSchemas).pipe(
     map(this.extractSchemasData));
 }
-//get call for a single schema
+
 getSingleSchema(id): Observable<any> {
   return this.http.get(endpointSchemas + '/' + id).pipe(
     map(this.extractData));
 }
 
-/*getBlock(id): Observable<any> {
-  return this.http.get(endpoint).pipe(
-    map(this.extractData));
+addSchema (data): Observable<any> {
+    return this.http.post(endpointSchemas, data);
 }
 
-//post call
-addBlock (product): Observable<any> {
-  console.log(product);
-  return this.http.post<any>(endpoint, JSON.stringify(product), httpOptions).pipe(
-    tap((product) => console.log(`added item w/ id=${some.id}`)),
-    catchError(this.handleError<any>('addProduct'))
-  );
+deleteSchema (id): Observable<any> {
+    return this.http.delete(endpointSchemas + '/' + id);
 }
+    
+updateSchema(data) {
+    return this.http.put(endpointSchemas + '/' + data.id, data);
+  }
+/*------------------------COLLECTIONS------------------------*/
 
-//put call
-updateBlock (id, product): Observable<any> {
-  return this.http.put(endpoint + '/' + id, JSON.stringify(some), httpOptions).pipe(
-    tap(_ => console.log(`updated item id=${id}`)),
-    catchError(this.handleError<any>('updateProduct'))
-  );
-}
-
-//delete call
-deleteBlock (id): Observable<any> {
-  return this.http.delete<any>(endpoint + '/' + id, httpOptions).pipe(
-    tap(_ => console.log(`deleted item id=${id}`)),
-    catchError(this.handleError<any>('deleteProduct'))
-  );
-}*/
-
+/*---------------------UNSTRUCTURED FILES--------------------*/
+    
+/*----------------------STRUCTURED FILES---------------------*/
+    
+    
 private handleError<T> (operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
     console.error(error);
