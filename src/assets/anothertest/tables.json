@@ -1,0 +1,1 @@
+[{"tableName":null,"schema":null,"schemaId":2,"key":null,"fields":null,"name":"User","primaryKeyTo":null,"foreignKeyTo":null,"annotations":null,"id":3},{"tableName":null,"schema":null,"schemaId":2,"key":null,"fields":null,"name":"Car","primaryKeyTo":null,"foreignKeyTo":null,"annotations":null,"id":4}]

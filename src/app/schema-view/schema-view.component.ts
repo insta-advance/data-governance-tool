@@ -19,31 +19,31 @@ export class SchemaViewComponent implements OnInit {
     }
 
     getData() {
-        this.singleSchemaData = [];
-        this.rest.getSchemas().subscribe((data: {}) => {
+        /*this.singleSchemaData = [];
+        this.rest.getSingleSchema().subscribe((data: {}) => {
           console.log(data);
           this.singleSchemaData = data;
-    });
+    });*/
   }
     
     backToHome() {
-        this.router.navigate(['/']);
+        //this.router.navigate(['/']);
     }    
     
     backToSchemas() {
-        this.router.navigate(['/schemas']);
+        //this.router.navigate(['/schemas']);
     } 
     
-    /*addNewSchema(){
-        this.rest.addSchema(this.singleSchemaData);
+    addNewSchema(){
+        //this.rest.addSchema(this.singleSchemaData);
     }    
     
     editThisSchema(){
-        this.rest.deleteSchema(this.singleSchemaData);
-    } */
+        //this.rest.deleteSchema(this.singleSchemaData);
+    } 
     
     deleteThisSchema(){
-        this.rest.deleteSchema(this.singleSchemaData);
+        //this.rest.deleteSchema(this.singleSchemaData);
     }
 
 }

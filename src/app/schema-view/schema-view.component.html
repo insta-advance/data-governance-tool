@@ -1,28 +1,26 @@
 <div *ngFor="let p of singleSchemaData; let i=index;">
-    <div class="homelink">
-        <button (click)="backToHome()">[PH] My new storage </button>
-        <span class="breadcrumbs-divider">►</span>
-        <button (click)="backToSchemas()">{{p.Database.Name}} ({{p.Database.Type}})</button>    
-        <span class="breadcrumbs-divider">►</span>
-        <p>{{p.Name}}</p>
-        <span class="breadcrumbs-divider">|</span>
-        <button class="add" (click)="addNewSchema()">+ Add new table</button>
-        <span class="breadcrumbs-divider">|</span>
-        <button class="edit" (click)="editThisSchema()">Edit</button>      
-        <span class="breadcrumbs-divider">|</span>
-        <button class="delete" (click)="deleteThisSchema()">Delete</button>
-    </div>
-</div>
-
-<div *ngFor="let p of singleSchemaData; let i=index;">
-    <div class="table" *ngFor="let n of p.Tables; let j=index;">
-        <p class="table-name">{{n.Name}}</p>
-        <div class="table-fields">        
-            <p class="field-id"> </p>
-            <p class="field-name"></p>
-            <p class="field-type"></p>
-            <div class="rel-from"></div>
-            <div class="rel-to"></div>
+    <div *ngFor="let n of p[0]; let i=index;">
+        <div class="homelink">
+            <button (click)="backToHome()">[PH] My new storage </button>
+            <span class="breadcrumbs-divider">►</span>
+            <button (click)="backToSchemas()">[PH] Database </button>   
+            <span class="breadcrumbs-divider">►</span>
+            <p>{{n.name}}</p>
+            <span class="breadcrumbs-divider">|</span>
+            <button class="add" (click)="addNewSchema()">+ Add new table</button>
+            <span class="breadcrumbs-divider">|</span>
+            <button class="edit" (click)="editThisSchema()">Edit</button>      
+            <span class="breadcrumbs-divider">|</span>
+            <button class="delete" (click)="deleteThisSchema()">Delete</button>
         </div>
+
+            <p class="table-name">TABLE NAME</p>
+            <div class="table-fields">        
+                <p class="field-id"> </p>
+                <p class="field-name"></p>
+                <p class="field-type"></p>
+                <div class="rel-from"></div>
+                <div class="rel-to"></div>
+            </div>
     </div>
 </div>

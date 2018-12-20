@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
 import { RelationalViewComponent } from './relational-view/relational-view.component';
 import { NonrelationalViewComponent } from './nonrelational-view/nonrelational-view.component';
 import { TableAddComponent } from './table-add/table-add.component';
-import { SchemaEditComponent } from './schema-edit/schema-edit.component';
 
 
 const appRoutes: Routes = [
@@ -60,16 +59,13 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     GlobalViewComponent,
-    /*BlockAddComponent,
-    BlockDetailsComponent,
-    BlockEditComponent,*/
     SchemaViewComponent,
     DatabaseViewComponent,
     GlobalViewComponent,
     RelationalViewComponent,
     NonrelationalViewComponent,
     TableAddComponent,
-    SchemaEditComponent
+
   ],
   imports: [
       RouterModule.forRoot(appRoutes),

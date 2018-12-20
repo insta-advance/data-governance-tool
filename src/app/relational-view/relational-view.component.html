@@ -2,24 +2,22 @@
     <div class="homelink">
         <button (click)="backToHome()">[PH] My new storage </button>
         <span class="breadcrumbs-divider">►</span>
-        <p>{{p.Database.Name}}  ({{p.Database.Type}})</p>
+        <p>[PH] Database</p>
         <span class="breadcrumbs-divider">|</span>
         <p class="add">+ Add new schema</p>
         <span class="breadcrumbs-divider">|</span>
         <p class="edit">Edit</p>
     </div>
-</div>
 
-<div *ngFor="let p of schemasData; let i=index;">
-    <p class="schema-name">{{p.Name}} | <a href="http://localhost:4200/schemas/2">Details</a>  | <a href="">Edit</a></p>
-    <div class="table" *ngFor="let n of p.Tables; let j=index;">
-        <p class="table-name">{{n.Name}}</p> 
+    <p class="schema-name">{{p.name}} | <a href="http://localhost:4200/schemas/2">Details</a>  | <a href="">Edit</a> | <button (click)="deleteSchema(p)">Delete</button></p>
+
+        <p class="table-name">Table</p> 
         <div class="table-fields">        
-            <p class="field-id"> </p>
-            <p class="field-name"></p>
-            <p class="field-type"></p>
-            <div class="rel-from"></div>
-            <div class="rel-to"></div>
+            <p class="field-id"> id, </p>
+            <p class="field-name">name, </p>
+            <p class="field-type">type, </p>
+            <div class="rel-from">PK </div>
+            <div class="rel-to">FK </div>
         </div>
-    </div>
+
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../restapi/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Schema } from '../model/metadata.model';
 
 @Component({
   selector: 'app-relational-view',
@@ -28,5 +29,12 @@ export class RelationalViewComponent implements OnInit {
     backToHome() {
         this.router.navigate(['/']);
     } 
+    
+    deleteSchema(schema: Schema): void {
+        this.rest.deleteSchema(schema.id)
+        .subscribe( data => {
+        this.schemasData = this.schemasData.filter(u => u !== schema);
+        })
+    };
 
 }

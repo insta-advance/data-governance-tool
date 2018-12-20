@@ -1,12 +1,13 @@
 <div class="container">
     <div class="global">
-        
-        <div class="homelink">
-            <p>[PH] My new storage</p>
-            <span class="breadcrumbs-divider">|</span>
-            <p class="add">+ Add new datastore</p>
-            <span class="breadcrumbs-divider">|</span>    
-            <p class="edit">Edit</p>
+        <div *ngFor="let d of datastore; let i=index;">    
+            <div class="homelink">
+                <p>{{d.name}}</p>
+                <span class="breadcrumbs-divider">|</span>
+                <p class="add">+ Add new datastore</p>
+                <span class="breadcrumbs-divider">|</span>    
+                <p class="edit">Edit</p>
+            </div>
         </div>
         <!--MONGO-->
         <h2 id="nonrel">[PH] My new MongoDB | <a href="">Details</a>  | <a href="/schemas">Edit</a></h2> 
@@ -15,6 +16,7 @@
                 <p *ngIf="i==0" class="collection-name">{{x.CollectionName}}</p>
                 <p *ngIf="i==0" class="collection-fields">No fields</p>
             </div>
+
         </div>
         <!--POSGRES-->
         <div *ngFor="let m of metadata; let i=index;">
@@ -51,18 +53,19 @@
             </div>
         </div>    
     </div>
-
     <!--SIDEBAR-->
-    <div class="side">
-        <p class="title">Content</p>
-        <ul>
-            <li> <a href="#nonrel"> [PH] My new MongoDB</a></li>
-            <li>
-            <a href="#rel">[PH] UserDB (PosgreSQL)</a>
-            </li>
-            <li> <a href="#struct"> [PH] My structured files</a></li>
-            <li> <a href="#nonstruct"> [PH] My nonstructured files</a></li>
-        </ul>
+    <div *ngFor="let d of datastore; let i=index;"> 
+        <div class="side">
+            <p class="title">Content</p>
+            <ul>
+                <li> <a href="#nonrel"> [PH] My new MongoDB</a></li>
+                <li>
+                <a href="#rel">[PH] UserDB (PosgreSQL)</a>
+                </li>
+                <li> <a href="#struct"> [PH] My structured files</a></li>
+                <li> <a href="#nonstruct"> [PH] My nonstructured files</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 

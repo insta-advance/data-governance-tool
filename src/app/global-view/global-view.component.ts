@@ -9,19 +9,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GlobalViewComponent implements OnInit {
 
-    metadata:any = [];
+    datastore:any = [];
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        this.getData();
+        this.getDatastoreData();
+        this.getDatabases();
+
     }
 
-    getData() {
-        this.metadata = [];
-        this.rest.getMeta().subscribe((data: {}) => {
+    getDatastoreData() {
+        this.datastore = [];
+        this.rest.getDatastore().subscribe((data: {}) => {
           console.log(data);
-          this.metadata = data;
-    });
-  }
+          this.datastore = data;
+        });
+    }
+
+    getDatabases() {
+
+    }
 }
