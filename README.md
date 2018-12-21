@@ -80,13 +80,13 @@ The metadata can be accessed from from:
 ### Docker
 Run the following commands in the folder '/DataGovernanceTool'.
 
-Starts up Postgresql in a separate container:
+Starts up Postgresql in a separate container:  
 `$ docker run -d --name my-postgres -e POSTGRES_PASSWORD=password postgres`
 
-Builds the image of DataGovernanceTool called datagt:
+Builds the image of DataGovernanceTool called datagt:   
 `$ docker build -t datagt .`
 
-Starts the DataGovernanceTool docker and links it to Postgresql container:
+Starts the DataGovernanceTool docker and links it to Postgresql container:  
 `$ docker run -it -p 5000:5000 --link my-postgres:postgres datagt`
 
 ### Development
