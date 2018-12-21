@@ -9,6 +9,7 @@ using DataGovernanceTool.BusinessLogic.Managers;
 using DataGovernanceTool.Data.Access.IRepositories;
 using DataGovernanceTool.Data.Access.Repositories;
 using DataGovernanceTool.Data.Access;
+using GlobalErrorHandling.Extensions;
 
 namespace DataGovernanceTool
 {
@@ -43,9 +44,9 @@ namespace DataGovernanceTool
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 
             // NOT Docker
-            //opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             // Docker
-            opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+            //opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
 
             //Use in development if sql if pg is too much hassle.
             //opt.UseSqlite("Data source=DataGovernanceTool.db"));
@@ -68,9 +69,11 @@ namespace DataGovernanceTool
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
 
+            //app.ConfigureExceptionHandler();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseMvc();
         }
     }
