@@ -77,9 +77,11 @@ namespace DataGovernanceTool.Data.Access.Repositories
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
+            
             var newEntry = DbSet.Add(entity);
             await DbContext.SaveChangesAsync();
             return newEntry.Entity;
+            
         }
 
         public virtual async Task<TEntity> ReplaceAsync(int id, TEntity entity)
@@ -103,6 +105,8 @@ namespace DataGovernanceTool.Data.Access.Repositories
             {
                 await DeleteAsync(entity);
             }
+            else 
+                throw new EntityNotFoundException($@"{typeof(TEntity).Name} with id {id} not found.");
         }
 
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)

@@ -12,6 +12,7 @@ using DataGovernanceTool.BusinessLogic.Managers;
 using DataGovernanceTool.Data.Access.IRepositories;
 using DataGovernanceTool.Data.Access.Repositories;
 using DataGovernanceTool.Data.Access;
+using GlobalErrorHandling.Extensions;
 
 namespace DataGovernanceTool
 {
@@ -86,9 +87,11 @@ namespace DataGovernanceTool
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
 
+            //app.ConfigureExceptionHandler();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseMvc();
         }
     }
