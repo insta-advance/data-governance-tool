@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataGovernanceTool.BusinessLogic.IManagers;
 using DataGovernanceTool.Data.Models.Metadata.Structure;
+using DataGovernanceTool.Data.Models.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataGovernanceTool.BusinessLogic.Managers
 {
@@ -13,7 +15,21 @@ namespace DataGovernanceTool.BusinessLogic.Managers
             : base(repository)
         {
         }
-       
+
+        public new async Task<IEnumerable<Field>> GetAsync()
+        {
+            return await Repository.All().Include(f => f.Fields).ToListAsync();
+        }
+
+        public new async Task<Field> GetAsync(int id)
+        {
+            var field = await Repository.Filter(f => f.Id == id).Include(f => f.Fields).ToListAsync();
+            if (field.Count == 0) {
+                throw new EntityNotFoundException($@"{typeof(Field).Name} with id {id} not found.");
+            } 
+            return field[0];
+        }        
+
         public new async Task<Field> ReplaceAsync(int id, Field entity)
         {
             var existing = await GetAsync(id);

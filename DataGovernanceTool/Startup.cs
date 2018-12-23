@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using DataGovernanceTool.BusinessLogic.IManagers;
 using DataGovernanceTool.BusinessLogic.Managers;
 using DataGovernanceTool.Data.Access.IRepositories;
@@ -38,14 +41,16 @@ namespace DataGovernanceTool
             services.AddTransient<IStructuredFilesRepository, StructuredFilesRepository>();
             services.AddTransient<ITablesManager, TablesManager>();
             services.AddTransient<ITablesRepository, TablesRepository>();
+            services.AddTransient<IFieldsManager, FieldsManager>();
+            services.AddTransient<IFieldsRepository, FieldsRepository>();
             services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
             // Comment next 2 lines for Docker, otherwise uncomment
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 
             // NOT Docker
-            //opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             // Docker
-            opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+            //opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
 
             //Use in development if sql if pg is too much hassle.
             //opt.UseSqlite("Data source=DataGovernanceTool.db"));
@@ -60,7 +65,20 @@ namespace DataGovernanceTool
         //    options => options.UseSqlServer(connection));
         
 
-            services.AddMvc()
+            services.AddMvc(
+                options =>
+                {
+                    options.OutputFormatters.RemoveType<JsonOutputFormatter>();
+                    options.OutputFormatters.Add(
+                        new JsonOutputFormatter(
+                            new JsonSerializerSettings() {
+                                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                                NullValueHandling = NullValueHandling.Ignore
+                            },
+                            System.Buffers.ArrayPool<char>.Shared)
+                    );
+                }
+            )
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

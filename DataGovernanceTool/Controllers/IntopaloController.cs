@@ -55,7 +55,18 @@ namespace DataGovernanceTool.Controllers
                                             Fields = new List<Field> {
                                                 new Field {Name = "CarId", Type = "int" },
                                                 new Field {Name = "OwnerId", Type = "int" },
-                                                new Field {Name = "CarBrand", Type = "nvarchar(max)" }
+                                                new Field {Name = "CarBrand", Type = "nvarchar(max)" },
+                                                new Field {
+                                                    Name = "document", 
+                                                    Type = "JSON",
+                                                    Fields = new List<Field> { 
+                                                        new Field { Name = "a", Type = "JSON",
+                                                            Fields = new List<Field> {
+                                                                new Field {Name = "b", Type = "JSON_int"}
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }

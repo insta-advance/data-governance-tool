@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataGovernanceTool.BusinessLogic.IManagers;
 using DataGovernanceTool.Data.Models.Metadata.Structure;
+using DataGovernanceTool.Data.Models.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataGovernanceTool.BusinessLogic.Managers
 {
@@ -12,6 +14,19 @@ namespace DataGovernanceTool.BusinessLogic.Managers
         public SchemasManager(ISchemasRepository repository)
             : base(repository)
         {
+        }
+        public new async Task<IEnumerable<Schema>> GetAsync()
+        {
+            return await Repository.All().Include(s => s.Tables).ToListAsync();
+        }
+
+        public new async Task<Schema> GetAsync(int id)
+        {
+            var schema = await Repository.Filter(s => s.Id == id).Include(s => s.Tables).ToListAsync();
+            if (schema.Count == 0) {
+                throw new EntityNotFoundException($@"{typeof(Schema).Name} with id {id} not found.");
+            } 
+            return schema[0];
         }
         public new async Task<Schema> ReplaceAsync(int id, Schema entity)
         {

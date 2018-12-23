@@ -7,7 +7,7 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 
 namespace DataGovernanceTool.Data.Models.Metadata.Relationships
 {
-    public class KeyRelationship
+    public class KeyRelationship : SuperBase
     {
         /* PK in metadata */
         public int FromId { get; set; }
