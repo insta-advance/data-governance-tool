@@ -45,6 +45,8 @@ namespace DataGovernanceTool
             services.AddTransient<IFieldsManager, FieldsManager>();
             services.AddTransient<IFieldsRepository, FieldsRepository>();
             services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
+            services.AddTransient<IKeyRelationshipsManager, KeyRelationshipsManager>();
+            services.AddTransient<IKeyRelationshipsRepository, KeyRelationshipsRepository>();
             // Comment next 2 lines for Docker, otherwise uncomment
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 

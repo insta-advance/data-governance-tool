@@ -23,6 +23,15 @@ namespace DataGovernanceTool.BusinessLogic.Managers
 
         public new async Task<Field> GetAsync(int id)
         {
+            /* For nested fields (json, document, anything really...) get the whole nesting tree. */
+            Stack<int> ids = new Stack<int>(new int[] {id});
+            while (ids.Count > 0) {
+                var currentId = ids.Pop();
+                var fields = await Repository.Filter(f => f.StructuredId == currentId).ToListAsync();   
+                fields.ForEach(f => ids.Push(f.Id));
+            }
+            /* Get the actual field */
+            /* If something is queried once (code above) it is eagerly populated in all navigation properties if Inlude() is used. */
             var field = await Repository.Filter(f => f.Id == id).Include(f => f.Fields).ToListAsync();
             if (field.Count == 0) {
                 throw new EntityNotFoundException($@"{typeof(Field).Name} with id {id} not found.");

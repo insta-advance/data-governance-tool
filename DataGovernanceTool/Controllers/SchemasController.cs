@@ -9,43 +9,10 @@ namespace DataGovernanceTool.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SchemasController : ControllerBase
+    public class SchemasController : BaseController<Schema> 
     {
-        ISchemasManager manager;
-        public SchemasController(ISchemasManager manager)
+        public SchemasController(ISchemasManager manager) : base(manager)
         {
-            this.manager = manager;
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<Schema>> List(int id)
-        {
-            return await manager.GetAsync();
-        }
-
-
-        [HttpGet("{id}")]
-        public async Task<Schema> GetById(int id)
-        {
-            return await manager.GetAsync(id);
-        }
-
-        [HttpPost]
-        public async Task<Schema> Create(Schema schema)
-        {
-            return await manager.CreateAsync(schema);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<Schema> Replace(int id, Schema schema)
-        {
-            return await manager.ReplaceAsync(id, schema);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task Replace(int id)
-        {
-            await manager.DeleteAsync(id);
         }
     }
 }
