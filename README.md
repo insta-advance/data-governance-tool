@@ -71,7 +71,7 @@ Installing from NuGet (ctrl+P+>nuget) will automatically update the project file
 If tools for making the dev certificate fail. Don't waste your time & remove
 the https://localhost:5001 from your launchSettings.json and use http for development.
 
-The metadata can be accessed from from:
+The metadata can be accessed from:
 
   * http://localhost:5000/api/datagt
   * http://localhost:5000/api/\<Controller\>\[/\<id\>\]
@@ -88,6 +88,13 @@ Builds the image of DataGovernanceTool called datagt:
 
 Starts the DataGovernanceTool docker and links it to Postgresql container:  
 `$ docker run -it -p 5000:5000 --link my-postgres:postgres datagt`
+
+
+### Swagger
+Swagger documentation of API can be found from:
+
+  * http://localhost:5000/swagger
+
 
 ### Development
   * [Basic guide to REST Api](https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc?view=aspnetcore-2.1#create-the-database-context).

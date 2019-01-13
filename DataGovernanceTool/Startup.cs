@@ -14,6 +14,7 @@ using DataGovernanceTool.Data.Access.IRepositories;
 using DataGovernanceTool.Data.Access.Repositories;
 using DataGovernanceTool.Data.Access;
 using GlobalErrorHandling.Extensions;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DataGovernanceTool
 {
@@ -56,7 +57,7 @@ namespace DataGovernanceTool
             opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
 
             // NOT Docker
-            // opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
 
             //Use in development if sql if pg is too much hassle.
@@ -85,6 +86,11 @@ namespace DataGovernanceTool
                 }
             )
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -101,6 +107,13 @@ namespace DataGovernanceTool
             /* Enable CORS allow usage only  */
             app.UseCors(builder =>
                 builder.WithOrigins(Configuration.GetValue<string>("AllowedHosts")));
+
+            //Using Swagger for API documentation    
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
         }
     }
 }
