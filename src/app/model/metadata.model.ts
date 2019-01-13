@@ -1,47 +1,32 @@
 export interface Field{
-
+    type: string;
+    structureId: number;
+    fields: Fields[];
+    name: string;
+    id: number;
 }
 
 export interface Table{
-    tableName: string;
-    schema: string;
     schemaId: number;
-    key: Field[];
-    fields: Field[];
+    fields: Fields[];
     name: string;
-    primaryKeyTo: number;
-    foreignKeyTo: number;
-    annotations: number;
     id: number;
 }
 
-export interface Collection{
-
-}
 
 export interface Schema{
-    schemaName: string;
-    database: string;
-    databaseId: number;
+    databaseId: number;    
     tables: Table[];
     name: string;
-    primaryKeyTo: number;
-    foreignKeyTo: number;
-    annotations: string;
     id: number;
 }
 
-export interface MongoDatabase{
-
-}
-
-
-export interface RelationalDatabase{
+export interface Database{
+    type: string;
     schemas: Schema[];
-}
-
-export interface NonrelationalDatabase{
-    mongos: MongoDatabase[];
+    datastoreId: number;
+    name: string;
+    id: number;
 }
  
 export interface UnstructuredFile{

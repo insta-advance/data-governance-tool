@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Schema } from '../model/metadata.model'
+import
 
-
-const endpointSchemas = 'http://localhost:4200/assets/anothertest/schemas.json';
-const endpointSchema = 'http://localhost:4200/assets/anothertest/schema2.json';
-const endpointDatastore = 'http://localhost:4200/assets/anothertest/datastores.json';
-
-const endpointTestSchemas = 'http://localhost:5000/api/schemas';
+const endpointDatastores = 'http://localhost:5000/api/datastores';
+const endpointDatabases = 'http://localhost:5000/api/databases';
+const endpointSchemas = 'http://localhost:5000/api/schemas';
+const endpointTables = 'http://localhost:5000/api/tables';
+const endpointFields = 'http://localhost:5000/api/fields';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -30,46 +29,50 @@ constructor(private http: HttpClient) { }
 private extractData(res: Response) {
   let meta = res;
   return meta || { };
-    //to do mapping for the model
-}
-
-private extractSchemasData(res: Response) {
-  let schemas = res;
-  return schemas || { };
-    //to do mapping for the model
-}
-
-private extractSingleSchemaData(res: Response) {
-  let schema = res;
-  return schema || { };
-    //to do mapping for the model
 }
     
-/*------------------------META------------------------*/
-getDatastore(): Observable<any> {
-  return this.http.get(endpointDatastore).pipe(
+/*------------------------DATASTORE------------------------*/
+
+getDatastores(): Observable<any> {
+  return this.http.get(endpointDatastores).pipe(
     map(this.extractData));
+}
+
+getDatastore(id): Observable<any> {
+  return this.http.get(endpointDatastores + '/' + id).pipe(
+    map(this.extractData));
+}
+/*------------------------DATABASES------------------------*/
+getDatabases(): Observable<any> {
+  return this.http.get(endpointTestDatabases).pipe(
+    map(this.extractData));
+}
+
+getDatabase(id): Observable<any> {
+  return this.http.delete(endpointDatabases + '/' + id);
 }
 /*------------------------SCHEMAS------------------------*/
 getSchemas(): Observable<any> {
-  return this.http.get(endpointTestSchemas).pipe(
+  return this.http.get(endpointSchemas).pipe(
     map(this.extractSchemasData));
 }
     
-getSingleSchema(id): Observable<any> {
-  return this.http.get(endpointTestSchemas + '/' + id).pipe(
+getSchema(id): Observable<any> {
+  return this.http.get(endpointSchemas + '/' + id).pipe(
     map(this.extractSingleSchemaData));
 }
-    
-deleteSchema(id): Observable<any> {
-    return this.http.delete(endpointTestSchemas + '/' + id );
+
+/*------------------------TABLES------------------------*/
+getTables(): Observable<any> {
+  return this.http.get(endpointTables).pipe(
+    map(this.extractSchemasData));
 }
-
-/*------------------------COLLECTIONS------------------------*/
-
-/*---------------------UNSTRUCTURED FILES--------------------*/
     
-/*----------------------STRUCTURED FILES---------------------*/
+getTable(id): Observable<any> {
+  return this.http.get(endpointTable + '/' + id).pipe(
+    map(this.extractSingleSchemaData));
+}
+/*---------------------FIELDS--------------------*/
     
     
 private handleError<T> (operation = 'operation', result?: T) {

@@ -2,70 +2,27 @@
     <div class="global">
         <div *ngFor="let d of datastore; let i=index;">    
             <div class="homelink">
-                <p>{{d.name}}</p>
-                <span class="breadcrumbs-divider">|</span>
-                <p class="add">+ Add new datastore</p>
-                <span class="breadcrumbs-divider">|</span>    
+                <p>{{d.Name}}</p>
+               <span class="breadcrumbs-divider">|</span>    
                 <p class="edit">Edit</p>
+                <span class="breadcrumbs-divider">|</span>
+                <p class="add">+ Add new database</p>
+                <span class="breadcrumbs-divider">|</span>
+                <p class="add">+ Add new file</p>
             </div>
         </div>
-        <!--MONGO-->
-        <h2 id="nonrel">[PH] My new MongoDB | <a href="">Details</a>  | <a href="/schemas">Edit</a></h2> 
-        <div *ngFor="let p of metadata; let i=index;"> 
-            <div *ngFor="let x of p.Value; let u=index;" class="collection"> 
-                <p *ngIf="i==0" class="collection-name">{{x.CollectionName}}</p>
-                <p *ngIf="i==0" class="collection-fields">No fields</p>
-            </div>
+        
+        <div *ngFor="let d of datastore; let i=index;">
+		<h2>[{{d.Databases[i].Type}}] {{d.Databases[i].Name}}  | <a href="/db/1">View</a></h2>
+	</div>
 
-        </div>
-        <!--POSGRES-->
-        <div *ngFor="let m of metadata; let i=index;">
-            <div *ngFor="let v of m.Value; let j=index;"> 
-                <h2 id="rel" *ngIf="i==1"> {{v.Name}} ({{v.Type}}) | <a href="/schemas">Details</a> | <a href="/schemas">Edit</a></h2>
-                <div *ngFor="let s of v.Schemas; let u=index;"> 
-                    <p class="schema-name"> {{s.Name}} | <a href="http://localhost:4200/schemas/2">Details</a>  | <a href="">Edit</a></p> 
-                    <div class="table" *ngFor="let y of s.Tables; let k=index;">
-                        <p class="table-name">{{y.Name}}</p>
-                        <div class="table-fields" *ngFor="let z of y.Fields; let o=index;">
-                            <p class="field-id">[{{z.Id}}] </p>
-                            <p class="field-name">, {{z.Name}}</p>
-                            <p class="field-type">, {{z.Type}}</p>
-                            <div class="rel-from" *ngFor="let r of z.PrimaryKeyTo; let o=index;">
-                                    , PK
-                            </div>
-                            <div class="rel-to" *ngFor="let r of z.ForeignKeyTo; let o=index;">
-                                    , FK to [{{r.FromId}}]
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div *ngFor="let d of datastore; let i=index;">
+		<h2>struc file ph {{d.StructuredFiles}}  | <a href="">Edit</a> </h2>
+	</div>
 
-        <!--STRUCTURED FILES-->
-        <h2  id="struct">[PH] My structured files | <a href="">Details</a>  | <a href="/schemas">Edit</a></h2>
-        <!--UNSTRUCTURED FILES-->
-        <h2 id="nonstruct">[PH] My nonstructured files | <a href="">Details</a> | <a href="/schemas">Edit</a></h2>
-        <div *ngFor="let p of metadata; let u=index;"> 
-            <div class="unstruct-files" *ngFor="let x of p.Value; let i=index;">
-                <p *ngIf="u==5" class="file-title">Unstructured file</p>
-                <p *ngIf="u==5" class="file-path">{{x.FilePath}}</p>
-            </div>
-        </div>    
-    </div>
-    <!--SIDEBAR-->
-    <div *ngFor="let d of datastore; let i=index;"> 
-        <div class="side">
-            <p class="title">Content</p>
-            <ul>
-                <li> <a href="#nonrel"> [PH] My new MongoDB</a></li>
-                <li>
-                <a href="#rel">[PH] UserDB (PosgreSQL)</a>
-                </li>
-                <li> <a href="#struct"> [PH] My structured files</a></li>
-                <li> <a href="#nonstruct"> [PH] My nonstructured files</a></li>
-            </ul>
-        </div>
+        <div *ngFor="let d of datastore; let i=index;">
+		<h2>unstruc file ph {{d.UnstructuredFiles}}  | <a href="">Edit</a></h2>
+	</div>
     </div>
 </div>
 

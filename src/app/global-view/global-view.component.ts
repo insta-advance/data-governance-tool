@@ -9,13 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GlobalViewComponent implements OnInit {
 
-    datastore:any = [];
+    	datastore:any = [];
+
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.getDatastoreData();
-        this.getDatabases();
 
     }
 
@@ -27,7 +27,4 @@ export class GlobalViewComponent implements OnInit {
         });
     }
 
-    getDatabases() {
-
-    }
 }

@@ -11,30 +11,32 @@ import { Schema } from '../model/metadata.model';
 export class RelationalViewComponent implements OnInit {
 
     schemasData:any = [];
+    datastoreData:any = [];
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        this.getData();
+	this.getDatastoreData();
+        this.getSchemasData();
     }
 
-    getData() {
+    getDatastoreData() {
+        this.datastoreData = [];
+        this.rest.getDatastore().subscribe((ddata: {}) => {
+          console.log(ddata);
+          this.datastoreData = ddata;
+    });
+  }
+    getSchemasData() {
         this.schemasData = [];
-        this.rest.getSchemas().subscribe((data: {}) => {
-          console.log(data);
-          this.schemasData = data;
+        this.rest.getSchemas().subscribe((sdata: {}) => {
+          console.log(sdata);
+          this.schemasData = sdata;
     });
   }
     
     backToHome() {
         this.router.navigate(['/']);
     } 
-    
-    deleteSchema(schema: Schema): void {
-        this.rest.deleteSchema(schema.id)
-        .subscribe( data => {
-        this.schemasData = this.schemasData.filter(u => u !== schema);
-        })
-    };
 
 }

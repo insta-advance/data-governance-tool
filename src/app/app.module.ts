@@ -25,34 +25,15 @@ const appRoutes: Routes = [
     data: { title: 'Global View' }
   },
   {
-    path: 'schemas',
+    path: 'db/:id',
     component: RelationalViewComponent,
     data: { title: 'All schemas View' }
   },
   {
-    path: 'databases',
-    component: NonrelationalViewComponent,
-    data: { title: 'All databases View' }
-  },
-  {
-    path: 'schemas/:id',
+    path: 'db/:id/:schemaId',
     component: SchemaViewComponent,
     data: { title: 'Schema view' }
   },
-  {
-    path: 'databases/:id',
-    component: DatabaseViewComponent,
-    data: { title: 'Database view' }
-  },
-  /*{
-    path: 'block-edit/:id',
-    component: BlockEditComponent,
-    data: { title: 'Block Edit' }
-  },
-  { path: '',
-    redirectTo: '/view',
-    pathMatch: 'full'
-  }*/
 ];
 
 @NgModule({
