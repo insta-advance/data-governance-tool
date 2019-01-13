@@ -9,43 +9,10 @@ namespace DataGovernanceTool.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UnstructuredFilesController : ControllerBase
+    public class UnstructuredFilesController : BaseController<UnstructuredFile> 
     {
-        IUnstructuredFilesManager manager;
-        public UnstructuredFilesController(IUnstructuredFilesManager manager)
+        public UnstructuredFilesController(IUnstructuredFilesManager manager) : base(manager)
         {
-            this.manager = manager;
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<UnstructuredFile>> List(int id)
-        {
-            return await manager.GetAsync();
-        }
-
-
-        [HttpGet("{id}")]
-        public async Task<UnstructuredFile> GetById(int id)
-        {
-            return await manager.GetAsync(id);
-        }
-
-        [HttpPost]
-        public async Task<UnstructuredFile> Create(UnstructuredFile unstructuredFile)
-        {
-            return await manager.CreateAsync(unstructuredFile);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<UnstructuredFile> Replace(int id, UnstructuredFile unstructuredFile)
-        {
-            return await manager.ReplaceAsync(id, unstructuredFile);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task Replace(int id)
-        {
-            await manager.DeleteAsync(id);
         }
     }
 }

@@ -54,9 +54,13 @@ namespace DataGT.Migrations
 
                     b.Property<int>("ToId");
 
+                    b.Property<int>("Id");
+
                     b.Property<string>("Type");
 
                     b.HasKey("FromId", "ToId");
+
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("ToId");
 
@@ -123,25 +127,6 @@ namespace DataGT.Migrations
                     b.HasDiscriminator().HasValue("Database");
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Field", b =>
-                {
-                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Base");
-
-                    b.Property<int>("StructuredId");
-
-                    b.Property<string>("Type")
-                        .HasColumnName("Field_Type");
-
-                    b.HasIndex("StructuredId");
-
-                    b.HasIndex("Name", "StructuredId")
-                        .IsUnique();
-
-                    b.ToTable("Field");
-
-                    b.HasDiscriminator().HasValue("Field");
-                });
-
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", b =>
                 {
                     b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Base");
@@ -205,6 +190,25 @@ namespace DataGT.Migrations
                     b.ToTable("Collection");
 
                     b.HasDiscriminator().HasValue("Collection");
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Field", b =>
+                {
+                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Structured");
+
+                    b.Property<int>("StructuredId");
+
+                    b.Property<string>("Type")
+                        .HasColumnName("Field_Type");
+
+                    b.HasIndex("StructuredId");
+
+                    b.HasIndex("Name", "StructuredId")
+                        .IsUnique();
+
+                    b.ToTable("Field");
+
+                    b.HasDiscriminator().HasValue("Field");
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.StructuredFile", b =>
@@ -286,14 +290,6 @@ namespace DataGT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Field", b =>
-                {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Structured", "Structured")
-                        .WithMany("Fields")
-                        .HasForeignKey("StructuredId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", b =>
                 {
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Database", "Database")
@@ -315,6 +311,14 @@ namespace DataGT.Migrations
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Database", "Database")
                         .WithMany("Collections")
                         .HasForeignKey("DatabaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Field", b =>
+                {
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Structured", "Structured")
+                        .WithMany("Fields")
+                        .HasForeignKey("StructuredId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

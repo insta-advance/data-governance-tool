@@ -8,7 +8,7 @@ using DataGovernanceTool.Data.Models.Metadata.Relationships;
 
 namespace DataGovernanceTool.Data.Models.Metadata.Structure
 {
-    public class Field : Base
+    public class Field : Structured
     {
         public string Type { get; set; }
         /* Field is either part of Collection, Table, StructuredFile or Field (nested!). */

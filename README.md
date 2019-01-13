@@ -73,7 +73,7 @@ the https://localhost:5001 from your launchSettings.json and use http for develo
 
 The metadata can be accessed from from:
 
-  * http://localhost:5000/api/intopalo
+  * http://localhost:5000/api/datagt
   * http://localhost:5000/api/\<Controller\>\[/\<id\>\]
 
 
