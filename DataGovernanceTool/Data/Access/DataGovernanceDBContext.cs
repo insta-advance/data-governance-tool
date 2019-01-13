@@ -20,7 +20,7 @@ namespace DataGovernanceTool.Data.Access
         }
         /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=IntopaloDb");
+            optionsBuilder.UseSqlite("Data Source=DataGTDb");
         }*/
         /* Implement tables. */
         public DbSet<Base> Bases { get; set; }

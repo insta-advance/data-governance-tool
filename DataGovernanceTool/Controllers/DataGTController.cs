@@ -14,19 +14,19 @@ namespace DataGovernanceTool.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IntopaloController : ControllerBase
+    public class DataGTController : ControllerBase
     {
         private readonly DataGovernanceDBContext _context;
 
-        public IntopaloController(DataGovernanceDBContext context)
+        public DataGTController(DataGovernanceDBContext context)
         {
             _context = context;
 
             if (_context.Collections.Count() == 0)
             {
-                // Create a new IntopaloItem if collection is empty,
-                // which means you can't delete all IntopaloItems.
-                //_context.Collections.Add(new Collection { Name = "IntopaloCollection1" });
+                // Create a new DataGTItem if collection is empty,
+                // which means you can't delete all DataGTItems.
+                //_context.Collections.Add(new Collection { Name = "DataGTCollection1" });
                 //_context.SaveChanges();
             }
             

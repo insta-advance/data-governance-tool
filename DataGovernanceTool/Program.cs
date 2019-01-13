@@ -23,14 +23,14 @@ namespace DataGovernanceTool
 
         /*static void Main(string[] args)
          {
-             using (var context = new IntopaloContext()) {
+             using (var context = new DataGTContext()) {
 
-                 var std = new IntopaloItem()
+                 var std = new DataGTItem()
                  {
                       Name = "Bill"
                  };
 
-                 context.IntopaloItems.Add(std);
+                 context.DataGTItems.Add(std);
                  context.SaveChanges();
              }
          }*/

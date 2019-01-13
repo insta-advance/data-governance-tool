@@ -40,11 +40,13 @@ namespace DataGovernanceTool
             services.AddTransient<ITablesManager, TablesManager>();
             services.AddTransient<ITablesRepository, TablesRepository>();
             services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
-            // Comment next 2 lines for Docker, otherwise uncomment
+
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 
+            
             // NOT Docker
             opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
             // Docker
             //opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
 

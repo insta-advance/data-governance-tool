@@ -13,15 +13,15 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": false,
-      "launchUrl": "api/intopalo",
+      "launchUrl": "api/DataGT",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IntopaloApi": {
+    "DataGT": {
       "commandName": "Project",
       "launchBrowser": false,
-      "launchUrl": "api/intopalo",
+      "launchUrl": "api/DataGT",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
