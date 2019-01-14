@@ -15,19 +15,5 @@ namespace DataGovernanceTool.Data.Access.Repositories
         public KeyRelationshipsRepository(BaseDbContext dbContext) : base(dbContext)
         {
         }
-        public async Task<KeyRelationship> GetAsync(int id)
-        {
-            Console.WriteLine("asdfasdfadsf");
-            var entity = await DbSet.FindAsync(new int[] {5,8,3,3});
-            Console.WriteLine("doned");
-
-            if (entity == null)
-            {
-                throw new EntityNotFoundException($@"{typeof(KeyRelationship).Name} with id {id} not found.");
-            }
-
-            return entity;
-        }
-
     }
 }

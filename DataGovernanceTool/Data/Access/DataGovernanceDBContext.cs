@@ -40,7 +40,7 @@ namespace DataGovernanceTool.Data.Access
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             /* Configure many-to-many manually. */
             modelBuilder.Entity<KeyRelationship>()
-                .HasKey(r => new { r.FromId, r.ToId });
+                .HasAlternateKey(r => new { r.FromId, r.ToId });
             modelBuilder.Entity<KeyRelationship>()
                 .HasOne(r => r.From)
                 .WithMany(r => r.PrimaryKeyTo)
@@ -55,7 +55,7 @@ namespace DataGovernanceTool.Data.Access
 
             /* Composite key is a subset of fields. Configure many-to-many. */
             modelBuilder.Entity<CompositeKeyField>()
-                .HasKey(c => new { c.FieldId, c.CompositeKeyId });
+                .HasAlternateKey(c => new { c.FieldId, c.CompositeKeyId });
             modelBuilder.Entity<CompositeKeyField>()
                 .HasOne(c => c.Field)
                 .WithMany(c => c.CompositeKeyFields)
@@ -79,6 +79,18 @@ namespace DataGovernanceTool.Data.Access
                 .HasOne(s => s.Datastore)
                 .WithMany(d => d.StructuredFiles)
                 .HasForeignKey(s => s.DatastoreId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CompositeKey>()
+                .HasOne(c => c.TableForeign)            
+                .WithMany(t => t.ForeignKeys)
+                .HasForeignKey(c => c.TableId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Table>()
+                .HasOne(t => t.PrimaryKey)            
+                .WithOne(c => c.TablePrimary)
+                .HasForeignKey<CompositeKey>(c => c.TableId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UnstructuredFile>()

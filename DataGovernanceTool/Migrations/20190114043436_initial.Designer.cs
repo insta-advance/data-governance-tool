@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntopaloApi.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
-    [Migration("20181221022848_initial")]
+    [Migration("20190114043436_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,11 +39,16 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKeyField", b =>
                 {
-                    b.Property<int>("FieldId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("CompositeKeyId");
 
-                    b.HasKey("FieldId", "CompositeKeyId");
+                    b.Property<int>("FieldId");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("FieldId", "CompositeKeyId");
 
                     b.HasIndex("CompositeKeyId");
 
@@ -52,17 +57,18 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Relationships.KeyRelationship", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("FromId");
 
                     b.Property<int>("ToId");
 
-                    b.Property<int>("Id");
-
                     b.Property<string>("Type");
 
-                    b.HasKey("FromId", "ToId");
+                    b.HasKey("Id");
 
-                    b.HasAlternateKey("Id");
+                    b.HasAlternateKey("FromId", "ToId");
 
                     b.HasIndex("ToId");
 
@@ -105,6 +111,14 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Base");
 
+                    b.Property<int?>("TableForeignId");
+
+                    b.Property<int>("TableId");
+
+                    b.HasIndex("TableForeignId");
+
+                    b.HasIndex("TableId")
+                        .IsUnique();
 
                     b.ToTable("CompositeKey");
 
@@ -236,13 +250,9 @@ namespace IntopaloApi.Migrations
                 {
                     b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Structured");
 
-                    b.Property<int?>("KeyId");
-
                     b.Property<int>("SchemaId");
 
                     b.Property<string>("TableName");
-
-                    b.HasIndex("KeyId");
 
                     b.HasIndex("SchemaId");
 
@@ -281,6 +291,18 @@ namespace IntopaloApi.Migrations
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Base", "To")
                         .WithMany("ForeignKeyTo")
                         .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKey", b =>
+                {
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Table", "TableForeign")
+                        .WithMany("ForeignKeys")
+                        .HasForeignKey("TableForeignId");
+
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Table", "TablePrimary")
+                        .WithOne("PrimaryKey")
+                        .HasForeignKey("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKey", "TableId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -334,10 +356,6 @@ namespace IntopaloApi.Migrations
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Table", b =>
                 {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKey", "Key")
-                        .WithMany()
-                        .HasForeignKey("KeyId");
-
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", "Schema")
                         .WithMany("Tables")
                         .HasForeignKey("SchemaId")

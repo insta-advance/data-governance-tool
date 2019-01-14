@@ -29,6 +29,8 @@ namespace IntopaloApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
+                    TableId = table.Column<int>(nullable: true),
+                    TableForeignId = table.Column<int>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     DatastoreId = table.Column<int>(nullable: true),
                     SchemaName = table.Column<string>(nullable: true),
@@ -40,13 +42,24 @@ namespace IntopaloApi.Migrations
                     StructuredFile_DatastoreId = table.Column<int>(nullable: true),
                     TableName = table.Column<string>(nullable: true),
                     SchemaId = table.Column<int>(nullable: true),
-                    KeyId = table.Column<int>(nullable: true),
                     UnstructuredFile_FilePath = table.Column<string>(nullable: true),
                     UnstructuredFile_DatastoreId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bases", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bases_Bases_TableForeignId",
+                        column: x => x.TableForeignId,
+                        principalTable: "Bases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Bases_Bases_TableId",
+                        column: x => x.TableId,
+                        principalTable: "Bases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bases_Bases_DatabaseId",
                         column: x => x.DatabaseId,
@@ -77,12 +90,6 @@ namespace IntopaloApi.Migrations
                         principalTable: "Datastores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bases_Bases_KeyId",
-                        column: x => x.KeyId,
-                        principalTable: "Bases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Bases_Bases_SchemaId",
                         column: x => x.SchemaId,
@@ -121,12 +128,15 @@ namespace IntopaloApi.Migrations
                 name: "CompositeKeyFields",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     FieldId = table.Column<int>(nullable: false),
                     CompositeKeyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompositeKeyFields", x => new { x.FieldId, x.CompositeKeyId });
+                    table.PrimaryKey("PK_CompositeKeyFields", x => x.Id);
+                    table.UniqueConstraint("AK_CompositeKeyFields_FieldId_CompositeKeyId", x => new { x.FieldId, x.CompositeKeyId });
                     table.ForeignKey(
                         name: "FK_CompositeKeyFields_Bases_CompositeKeyId",
                         column: x => x.CompositeKeyId,
@@ -145,15 +155,16 @@ namespace IntopaloApi.Migrations
                 name: "KeyRelationships",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     FromId = table.Column<int>(nullable: false),
                     ToId = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KeyRelationships", x => new { x.FromId, x.ToId });
-                    table.UniqueConstraint("AK_KeyRelationships_Id", x => x.Id);
+                    table.PrimaryKey("PK_KeyRelationships", x => x.Id);
+                    table.UniqueConstraint("AK_KeyRelationships_FromId_ToId", x => new { x.FromId, x.ToId });
                     table.ForeignKey(
                         name: "FK_KeyRelationships_Bases_FromId",
                         column: x => x.FromId,
@@ -172,6 +183,17 @@ namespace IntopaloApi.Migrations
                 name: "IX_Annotations_BaseId",
                 table: "Annotations",
                 column: "BaseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bases_TableForeignId",
+                table: "Bases",
+                column: "TableForeignId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bases_TableId",
+                table: "Bases",
+                column: "TableId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bases_DatabaseId",
@@ -227,11 +249,6 @@ namespace IntopaloApi.Migrations
                 table: "Bases",
                 columns: new[] { "FilePath", "StructuredFile_DatastoreId" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bases_KeyId",
-                table: "Bases",
-                column: "KeyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bases_SchemaId",

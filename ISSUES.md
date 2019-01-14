@@ -10,10 +10,21 @@ If metadata is deleted and it contains a foreign key you cannot automatically
 delete the relationship from the KeyRelationship table because SQL server is 
 over paranoid about cascading loops. Either we have to do this on backend or use postgresql.
 
+Solved by migrating to postgresql
+
 ---
 
 ## Certificate
 
 Proper certificate handling should be looked into.
 
+Solved by ignoring http. Use https proxy in development or just run locally.
+
 ---
+
+## KeyRelationship POST not working
+
+Won't be able to post without specifying Id because of conflicting primary keys:
+Id and (FromId, ToId).
+
+Solved byt making (FromId, ToId) a alternate key.

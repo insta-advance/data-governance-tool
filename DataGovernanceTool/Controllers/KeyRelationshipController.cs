@@ -16,16 +16,22 @@ namespace DataGovernanceTool.Controllers
         {
         }
 
-        // [HttpGet("{id}")]
-        // public async Task<T> GetById(int id)
-        // {
-        //     return await manager.GetAsync(id);
-        // }
+        [HttpGet("{id1}/{id2}")]
+        public async Task<KeyRelationship> GetComposite(int id1, int id2)
+        {
+            return await manager.FindAsync(id1, id2);
+        }
 
         [HttpGet("from/{id}")]
-        public async Task<KeyRelationship> GetByFromId(int id)
+        public async Task<IEnumerable<KeyRelationship>> FromIdList(int id)
         {
-            return await manager.GetAsync(id);
+            return await manager.Filter(k => k.FromId == id);
+        }
+
+        [HttpGet("to/{id}")]
+        public async Task<IEnumerable<KeyRelationship>> ToIdList(int id)
+        {
+            return await manager.Filter(k => k.ToId == id);
         }
     }
 }

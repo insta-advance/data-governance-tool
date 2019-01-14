@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Linq.Expressions;
 using DataGovernanceTool.BusinessLogic.IManagers;
 using DataGovernanceTool.Data.Access.IRepositories;
 using DataGovernanceTool.Data.Models.Metadata.Structure;
+using Microsoft.EntityFrameworkCore;
 namespace DataGovernanceTool.BusinessLogic.Managers
 {
 
@@ -25,6 +28,17 @@ namespace DataGovernanceTool.BusinessLogic.Managers
         {
             return await Repository.GetAsync(id);
         }
+
+        public virtual async Task<TEntity> FindAsync(params object[] keys)
+        {
+            return await Repository.FindAsync(keys);
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> Filter(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Repository.Filter(predicate).ToListAsync();
+        }
+
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {

@@ -7,7 +7,7 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 
 namespace DataGovernanceTool.Data.Models.Metadata.Relationships
 {
-    public class CompositeKeyField
+    public class CompositeKeyField : SuperBase
     {
         /* PK in metadata */
         public int FieldId { get; set; }

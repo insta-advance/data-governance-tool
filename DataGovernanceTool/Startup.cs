@@ -48,6 +48,10 @@ namespace DataGovernanceTool
             services.AddTransient<BaseDbContext, DataGovernanceDBContext>();
             services.AddTransient<IKeyRelationshipsManager, KeyRelationshipsManager>();
             services.AddTransient<IKeyRelationshipsRepository, KeyRelationshipsRepository>();
+            services.AddTransient<ICompositeKeysRepository, CompositeKeysRepository>();
+            services.AddTransient<ICompositeKeysManager, CompositeKeysManager>();
+            services.AddTransient<ICompositeKeyFieldsRepository, CompositeKeyFieldsRepository>();
+            services.AddTransient<ICompositeKeyFieldsManager, CompositeKeyFieldsManager>();
             // Comment next 2 lines for Docker, otherwise uncomment
 
             services.AddDbContext<DataGovernanceDBContext>(opt => 

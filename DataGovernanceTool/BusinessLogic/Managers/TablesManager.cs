@@ -18,12 +18,25 @@ namespace DataGovernanceTool.BusinessLogic.Managers
 
         public new async Task<IEnumerable<Table>> GetAsync()
         {
-            return await Repository.All().Include(t => t.Fields).ToListAsync();
+            return await Repository.All()
+                .Include(t => t.Fields)
+                .Include(t => t.PrimaryKey)
+                    .ThenInclude(c => c.CompositeKeyFields)
+                .Include(t => t.ForeignKeys)
+                    .ThenInclude(c => c.CompositeKeyFields)
+                .ToListAsync();
         }
 
         public new async Task<Table> GetAsync(int id)
         {
-            var table = await Repository.Filter(t => t.Id == id).Include(t => t.Fields).ToListAsync();
+            var table = await Repository.Filter(t => t.Id == id)
+                .Include(t => t.Fields)
+                .Include(t => t.PrimaryKey)
+                    .ThenInclude(c => c.CompositeKeyFields)
+                .Include(t => t.ForeignKeys)
+                    .ThenInclude(c => c.CompositeKeyFields)
+                .Include(t => t.ForeignKeys)
+                .ToListAsync();
             if (table.Count == 0) {
                 throw new EntityNotFoundException($@"{typeof(Table).Name} with id {id} not found.");
             } 

@@ -11,6 +11,7 @@ namespace DataGovernanceTool.Data.Models.Metadata.Structure
         public string TableName { get; set; }
         public Schema Schema { get; set; }
         public int SchemaId { get; set; }
-        public CompositeKey Key { get; set; }
+        public CompositeKey PrimaryKey { get; set; }
+        public List<CompositeKey> ForeignKeys { get; set; }
     }
 }

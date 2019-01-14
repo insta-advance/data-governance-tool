@@ -10,5 +10,8 @@ namespace DataGovernanceTool.Data.Models.Metadata.Relationships
     public class CompositeKey : Base
     {
         public List<CompositeKeyField> CompositeKeyFields { get; set; }
+        public int TableId { get; set; }
+        public Table TablePrimary { get; set; }
+        public Table TableForeign { get; set; }
     }
 }
