@@ -4,28 +4,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-relational-view',
-  templateUrl: './database-view.component.html',
-  styleUrls: ['./database-view.component.css']
+  selector: 'app-table-view',
+  templateUrl: './table-view.component.html',
+  styleUrls: ['./table-view.component.css']
 })
-export class DatabaseViewComponent implements OnInit {
+export class TableViewComponent implements OnInit {
 
-    datastore:any = [];
-    databases:any = [];
-    schemas:any = [];
-    tables:any = [];
-    fields:any = [];
-    
+
+
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
 
     }
 
-
-    
     backToHome() {
         this.router.navigate(['/']);
     } 
-
+  
 }

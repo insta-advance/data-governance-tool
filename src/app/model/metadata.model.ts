@@ -1,14 +1,14 @@
 export interface Field{
     type: string;
     structureId: number;
-    fields: Fields[];
+    fields: Field[];
     name: string;
     id: number;
 }
 
 export interface Table{
     schemaId: number;
-    fields: Fields[];
+    fields: Field[];
     name: string;
     id: number;
 }
@@ -38,9 +38,9 @@ export interface StructuredFile{
 }   
 export interface Datastore{
     name: string;
-    databases: string;
-    structuredFiles: string;
-    unstructuredFiles: string;
+    databases: Database[];
+    structuredFiles: Database[];
+    unstructuredFiles: Database[];
     id: string;
 }  
 

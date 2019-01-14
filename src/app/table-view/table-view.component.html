@@ -3,17 +3,17 @@
         <button (click)="backToHome()">{{p.Name}} </button>
         <span class="breadcrumbs-divider">►</span>
         <p>{{p.Databases[0].Name}}</p>
+        <span class="breadcrumbs-divider">►</span>
+        <p>PH SCHEMA NAME</p>
         <span class="breadcrumbs-divider">|</span>
         <p class="edit">Edit</p>
         <span class="breadcrumbs-divider">|</span>
-        <p class="add">+ Add new schema</p>
+        <p class="add">+ Add new table</p>
     </div>
 </div>
-
 <div *ngFor="let p of schemasData; let j=index;">
-    <p class="schema-name">{{p.Name}} | <a href="http://localhost:4200/db/1/2">View</a> </p>
 	<div *ngFor="let t of schemasData.Tables; let i=index;">
-		<p class="table-name">{{t.Name}}</p>
+		<p class="table-name">{{t.Name}}</p>  <p class="edit">Edit</p>
 		<div class="table-fields">        
 		    <p class="field-id"> {{t.Id}}, </p>
 		    <p class="field-name">name, </p>

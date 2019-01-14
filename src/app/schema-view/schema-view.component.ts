@@ -10,30 +10,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SchemaViewComponent implements OnInit {
 
-    singleSchemaData:any = [];
-    datastoreData:any = [];
+
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
 	this.getDatastoreData();
-        this.getSchemaData();
+
     }
 
-    getDatastoreData() {
-        this.datastoreData = [];
-        this.rest.getDatastore().subscribe((ddata: {}) => {
-          console.log(ddata);
-          this.datastoreData = ddata;
-    });
-  }
-    getSchemaData() {
-        this.singleSchemaData = [];
-        this.rest.getSingleSchema(2) => {
-          console.log(data);
-          this.singleSchemaData = data;
-    });
-  }
+
     backToHome() {
         this.router.navigate(['/']);
     } 

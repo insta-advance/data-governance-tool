@@ -12,17 +12,11 @@
             </div>
         </div>
         
-        <div *ngFor="let d of datastore; let i=index;">
-		<h2>[{{d.Databases[i].Type}}] {{d.Databases[i].Name}}  | <a href="/db/1">View</a></h2>
-	</div>
+        <div *ngFor="let d of databases; let i=index;">
+		  <h2>[{{d.Databases[i].Type}}] {{d.Databases[i].Name}}  | <a href="/db/1">View</a></h2>
+            
+        </div>
 
-        <div *ngFor="let d of datastore; let i=index;">
-		<h2>struc file ph {{d.StructuredFiles}}  | <a href="">Edit</a> </h2>
-	</div>
-
-        <div *ngFor="let d of datastore; let i=index;">
-		<h2>unstruc file ph {{d.UnstructuredFiles}}  | <a href="">Edit</a></h2>
-	</div>
     </div>
 </div>
 

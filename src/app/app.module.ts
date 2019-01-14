@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { TableViewComponent } from './table-view/table-view.component';
 import { SchemaViewComponent } from './schema-view/schema-view.component';
 import { DatabaseViewComponent } from './database-view/database-view.component';
 import { GlobalViewComponent } from './global-view/global-view.component';
@@ -13,9 +14,7 @@ import { GlobalViewComponent } from './global-view/global-view.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { RelationalViewComponent } from './relational-view/relational-view.component';
-import { NonrelationalViewComponent } from './nonrelational-view/nonrelational-view.component';
-import { TableAddComponent } from './table-add/table-add.component';
+
 
 
 const appRoutes: Routes = [
@@ -26,13 +25,18 @@ const appRoutes: Routes = [
   },
   {
     path: 'db/:id',
-    component: RelationalViewComponent,
-    data: { title: 'All schemas View' }
+    component: DatabaseViewComponent,
+    data: { title: 'Database view' }
   },
   {
-    path: 'db/:id/:schemaId',
+    path: 'db/:id/schema/:schemaId',
     component: SchemaViewComponent,
     data: { title: 'Schema view' }
+  },
+  {
+    path: 'db/:id/schema/:schemaId/table/:tableId',
+    component: TableViewComponent,
+    data: { title: 'Table view' }
   },
 ];
 
@@ -41,12 +45,8 @@ const appRoutes: Routes = [
     AppComponent,
     GlobalViewComponent,
     SchemaViewComponent,
-    DatabaseViewComponent,
     GlobalViewComponent,
-    RelationalViewComponent,
-    NonrelationalViewComponent,
-    TableAddComponent,
-
+    DatabaseViewComponent,
   ],
   imports: [
       RouterModule.forRoot(appRoutes),

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NonrelationalViewComponent } from './nonrelational-view.component';
+import { TableViewComponent } from './table-view.component';
 
-describe('NonrelationalViewComponent', () => {
-  let component: NonrelationalViewComponent;
-  let fixture: ComponentFixture<NonrelationalViewComponent>;
+describe('TableViewComponent', () => {
+  let component: TableViewComponent;
+  let fixture: ComponentFixture<TableViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NonrelationalViewComponent ]
+      declarations: [ TableViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NonrelationalViewComponent);
+    fixture = TestBed.createComponent(TableViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
