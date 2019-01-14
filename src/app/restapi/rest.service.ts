@@ -101,7 +101,11 @@ export class RestService {
 
     deleteTable (id): Observable<Table> {
       return this.http.delete<Table>(endpointTables + '/' + id, httpOptions);
-    }    
+    }  
+  
+    addTable (table): Observable<Table> {
+	return this.http.post<Table>(endpointTables, table, httpOptions);
+    }
     /*---------------------FIELDS--------------------*/
     getFields(): Observable<any> {
       return this.http.get(endpointFields).pipe(

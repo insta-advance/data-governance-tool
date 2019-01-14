@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../restapi/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Table, Schema, Field } from '../model/metadata.model';
 
 @Component({
   selector: 'app-schema-view',
@@ -14,17 +15,28 @@ export class SchemaViewComponent implements OnInit {
     databases:any = [];
     schemas:any = [];
     tables:any = [];
- 
 
 
-    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+	tableForm: FormGroup;
+	SchemaId:number=null;
+	Fields:string='';
+	Name:string='';
+	/*Id:number=null;*/
+
+
+    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
         this.getDatastoreData();
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
-
+	this.tableForm = this.formBuilder.group({
+	    'SchemaId' : [],
+	    'Fields' : [],
+	    'Name' : [],
+	    /*'Id' : []*/
+	  });
     }
 
     getDatastoreData() {
@@ -59,7 +71,10 @@ export class SchemaViewComponent implements OnInit {
         });
     }    
 
-
+	onFormSubmit() {
+	  this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
+          console.log(data);});
+	}
     
     backToHome() {
         this.router.navigate(['/']);

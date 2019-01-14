@@ -7,10 +7,10 @@ export interface Field{
 }
 
 export interface Table{
-    schemaId: number;
-    fields: Field[];
-    name: string;
-    id: number;
+    SchemaId: number;
+    Fields: Field[];
+    Name: string;
+    Id: number;
 }
 
 

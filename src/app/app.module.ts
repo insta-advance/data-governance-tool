@@ -12,9 +12,7 @@ import { DatabaseViewComponent } from './database-view/database-view.component';
 import { GlobalViewComponent } from './global-view/global-view.component';
 
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const appRoutes: Routes = [
@@ -51,8 +49,10 @@ const appRoutes: Routes = [
   imports: [
       RouterModule.forRoot(appRoutes),
       FormsModule,
+      ReactiveFormsModule,
       BrowserModule,
       HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

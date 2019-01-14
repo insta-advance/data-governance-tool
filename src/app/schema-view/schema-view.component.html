@@ -31,3 +31,15 @@
 </div>
 
 
+
+
+ <form [formGroup]="tableForm" (ngSubmit)="onFormSubmit()">
+  
+      <input  type="text" placeholder="Schema ID" formControlName="SchemaId">
+        <input  type="text" placeholder="Fields" formControlName="Fields">
+        <input  type="text" placeholder="Name" formControlName="Name">
+          <!-- <input  type="text" placeholder="ID" formControlName="Id">-->
+
+	<button> save </button>
+ </form>
+
