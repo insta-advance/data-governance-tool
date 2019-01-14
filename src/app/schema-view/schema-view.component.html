@@ -1,25 +1,33 @@
-<div *ngFor="let p of datastoreData; let i=index;">
-    <div class="homelink">
-        <button (click)="backToHome()">{{p.Name}} </button>
-        <span class="breadcrumbs-divider">►</span>
-        <p>{{p.Databases[0].Name}}</p>
-        <span class="breadcrumbs-divider">►</span>
-        <p>PH SCHEMA NAME</p>
-        <span class="breadcrumbs-divider">|</span>
-        <p class="edit">Edit</p>
-        <span class="breadcrumbs-divider">|</span>
-        <p class="add">+ Add new table</p>
+<div class="container">
+    <div class="global">
+	<div class="homelink">
+        	<button (click)="backToHome()">{{datastore.Name}} </button>
+		<span class="breadcrumbs-divider">►</span>    
+		<button (click)="backToDb()">{{datastore.Databases[0].Name}}</button>
+		<span class="breadcrumbs-divider">►</span>    
+		<p>[PH] schema name</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="edit">Edit</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add">+ Add new table</p>
+
+	</div>
+
+	<div *ngFor="let t of tables; let i=index;">
+		<div class="table">
+			<p class="table-name">{{t.Name}} |  <button (click)="deleteTable()">Edit</button></p>
+			<div *ngFor="let f of t.Fields; let j=index;">
+				<div class="table-fields">        
+				    <p class="field-id"> {{f.Id}}, </p>
+				    <p class="field-name"> {{f.Name}}, </p>
+				    <p class="field-type"> {{f.Type}}, </p>
+				    <div class="rel-from">PK, </div>
+				    <div class="rel-to">FK </div>
+				</div>	
+			</div>
+		</div>
+	</div>
     </div>
 </div>
-<div *ngFor="let p of schemasData; let j=index;">
-	<div *ngFor="let t of schemasData.Tables; let i=index;">
-		<p class="table-name">{{t.Name}}</p>  <p class="edit">Edit</p>
-		<div class="table-fields">        
-		    <p class="field-id"> {{t.Id}}, </p>
-		    <p class="field-name">name, </p>
-		    <p class="field-type">type, </p>
-		    <div class="rel-from">PK </div>
-		    <div class="rel-to">FK </div>
-		</div>
-	 </div>
-</div>
+
+

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { TableViewComponent } from './table-view/table-view.component';
+//import { TableViewComponent } from './table-view/table-view.component';
 import { SchemaViewComponent } from './schema-view/schema-view.component';
 import { DatabaseViewComponent } from './database-view/database-view.component';
 import { GlobalViewComponent } from './global-view/global-view.component';
@@ -33,11 +33,11 @@ const appRoutes: Routes = [
     component: SchemaViewComponent,
     data: { title: 'Schema view' }
   },
-  {
+  /*{
     path: 'db/:id/schema/:schemaId/table/:tableId',
     component: TableViewComponent,
     data: { title: 'Table view' }
-  },
+  },*/
 ];
 
 @NgModule({

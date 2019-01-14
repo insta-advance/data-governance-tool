@@ -14,7 +14,7 @@ export class GlobalViewComponent implements OnInit {
     databases:any = [];
     schemas:any = [];
     tables:any = [];
-    fields:any = [];
+
 
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
@@ -24,7 +24,7 @@ export class GlobalViewComponent implements OnInit {
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
-        this.getFieldData();
+
     }
 
     getDatastoreData() {
@@ -58,13 +58,6 @@ export class GlobalViewComponent implements OnInit {
           this.tables = data;
         });
     }    
-    
-    getFieldData() {
-        this.fields = [];
-        this.rest.getFields().subscribe((data: {}) => {
-          console.log(data);
-          this.fields = data;
-        });
-    }
+
 
 }

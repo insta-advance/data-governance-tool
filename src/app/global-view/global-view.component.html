@@ -1,22 +1,33 @@
 <div class="container">
     <div class="global">
-        <div *ngFor="let d of datastore; let i=index;">    
-            <div class="homelink">
-                <p>{{d.Name}}</p>
-               <span class="breadcrumbs-divider">|</span>    
-                <p class="edit">Edit</p>
-                <span class="breadcrumbs-divider">|</span>
-                <p class="add">+ Add new database</p>
-                <span class="breadcrumbs-divider">|</span>
-                <p class="add">+ Add new file</p>
-            </div>
-        </div>
-        
-        <div *ngFor="let d of databases; let i=index;">
-		  <h2>[{{d.Databases[i].Type}}] {{d.Databases[i].Name}}  | <a href="/db/1">View</a></h2>
-            
-        </div>
+	<div class="homelink">
+		<p>{{datastore.Name}}</p>
+		<span class="breadcrumbs-divider">|</span>    
+		<p class="edit">Edit</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add">+ Add new database</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add">+ Add new file</p>
+	</div>
 
+	<h2>[{{databases[0].Type}}] {{databases[0].Name}}  | <a href="">Edit</a>  | <a href="/db/{{databases[0].Id}}">View</a></h2>
+	<div *ngFor="let s of schemas; let i=index;">
+		<p class="schema-name">{{s.Name}} | <a href="/db/{{databases[0].Id}}/schema/{{s.Id}}">View</a> </p>
+	</div>
+	<div *ngFor="let t of tables; let i=index;">
+		<div class="table">
+			<p class="table-name">{{t.Name}} | <a href="">Edit</a> </p>
+			<div *ngFor="let f of t.Fields; let j=index;">
+				<div class="table-fields">        
+				    <p class="field-id"> {{f.Id}}, </p>
+				    <p class="field-name"> {{f.Name}}, </p>
+				    <p class="field-type"> {{f.Type}}, </p>
+				    <div class="rel-from">PK </div>
+				    <div class="rel-to">FK </div>
+				</div>	
+			</div>
+		</div>
+	</div>
     </div>
 </div>
 
