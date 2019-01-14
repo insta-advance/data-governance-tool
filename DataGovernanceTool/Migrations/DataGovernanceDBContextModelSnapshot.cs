@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace IntopaloApi.Migrations
+namespace DataGT.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
     partial class DataGovernanceDBContextModelSnapshot : ModelSnapshot

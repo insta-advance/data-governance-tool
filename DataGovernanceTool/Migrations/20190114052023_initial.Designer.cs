@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace IntopaloApi.Migrations
+namespace DataGT.Migrations
 {
     [DbContext(typeof(DataGovernanceDBContext))]
-    [Migration("20190114043436_initial")]
+    [Migration("20190114052023_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

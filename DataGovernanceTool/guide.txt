@@ -4,7 +4,7 @@ Install Docker and Docker-compose
 
 You probably need to comment out the content of Up function in Migration/201812091111_initial.cs file
 
-Run following commands in IntopaloApi folder:
+Run following commands in DataGT folder:
 
 docker build -t datagt .
 docker build -it -p 5000:5000 datagt
@@ -45,7 +45,7 @@ Names of the item lists can be found in the file Model/JsonData.cs.
 Examples of JSON bodies for basic REST Api calls:
 
 (CREATE)
-POST /api/intopalo:
+POST /api/DataGT:
 {
     "jsonCollections":
     [
@@ -59,16 +59,16 @@ POST /api/intopalo:
     "jsonUnstructuredFiles":
     [
     	{
-    		"FilePath": "/home/Intopalo"
+    		"FilePath": "/home/DataGT"
        	},
        	{
-       		"FilePath": "/home/datagovernance/Intopalo"
+       		"FilePath": "/home/datagovernance/DataGT"
        	}
     ]
 }
 
 (UPDATE)
-PUT /api/intopalo:
+PUT /api/DataGT:
 {
 	"jsonCollections":
     [
@@ -84,18 +84,18 @@ PUT /api/intopalo:
     "jsonUnstructuredFiles":
     [
     	{
-    		"FilePath": "/home/Intopalo/changed",
+    		"FilePath": "/home/DataGT/changed",
     		"BaseID" : 2016
        	},
        	{
-       		"FilePath": "/home/datagovernance/Intopalo/changed",
+       		"FilePath": "/home/datagovernance/DataGT/changed",
        		"BaseID" : 2017
        	}
     ]
 }
 
 (DELETE)
-DELETE /api/intopalo:
+DELETE /api/DataGT:
 
 {
     "jsonCollections":

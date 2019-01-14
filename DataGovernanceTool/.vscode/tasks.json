@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/IntopaloApi.csproj"
+                "${workspaceFolder}/DataGT.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
