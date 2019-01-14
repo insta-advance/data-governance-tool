@@ -15,7 +15,7 @@ export class SchemaViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-	this.getDatastoreData();
+
 
     }
 
