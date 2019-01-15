@@ -3,18 +3,17 @@
 	<div class="homelink">
         	<button (click)="backToHome()">{{datastore.Name}} </button>
 		<span class="breadcrumbs-divider">►</span>    
-		<button (click)="backToDb()">{{datastore.Databases[0].Name}}</button>
-		<span class="breadcrumbs-divider">►</span>    
-		<p>[PH] schema name</p>
+		<button (click)="backToDb()">{{database.Name}}</button>
+		<span class="breadcrumbs-divider">►</span>
+		<p > {{schema.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="edit">Edit</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add">+ Add new table</p>
-
 	</div>
 
 	<div *ngFor="let t of tables; let i=index;">
-		<div class="table">
+		<div *ngIf="t.SchemaId==schema.Id" class="table">
 			<p class="table-name">{{t.Name}} |  <button (click)="deleteTable()">Edit</button></p>
 			<div *ngFor="let f of t.Fields; let j=index;">
 				<div class="table-fields">        
@@ -34,12 +33,8 @@
 
 Add table
  <form [formGroup]="tableForm" (ngSubmit)="onFormSubmit()">
-  
-      <input  type="text" placeholder="Schema ID" formControlName="SchemaId">
         <input  type="text" placeholder="Fields" formControlName="Fields">
         <input  type="text" placeholder="Name" formControlName="Name">
-          <!-- <input  type="text" placeholder="ID" formControlName="Id">-->
-
 	<button> save </button>
  </form>
 

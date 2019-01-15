@@ -12,30 +12,32 @@ import { Table, Schema, Field } from '../model/metadata.model';
 export class SchemaViewComponent implements OnInit {
 
         datastore:any = [];
-    databases:any = [];
-    schemas:any = [];
-    tables:any = [];
+	database:any = [];
+	schema:any = [];
+	tables:any = [];
 
+	dbid:any = '';
+ 	schid:any = '';
 
 	tableForm: FormGroup;
 	SchemaId:number=null;
 	Fields:string='';
 	Name:string='';
-	/*Id:number=null;*/
 
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
+	this.dbid=this.route.snapshot.paramMap.get('dbId');
+	this.schid=this.route.snapshot.paramMap.get('schemaId');
         this.getDatastoreData();
-        this.getDatabasesData();
-        this.getSchemasData();
+        this.getDatabaseData(this.dbid);
+        this.getSchemaData(this.schid);
         this.getTablesData();
 	this.tableForm = this.formBuilder.group({
-	    'SchemaId' : [],
+	    'SchemaId' : this.schid,
 	    'Fields' : [],
 	    'Name' : [],
-	    /*'Id' : []*/
 	  });
     }
 
@@ -47,19 +49,19 @@ export class SchemaViewComponent implements OnInit {
         });
     }    
     
-    getDatabasesData() {
-        this.databases = [];
-        this.rest.getDatabases().subscribe((data: {}) => {
+    getDatabaseData(id) {
+        this.database = [];
+        this.rest.getDatabase(id).subscribe((data: {}) => {
           console.log(data);
-          this.databases = data;
+          this.database = data;
         });
     }    
     
-    getSchemasData() {
-        this.schemas = [];
-        this.rest.getSchemas().subscribe((data: {}) => {
+    getSchemaData(id) {
+        this.schema = [];
+        this.rest.getSchema(id).subscribe((data: {}) => {
           console.log(data);
-          this.schemas = data;
+          this.schema = data;
         });
     }    
     
@@ -82,7 +84,7 @@ export class SchemaViewComponent implements OnInit {
  
 
     backToDb() {
-        this.router.navigate(['/db/1'+ this.route.snapshot.paramMap.get('id')]);
+        this.router.navigate(['/db/'+ this.dbid]);
     }
 
   

@@ -2,43 +2,39 @@
     <div class="global">
 	<div class="homelink">
         	<button (click)="backToHome()">{{datastore.Name}} </button>
-		<span class="breadcrumbs-divider">►</span>    
-		<p>{{datastore.Databases[0].Name}}</p>
+		<span class="breadcrumbs-divider">►</span> 
+		<p > {{database.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="edit">Edit</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add">+ Add new schema</p>
-
-	</div>
-	<div *ngFor="let s of schemas; let i=index;">
-		<p class="schema-name">{{s.Name}} | <a href="/db/{{databases[0].Id}}/schema/{{s.Id}}">View</a> </p>
 	</div>
 
-	<div *ngFor="let t of tables; let i=index;">
-		<div class="table">
-			<p class="table-name">{{t.Name}}</p>
-			<div *ngFor="let f of t.Fields; let j=index;">
-				<div class="table-fields">        
-				    <p class="field-id"> {{f.Id}}, </p>
-				    <p class="field-name"> {{f.Name}}, </p>
-				    <p class="field-type"> {{f.Type}}, </p>
-				    <div class="rel-from">PK, </div>
-				    <div class="rel-to">FK </div>
-				</div>	
+		<div *ngFor="let s of database.Schemas; let j=index;">
+			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <a href="/db/{{s.DatabaseId}}/schema/{{s.Id}}">View</a> </p>
+			<div *ngFor="let t of tables; let k=index;">
+				<div *ngIf="t.SchemaId==s.Id" class="table">
+					<p class="table-name">{{t.Name}} |  <button >Edit</button></p>
+					<div *ngFor="let f of t.Fields; let l=index;">
+						<div class="table-fields">        
+						    <p class="field-id"> {{f.Id}}, </p>
+						    <p class="field-name"> {{f.Name}}, </p>
+						    <p class="field-type"> {{f.Type}}, </p>
+						    <div class="rel-from">PK, </div>
+						    <div class="rel-to">FK </div>
+						</div>	
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+
+	
     </div>
 </div>
 
 Add schema
  <form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
-  
-      <input  type="text" placeholder="Database ID" formControlName="DatabaseId">
-        <input  type="text" placeholder="Tables" formControlName="Tables">
         <input  type="text" placeholder="Name" formControlName="Name">
-          <!-- <input  type="text" placeholder="ID" formControlName="Id">-->
-
 	<button> save </button>
  </form>
 

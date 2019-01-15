@@ -12,10 +12,13 @@ import { Database, Table, Schema, Field } from '../model/metadata.model';
 export class DatabaseViewComponent implements OnInit {
 
         datastore:any = [];
-    databases:any = [];
-    schemas:any = [];
-    tables:any = [];
- 
+	database:any = [];
+	schemas:any = [];
+	tables:any = [];
+
+	dbid:any = '';
+ 	schid:any = '';
+
 	schemaForm: FormGroup;
 	DatabaseId: number=null;    
 	Tables:  string='';
@@ -25,12 +28,14 @@ export class DatabaseViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
+	this.dbid=this.route.snapshot.paramMap.get('dbId');
+	this.schid=this.route.snapshot.paramMap.get('schemaId');
         this.getDatastoreData();
-        this.getDatabasesData();
+        this.getDatabaseData(this.dbid);
         this.getSchemasData();
         this.getTablesData();
 	this.schemaForm = this.formBuilder.group({
-	    'DatabaseId' : [],
+	    'DatabaseId' : this.dbid,
 	    'Tables' : [],
 	    'Name' : [],
 	  });
@@ -44,11 +49,11 @@ export class DatabaseViewComponent implements OnInit {
         });
     }    
     
-    getDatabasesData() {
-        this.databases = [];
-        this.rest.getDatabases().subscribe((data: {}) => {
+    getDatabaseData(id) {
+        this.database = [];
+        this.rest.getDatabase(id).subscribe((data: {}) => {
           console.log(data);
-          this.databases = data;
+          this.database = data;
         });
     }    
     

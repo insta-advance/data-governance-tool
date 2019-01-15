@@ -55,7 +55,7 @@ export class RestService {
     }
 
     getDatabase(id): Observable<any> {
-      return this.http.delete(endpointDatabases + '/' + id).pipe(
+      return this.http.get(endpointDatabases + '/' + id).pipe(
         map(this.extractData));
     }
     

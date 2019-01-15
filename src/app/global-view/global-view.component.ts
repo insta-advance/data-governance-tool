@@ -15,7 +15,7 @@ export class GlobalViewComponent implements OnInit {
     databases:any = [];
     schemas:any = [];
     tables:any = [];
-
+	dtsid: any;
 	databaseForm: FormGroup;
 	Type: string='';    
 	Schemas:  string='';
@@ -26,21 +26,22 @@ export class GlobalViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-        this.getDatastoreData();
+	this.dstid=this.dbid=this.route.snapshot.paramMap.get('storeId');
+        this.getDatastoreData(this.dstid);
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
 	this.databaseForm = this.formBuilder.group({
 	    'Type' : [],
 	    'Schemas' : [],
-	    'DatastoreId' : [],
+	    'DatastoreId' : this.datastore.Id,
 	    'Name' : [],
 	  });
     }
 
-    getDatastoreData() {
+    getDatastoreData(id) {
         this.datastore = [];
-        this.rest.getDatastore(1).subscribe((data: {}) => {
+        this.rest.getDatastore(id).subscribe((data: {}) => {
           console.log(data);
           this.datastore = data;
         });
