@@ -53,15 +53,19 @@ namespace DataGovernanceTool
             services.AddTransient<ICompositeKeysManager, CompositeKeysManager>();
             services.AddTransient<ICompositeKeyFieldsRepository, CompositeKeyFieldsRepository>();
             services.AddTransient<ICompositeKeyFieldsManager, CompositeKeyFieldsManager>();
-            // Comment next 2 lines for Docker, otherwise uncomment
+            services.AddTransient<IAnnotationsRepository, AnnotationsRepository>();
+            services.AddTransient<IAnnotationsManager, AnnotationsManager>();
+            services.AddTransient<IAnnotationBasesRepository, AnnotationBasesRepository>();
+            services.AddTransient<IAnnotationBasesManager, AnnotationBasesManager>();
 
+            // Comment next 2 lines for Docker, otherwise uncomment
             services.AddDbContext<DataGovernanceDBContext>(opt => 
 
             // Docker
-            opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+            // opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
 
             // NOT Docker
-            // opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
 
             //Use in development if sql if pg is too much hassle.

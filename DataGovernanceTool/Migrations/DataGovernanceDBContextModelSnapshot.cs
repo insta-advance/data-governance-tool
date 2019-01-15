@@ -19,20 +19,34 @@ namespace DataGT.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Annotation", b =>
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Annotation", b =>
                 {
-                    b.Property<int>("AnnotationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("BaseId");
 
                     b.Property<string>("Description");
 
-                    b.HasKey("AnnotationId");
+                    b.HasKey("Id");
+
+                    b.ToTable("Annotations");
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.AnnotationBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AnnotationId");
+
+                    b.Property<int>("BaseId");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("AnnotationId", "BaseId");
 
                     b.HasIndex("BaseId");
 
-                    b.ToTable("Annotations");
+                    b.ToTable("AnnotationBases");
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKeyField", b =>
@@ -259,11 +273,17 @@ namespace DataGT.Migrations
                     b.HasDiscriminator().HasValue("Table");
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Annotation", b =>
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.AnnotationBase", b =>
                 {
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Annotation", "Annotation")
+                        .WithMany("AnnotationBases")
+                        .HasForeignKey("AnnotationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Base", "Base")
-                        .WithMany("Annotations")
-                        .HasForeignKey("BaseId");
+                        .WithMany("AnnotationBases")
+                        .HasForeignKey("BaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKeyField", b =>

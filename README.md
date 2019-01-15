@@ -59,7 +59,6 @@ Make life easy:
 `&& dotnet ef migrations add initial --context DataGovernanceDBContext \`  
 `&& dotnet ef database drop --context DataGovernanceDBContext \`  
 `&& dotnet ef database update --context DataGovernanceDBContext \`  
-`/`
 
 ### Compilation
 Compile and run the project  

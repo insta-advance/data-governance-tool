@@ -6,6 +6,7 @@ using System.Data.Entity;*/
 using DataGovernanceTool.Data.Access;
 using Microsoft.EntityFrameworkCore;
 using DataGovernanceTool.Data;
+using DataGovernanceTool.Data.Models.Metadata;
 using DataGovernanceTool.Data.Models.Metadata.Structure;
 using DataGovernanceTool.Data.Models.Metadata.Relationships;
 
@@ -33,9 +34,10 @@ namespace DataGovernanceTool.Data.Access
         public DbSet<UnstructuredFile> UnstructuredFiles { get; set; }
         public DbSet<Database> Databases { get; set; }
         public DbSet<KeyRelationship> KeyRelationships { get; set; }
-        public DbSet<Annotation> Annotations { get; set; }
         public DbSet<CompositeKeyField> CompositeKeyFields { get; set; }
         public DbSet<Datastore> Datastores { get; set; }
+        public DbSet<Annotation> Annotations { get; set; }
+        public DbSet<AnnotationBase> AnnotationBases { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             /* Configure many-to-many manually. */
@@ -65,6 +67,20 @@ namespace DataGovernanceTool.Data.Access
                 .HasOne(c => c.CompositeKey)
                 .WithMany(c => c.CompositeKeyFields)
                 .HasForeignKey(c => c.CompositeKeyId)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+            /* Annotations to bases many to-many. */
+            modelBuilder.Entity<AnnotationBase>()
+                .HasAlternateKey(a => new { a.AnnotationId, a.BaseId });
+            modelBuilder.Entity<AnnotationBase>()
+                .HasOne(a => a.Annotation)
+                .WithMany(a => a.AnnotationBases)
+                .HasForeignKey(r => r.AnnotationId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AnnotationBase>()
+                .HasOne(a => a.Base)
+                .WithMany(b => b.AnnotationBases)
+                .HasForeignKey(a => a.BaseId)
                 .OnDelete(DeleteBehavior.Cascade); 
 
             /* Configure Foreign key of Field(StructuredId)->Structured(Id).*/

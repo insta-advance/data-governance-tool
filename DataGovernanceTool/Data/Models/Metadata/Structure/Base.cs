@@ -13,6 +13,6 @@ namespace DataGovernanceTool.Data.Models.Metadata.Structure
         /* Many-to-Many between PK and FK in metadata. */
         public List<KeyRelationship> PrimaryKeyTo { get; set; }
         public List<KeyRelationship> ForeignKeyTo { get; set; }
-        public List<Annotation> Annotations { get; set; }
+        public List<AnnotationBase> AnnotationBases { get; set; }
     }
 }

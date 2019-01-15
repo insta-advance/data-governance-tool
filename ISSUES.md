@@ -28,3 +28,9 @@ Won't be able to post without specifying Id because of conflicting primary keys:
 Id and (FromId, ToId).
 
 Solved byt making (FromId, ToId) a alternate key.
+
+## Usability issue: PUT in KeyRelationships/CompositeKeyField
+
+You can't change a primary key (composite) to update a relationship.
+
+TODO: custom update.
