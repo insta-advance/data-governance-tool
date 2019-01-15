@@ -28,7 +28,18 @@
 			</div>
 		</div>
 	</div>
+	<h2>[{{databases[1].Type}}] {{databases[1].Name}}  | <a href="">Edit</a>  | <a href="/db/{{databases[1].Id}}">View</a></h2>
     </div>
 </div>
 
+Add database
+ <form [formGroup]="databaseForm" (ngSubmit)="onFormSubmit()">
+  
+        <input  type="text" placeholder="Type" formControlName="Type">
+        <input  type="text" placeholder="Schemas" formControlName="Schemas">
+        <input  type="text" placeholder="Datastore ID" formControlName="DatastoreId">
+        <input  type="text" placeholder="Name" formControlName="Name">
+          <!-- <input  type="text" placeholder="ID" formControlName="Id">-->
 
+	<button> save </button>
+ </form>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../restapi/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Database, Table, Schema, Field } from '../model/metadata.model';
 
 @Component({
   selector: 'app-relational-view',
@@ -15,16 +16,24 @@ export class DatabaseViewComponent implements OnInit {
     schemas:any = [];
     tables:any = [];
  
+	schemaForm: FormGroup;
+	DatabaseId: number=null;    
+	Tables:  string='';
+	Name: string='';
 
 
-    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
         this.getDatastoreData();
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
-
+	this.schemaForm = this.formBuilder.group({
+	    'DatabaseId' : [],
+	    'Tables' : [],
+	    'Name' : [],
+	  });
     }
 
     getDatastoreData() {
@@ -59,7 +68,10 @@ export class DatabaseViewComponent implements OnInit {
         });
     }    
 
-
+	onFormSubmit() {
+	  this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
+	  console.log(data);});
+	}
     
     backToHome() {
         this.router.navigate(['/']);

@@ -31,4 +31,14 @@
     </div>
 </div>
 
+Add schema
+ <form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
+  
+      <input  type="text" placeholder="Database ID" formControlName="DatabaseId">
+        <input  type="text" placeholder="Tables" formControlName="Tables">
+        <input  type="text" placeholder="Name" formControlName="Name">
+          <!-- <input  type="text" placeholder="ID" formControlName="Id">-->
+
+	<button> save </button>
+ </form>
 

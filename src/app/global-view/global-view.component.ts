@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../restapi/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Datastore, Database, Table, Schema, Field } from '../model/metadata.model';
 
 @Component({
   selector: 'app-global-view',
@@ -15,16 +16,26 @@ export class GlobalViewComponent implements OnInit {
     schemas:any = [];
     tables:any = [];
 
+	databaseForm: FormGroup;
+	Type: string='';    
+	Schemas:  string='';
+	DatastoreId: number=null;
+	Name: string='';
+ 
 
-
-    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router) { }
+    constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
         this.getDatastoreData();
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
-
+	this.databaseForm = this.formBuilder.group({
+	    'Type' : [],
+	    'Schemas' : [],
+	    'DatastoreId' : [],
+	    'Name' : [],
+	  });
     }
 
     getDatastoreData() {
@@ -58,6 +69,9 @@ export class GlobalViewComponent implements OnInit {
           this.tables = data;
         });
     }    
-
+	onFormSubmit() {
+	  this.rest.addDatabase(this.databaseForm.value).subscribe((data: {}) => {
+	  console.log(data);});
+	}
 
 }

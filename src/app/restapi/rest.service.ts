@@ -66,6 +66,9 @@ export class RestService {
     deleteDatabase (id): Observable<Database> {
       return this.http.delete<Database>(endpointDatabases + '/' + id, httpOptions);
     }
+    addDatabase (database): Observable<Database> {
+	return this.http.post<Database>(endpointDatabases, database, httpOptions);
+    }
     /*------------------------SCHEMAS------------------------*/
     getSchemas(): Observable<any> {
       return this.http.get(endpointSchemas).pipe(
@@ -83,6 +86,9 @@ export class RestService {
 
     deleteSchema (id): Observable<Schema> {
       return this.http.delete<Schema>(endpointSchemas + '/' + id, httpOptions);
+    }
+    addSchema (schema): Observable<Schema> {
+	return this.http.post<Schema>(endpointSchemas, schema, httpOptions);
     }
     /*------------------------TABLES------------------------*/
     getTables(): Observable<any> {
