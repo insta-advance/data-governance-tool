@@ -9,7 +9,14 @@
 .global{
     grid-column: 1;
     grid-row:1; 
-    
+}
+
+.schema-name button{
+	border:0;
+	background-color:white;
+	margin:0;
+	padding:0;
+
 }
 .side{
     grid-column: 2;
@@ -230,11 +237,10 @@ a:hover{
         font-weight: 900;
 }
 /*UNSTRUCTURED FILES*/
-.unstruct-files{
-    width: 300px;
+.files{
+    width: max-content;
     font-size: 1em;
     display:grid;
-    grid-template-columns: auto;
     grid-template-rows: auto auto;
     grid-gap:0;
     padding: 0;
@@ -252,5 +258,5 @@ a:hover{
 .file-path{
     background-color: #e8e8e8;
     padding: 5px;
-    margin: 0 0 10px 0;
+    margin: 0 0 0 0;
 }

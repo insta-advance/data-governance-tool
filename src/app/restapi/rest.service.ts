@@ -9,10 +9,14 @@ const endpointDatabases = 'http://localhost:5000/api/databases';
 const endpointSchemas = 'http://localhost:5000/api/schemas';
 const endpointTables = 'http://localhost:5000/api/tables';
 const endpointFields = 'http://localhost:5000/api/fields';
+const endpointStructFiles = 'http://localhost:5000/api/structuredfiles';
+const endpointUnstructFiles = 'http://localhost:5000/api/unstructuredfiles';
+const endpointAnnotations = 'http://localhost:5000/api/annotations';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
+	"Access-Control-Allow-Origin": "*",
   })
 };
 
@@ -130,6 +134,48 @@ export class RestService {
     deleteField (id): Observable<Field> {
       return this.http.delete<Field>(endpointFields + '/' + id, httpOptions);
     } 
+    /*---------------------STRUCTURED FILES--------------------*/
+    getStructFiles(): Observable<any> {
+      return this.http.get(endpointStructFiles).pipe(
+        map(this.extractData));
+    }
+
+    getStructFile(id): Observable<any> {
+      return this.http.get(endpointStructFiles + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateStructFile (id, structFile): Observable<any> {
+      return this.http.put(endpointStructFiles + '/' + id, httpOptions, structFile);
+    }
+
+    deleteStructFile (id): Observable<StructuredFile> {
+      return this.http.delete<StructuredFile>(endpointStructFiles + '/' + id, httpOptions);
+    } 
+    addStructFile (structFile): Observable<StructuredFile> {
+	return this.http.post<StructuredFile>(endpointStructFiles, structFile, httpOptions);
+    }
+    /*---------------------UNSTRUCTURED FILES--------------------*/
+    getUnstructFiles(): Observable<any> {
+      return this.http.get(endpointUnstructFiles).pipe(
+        map(this.extractData));
+    }
+
+    getUnstructFile(id): Observable<any> {
+      return this.http.get(endpointUnstructFiles + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateUnstructFile (id, unstructFile): Observable<any> {
+      return this.http.put(endpointUnstructFiles + '/' + id, httpOptions, unstructFile);
+    }
+
+    deleteUnstructFile (id): Observable<UnstructuredFile> {
+      return this.http.delete<UnstructuredFile>(endpointUnstructFiles + '/' + id, httpOptions);
+    } 
+    addUnstructFile (unstructFile): Observable<UnstructuredFile> {
+	return this.http.post<UnstructuredFile>(endpointUnstructFiles, unstructFile, httpOptions);
+    }
     /*---------------------ERROR HANDLING--------------------*/
     private handleError<T> (operation = 'operation', result?: T) {
       return (error: any): Observable<T> => {

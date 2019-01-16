@@ -15,8 +15,15 @@ export class GlobalViewComponent implements OnInit {
 	databases:any = [];
 	schemas:any = [];
 	tables:any = [];
+	structFiles:any = [];
+	unstructFiles: any = [];
 
 	stid: any='';
+
+	structFileForm: FormGroup;
+	FilePath:  string='';
+
+	unstructFileForm: FormGroup;
 
 	databaseForm: FormGroup;
 	Type: string='';    
@@ -30,15 +37,29 @@ export class GlobalViewComponent implements OnInit {
     ngOnInit() {
 	//this.stid=this.route.snapshot.paramMap.get('storeId');
 	//console.log(this.stid);
+
         this.getDatastoreData(1);
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
+	this.getStructFileData();
+	this.getUnstructFileData();
+
 	this.databaseForm = this.formBuilder.group({
 	    'Type' : [],
 	    'Schemas' : [],
-	    'DatastoreId' : this.datastore.Id,
+	    'DatastoreId' : 1,
 	    'Name' : [],
+	  });
+
+	this.structFileForm = this.formBuilder.group({
+	    'FilePath' : [],
+	    'DatastoreId' : 1,
+	  });
+
+	this.unstructFileForm = this.formBuilder.group({
+	    'FilePath' : [],
+	    'DatastoreId' : 1,
 	  });
     }
 
@@ -72,10 +93,45 @@ export class GlobalViewComponent implements OnInit {
           console.log(data);
           this.tables = data;
         });
-    }    
-	onFormSubmit() {
+    }
+    getStructFileData() {
+        this.structFiles = [];
+        this.rest.getStructFiles().subscribe((data: {}) => {
+          console.log(data);
+          this.structFiles = data;
+        });
+    }
+    getUnstructFileData() {
+        this.unstructFiles = [];
+        this.rest.getUnstructFiles().subscribe((data: {}) => {
+          console.log(data);
+          this.unstructFiles = data;
+        });
+    }
+
+
+    
+	addDatabase() {
 	  this.rest.addDatabase(this.databaseForm.value).subscribe((data: {}) => {
 	  console.log(data);});
 	}
+
+	addStructFile() {
+	  this.rest.addStructFile(this.structFileForm.value).subscribe((data: {}) => {
+	  console.log(data);});
+	}
+
+	addUnstructFile() {
+	  this.rest.addUnstructFile(this.unstructFileForm.value).subscribe((data: {}) => {
+	  console.log(data);});
+	}
+
+    toDB(db) {
+        this.router.navigate(['/db/'+ db]);
+    }
+
+   toSchema(db, schema) {
+        this.router.navigate(['/db/'+ db + '/schema/'schema);
+    }
 
 }

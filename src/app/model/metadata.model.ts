@@ -30,11 +30,13 @@ export interface Database{
 }
  
 export interface UnstructuredFile{
-
+	DatastoreId: number;
+    	FilePath: string;
 }
 
 export interface StructuredFile{
-
+	DatastoreId: number;
+    	FilePath: string;
 }   
 export interface Datastore{
     name: string;

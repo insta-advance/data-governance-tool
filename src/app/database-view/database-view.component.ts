@@ -74,12 +74,16 @@ export class DatabaseViewComponent implements OnInit {
     }    
 
 	onFormSubmit() {
-	  this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
-	  console.log(data);});
+  		this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
+  		console.log(data);});
 	}
     
-    backToHome() {
-        this.router.navigate(['/']);
-    } 
+	backToHome() {
+        	this.router.navigate(['/']);
+	} 
+
+	toSchema(db, schema) {
+		this.router.navigate(['/db/'+ db + '/schema/'schema);
+    	}
 
 }

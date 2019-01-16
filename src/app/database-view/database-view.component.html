@@ -1,4 +1,5 @@
 <div class="container">
+
     <div class="global">
 	<div class="homelink">
         	<button (click)="backToHome()">{{datastore.Name}} </button>
@@ -10,8 +11,12 @@
 		<p class="add">+ Add new schema</p>
 	</div>
 
+ <form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
+        <input  type="text" placeholder="Name of new schema" formControlName="Name">
+	<button> Add Schema </button>
+ </form>
 		<div *ngFor="let s of database.Schemas; let j=index;">
-			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <a href="/db/{{s.DatabaseId}}/schema/{{s.Id}}">View</a> </p>
+			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(database.Id, s.Id)">View</button> </p>
 			<div *ngFor="let t of tables; let k=index;">
 				<div *ngIf="t.SchemaId==s.Id" class="table">
 					<p class="table-name">{{t.Name}} |  <button >Edit</button></p>
@@ -32,9 +37,5 @@
     </div>
 </div>
 
-Add schema
- <form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
-        <input  type="text" placeholder="Name" formControlName="Name">
-	<button> save </button>
- </form>
+
 
