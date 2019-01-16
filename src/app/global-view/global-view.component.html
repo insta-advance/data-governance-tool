@@ -13,7 +13,7 @@
 	<div *ngFor="let db of databases; let i=index;">
 		<h2>[{{db.Type}}] {{db.Name}}  | <a href="">Edit</a>  | <a href="/db/{{db.Id}}">View</a></h2>
 		<div *ngFor="let s of db.Schemas; let j=index;">
-			<p class="schema-name">{{s.Name}} | <a href="/db/{{databases.Id}}/schema/{{s.Id}}">View</a></p>
+			<p class="schema-name">{{s.Name}} | <a href="/db/{{s.DatabaseId}}/schema/{{s.Id}}">View</a></p>
 			<div *ngFor="let t of tables; let i=index;">
 				<div *ngIf="t.SchemaId==s.Id" class="table">
 					<p class="table-name">{{t.Name}} |  <button (click)="deleteTable()">Edit</button></p>

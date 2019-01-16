@@ -11,11 +11,13 @@ import { Datastore, Database, Table, Schema, Field } from '../model/metadata.mod
 })
 export class GlobalViewComponent implements OnInit {
 
-    datastore:any = [];
-    databases:any = [];
-    schemas:any = [];
-    tables:any = [];
-	dtsid: any;
+	datastore:any = [];
+	databases:any = [];
+	schemas:any = [];
+	tables:any = [];
+
+	stid: any='';
+
 	databaseForm: FormGroup;
 	Type: string='';    
 	Schemas:  string='';
@@ -26,8 +28,9 @@ export class GlobalViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-	this.dstid=this.dbid=this.route.snapshot.paramMap.get('storeId');
-        this.getDatastoreData(this.dstid);
+	//this.stid=this.route.snapshot.paramMap.get('storeId');
+	//console.log(this.stid);
+        this.getDatastoreData(1);
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();

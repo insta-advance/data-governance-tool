@@ -10,29 +10,36 @@ import { HttpClientModule } from '@angular/common/http';
 import { SchemaViewComponent } from './schema-view/schema-view.component';
 import { DatabaseViewComponent } from './database-view/database-view.component';
 import { GlobalViewComponent } from './global-view/global-view.component';
+//import { DatastoreListComponent } from './datastore-list/datastore-list.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const appRoutes: Routes = [
+  /*{
+    path: 'store/:storeId/',
+    component: GlobalViewComponent,
+    data: { title: 'Global View' }
+  },*/
   {
     path: '',
     component: GlobalViewComponent,
     data: { title: 'Global View' }
   },
+
   {
-    path: 'db/:id',
+    path: 'db/:dbId',
     component: DatabaseViewComponent,
     data: { title: 'Database view' }
   },
   {
-    path: 'db/:id/schema/:schemaId',
+    path: 'db/:dbId/schema/:schemaId',
     component: SchemaViewComponent,
     data: { title: 'Schema view' }
   },
   /*{
-    path: 'db/:id/schema/:schemaId/table/:tableId',
+    path: 'db/:dbId/schema/:schemaId/table/:tableId',
     component: TableViewComponent,
     data: { title: 'Table view' }
   },*/
