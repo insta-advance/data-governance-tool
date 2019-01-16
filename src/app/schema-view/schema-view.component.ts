@@ -11,13 +11,14 @@ import { Table, Schema, Field } from '../model/metadata.model';
 })
 export class SchemaViewComponent implements OnInit {
 
-        datastore:any = [];
+    datastore:any = [];
 	database:any = [];
 	schema:any = [];
 	tables:any = [];
 
 	dbid:any = '';
  	schid:any = '';
+ 	dtsid:any = '';
 
 	tableForm: FormGroup;
 	SchemaId:number=null;
@@ -28,17 +29,18 @@ export class SchemaViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-	this.dbid=this.route.snapshot.paramMap.get('dbId');
-	this.schid=this.route.snapshot.paramMap.get('schemaId');
+        this.dbid=this.route.snapshot.paramMap.get('dbId');
+        this.schid=this.route.snapshot.paramMap.get('schemaId');
+        this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData();
         this.getDatabaseData(this.dbid);
         this.getSchemaData(this.schid);
         this.getTablesData();
-	this.tableForm = this.formBuilder.group({
-	    'SchemaId' : this.schid,
-	    'Fields' : [],
-	    'Name' : [],
-	  });
+        this.tableForm = this.formBuilder.group({
+            'SchemaId' : this.schid,
+            'Fields' : [],
+            'Name' : [],
+	   });
     }
 
     getDatastoreData() {
@@ -79,12 +81,12 @@ export class SchemaViewComponent implements OnInit {
 	}
     
     backToHome() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/store/'+ this.dtsid]);
     } 
  
 
-    backToDb() {
-        this.router.navigate(['/db/'+ this.dbid]);
+    toDB(store, db) {
+        this.router.navigate(['/store/'+ this.dtsid +'/db/'+ this.dbid]);
     }
 
   

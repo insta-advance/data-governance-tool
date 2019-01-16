@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { Datastores, Datastore, Database, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
+import {  Datastore, Database, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
 
 const endpointDatastores = 'http://localhost:5000/api/datastores';
 const endpointDatabases = 'http://localhost:5000/api/databases';
@@ -52,6 +52,9 @@ export class RestService {
     deleteDatastore (id): Observable<Datastore> {
       return this.http.delete<Datastore>(endpointDatastores + '/' + id, httpOptions);
     }
+    addDatastore (datastore): Observable<Datastore> {
+	   return this.http.post<Datastore>(endpointDatastores, datastore, httpOptions);
+    }
     /*------------------------DATABASES------------------------*/
     getDatabases(): Observable<any> {
       return this.http.get(endpointDatabases).pipe(
@@ -71,7 +74,7 @@ export class RestService {
       return this.http.delete<Database>(endpointDatabases + '/' + id, httpOptions);
     }
     addDatabase (database): Observable<Database> {
-	return this.http.post<Database>(endpointDatabases, database, httpOptions);
+	   return this.http.post<Database>(endpointDatabases, database, httpOptions);
     }
     /*------------------------SCHEMAS------------------------*/
     getSchemas(): Observable<any> {
@@ -114,7 +117,7 @@ export class RestService {
     }  
   
     addTable (table): Observable<Table> {
-	return this.http.post<Table>(endpointTables, table, httpOptions);
+	   return this.http.post<Table>(endpointTables, table, httpOptions);
     }
     /*---------------------FIELDS--------------------*/
     getFields(): Observable<any> {
@@ -153,7 +156,7 @@ export class RestService {
       return this.http.delete<StructuredFile>(endpointStructFiles + '/' + id, httpOptions);
     } 
     addStructFile (structFile): Observable<StructuredFile> {
-	return this.http.post<StructuredFile>(endpointStructFiles, structFile, httpOptions);
+	   return this.http.post<StructuredFile>(endpointStructFiles, structFile, httpOptions);
     }
     /*---------------------UNSTRUCTURED FILES--------------------*/
     getUnstructFiles(): Observable<any> {
@@ -174,7 +177,7 @@ export class RestService {
       return this.http.delete<UnstructuredFile>(endpointUnstructFiles + '/' + id, httpOptions);
     } 
     addUnstructFile (unstructFile): Observable<UnstructuredFile> {
-	return this.http.post<UnstructuredFile>(endpointUnstructFiles, unstructFile, httpOptions);
+	   return this.http.post<UnstructuredFile>(endpointUnstructFiles, unstructFile, httpOptions);
     }
     /*---------------------ERROR HANDLING--------------------*/
     private handleError<T> (operation = 'operation', result?: T) {

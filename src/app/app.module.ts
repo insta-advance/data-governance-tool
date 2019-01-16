@@ -10,31 +10,32 @@ import { HttpClientModule } from '@angular/common/http';
 import { SchemaViewComponent } from './schema-view/schema-view.component';
 import { DatabaseViewComponent } from './database-view/database-view.component';
 import { GlobalViewComponent } from './global-view/global-view.component';
-//import { DatastoreListComponent } from './datastore-list/datastore-list.component';
+
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatastoreListComponent } from './datastore-list/datastore-list.component';
 
 
 const appRoutes: Routes = [
-  /*{
-    path: 'store/:storeId/',
-    component: GlobalViewComponent,
-    data: { title: 'Global View' }
-  },*/
   {
     path: '',
+    component: DatastoreListComponent,
+    data: { title: 'List of datastores' }
+  },
+  {
+    path: 'store/:storeId',
     component: GlobalViewComponent,
     data: { title: 'Global View' }
   },
 
   {
-    path: 'db/:dbId',
+    path: 'store/:storeId/:dbId',
     component: DatabaseViewComponent,
     data: { title: 'Database view' }
   },
   {
-    path: 'db/:dbId/schema/:schemaId',
+    path: 'store/:storeId/:dbId/schema/:schemaId',
     component: SchemaViewComponent,
     data: { title: 'Schema view' }
   },
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
     SchemaViewComponent,
     GlobalViewComponent,
     DatabaseViewComponent,
+    DatastoreListComponent,
   ],
   imports: [
       RouterModule.forRoot(appRoutes),

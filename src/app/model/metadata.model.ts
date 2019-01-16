@@ -31,7 +31,7 @@ export interface Database{
  
 export interface UnstructuredFile{
 	DatastoreId: number;
-    	FilePath: string;
+    FilePath: string;
 }
 
 export interface StructuredFile{
@@ -39,13 +39,10 @@ export interface StructuredFile{
     	FilePath: string;
 }   
 export interface Datastore{
-    name: string;
-    databases: Database[];
-    structuredFiles: Database[];
-    unstructuredFiles: Database[];
-    id: string;
+    Name: string;
+    Databases: Database[];
+    StructuredFiles: StructuredFile[];
+    UnstructuredFiles: UnstructuredFile[];
+    Id: string;
 }  
 
-export interface Datastores{
-    datastores: Datastore[];
-}

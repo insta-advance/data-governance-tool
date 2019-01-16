@@ -1,0 +1,9 @@
+<div *ngFor="let dst in datastores">
+    {{dst.Name}}
+    <button click()="toDatastore({{dst.Id}})"></button>
+</div>
+
+ <form [formGroup]="datastoreForm" (ngSubmit)="addDatastore()">
+    <input  type="text" placeholder="Datastore name" formControlName="Name">
+    <button> Add Datastore </button>
+ </form>

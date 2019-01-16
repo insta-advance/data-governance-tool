@@ -18,7 +18,8 @@ export class DatabaseViewComponent implements OnInit {
 
 	dbid:any = '';
  	schid:any = '';
-
+    dtsid:any = '';
+    
 	schemaForm: FormGroup;
 	DatabaseId: number=null;    
 	Tables:  string='';
@@ -28,13 +29,14 @@ export class DatabaseViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-	this.dbid=this.route.snapshot.paramMap.get('dbId');
-	this.schid=this.route.snapshot.paramMap.get('schemaId');
+        this.dbid=this.route.snapshot.paramMap.get('dbId');
+        this.schid=this.route.snapshot.paramMap.get('schemaId');
+        this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData();
         this.getDatabaseData(this.dbid);
         this.getSchemasData();
         this.getTablesData();
-	this.schemaForm = this.formBuilder.group({
+        this.schemaForm = this.formBuilder.group({
 	    'DatabaseId' : this.dbid,
 	    'Tables' : [],
 	    'Name' : [],
@@ -77,13 +79,14 @@ export class DatabaseViewComponent implements OnInit {
   		this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
   		console.log(data);});
 	}
-    
-	backToHome() {
-        	this.router.navigate(['/']);
-	} 
+     	
 
-	toSchema(db, schema) {
-		this.router.navigate(['/db/'+ db + '/schema/'schema);
-    	}
+    backToHome() {
+        this.router.navigate(['/store/'+ this.dtsid]);
+    } 
+
+    toSchema(store, db, schema) {
+        this.router.navigate(['/store/'+ store +'/db/'+ db + '/schema/' + schema]);
+    }
 
 }

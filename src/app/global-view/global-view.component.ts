@@ -42,25 +42,25 @@ export class GlobalViewComponent implements OnInit {
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
-	this.getStructFileData();
-	this.getUnstructFileData();
+        this.getStructFileData();
+        this.getUnstructFileData();
 
-	this.databaseForm = this.formBuilder.group({
-	    'Type' : [],
-	    'Schemas' : [],
-	    'DatastoreId' : 1,
-	    'Name' : [],
-	  });
+        this.databaseForm = this.formBuilder.group({
+            'Type' : [],
+            'Schemas' : [],
+            'DatastoreId' : 1,
+            'Name' : [],
+          });
 
-	this.structFileForm = this.formBuilder.group({
-	    'FilePath' : [],
-	    'DatastoreId' : 1,
-	  });
+        this.structFileForm = this.formBuilder.group({
+            'FilePath' : [],
+            'DatastoreId' : 1,
+          });
 
-	this.unstructFileForm = this.formBuilder.group({
-	    'FilePath' : [],
-	    'DatastoreId' : 1,
-	  });
+        this.unstructFileForm = this.formBuilder.group({
+            'FilePath' : [],
+            'DatastoreId' : 1,
+          });
     }
 
     getDatastoreData(id) {
@@ -126,12 +126,14 @@ export class GlobalViewComponent implements OnInit {
 	  console.log(data);});
 	}
 
-    toDB(db) {
-        this.router.navigate(['/db/'+ db]);
+    
+    
+    toDB(store, db) {
+        this.router.navigate(['/store/'+ store +'/db/'+ db]);
     }
 
-   toSchema(db, schema) {
-        this.router.navigate(['/db/'+ db + '/schema/'schema);
+    toSchema(store, db, schema) {
+        this.router.navigate(['/store/'+ store +'/db/'+ db + '/schema/' + schema]);
     }
 
 }
