@@ -13,7 +13,8 @@ namespace DataGT.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    Reason = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,15 +81,21 @@ namespace DataGT.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Bases_Bases_StructuredId",
+                        column: x => x.StructuredId,
+                        principalTable: "Bases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Bases_Datastores_DatastoreId",
                         column: x => x.DatastoreId,
                         principalTable: "Datastores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bases_Bases_StructuredId",
-                        column: x => x.StructuredId,
-                        principalTable: "Bases",
+                        name: "FK_Bases_Datastores_DatastoreId1",
+                        column: x => x.DatastoreId,
+                        principalTable: "Datastores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -227,11 +234,6 @@ namespace DataGT.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bases_DatastoreId",
-                table: "Bases",
-                column: "DatastoreId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Bases_Name_DatastoreId",
                 table: "Bases",
                 columns: new[] { "Name", "DatastoreId" },
@@ -247,6 +249,16 @@ namespace DataGT.Migrations
                 table: "Bases",
                 columns: new[] { "Name", "StructuredId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bases_DatastoreId",
+                table: "Bases",
+                column: "DatastoreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bases_DatastoreId1",
+                table: "Bases",
+                column: "DatastoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bases_Schema_DatabaseId",

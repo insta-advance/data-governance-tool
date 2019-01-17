@@ -10,6 +10,7 @@ namespace DataGovernanceTool.Data.Models.Metadata
     public class Annotation : SuperBase
     {
         public string Description { get; set; }
+        public string Reason { get; set; }
         public List<AnnotationBase> AnnotationBases { get; set; }
     }
 }

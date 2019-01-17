@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System;
+using DataGovernanceTool.Data.Models.Metadata;
 using DataGovernanceTool.Data.Models.Metadata.Structure;
 using DataGovernanceTool.Data.Access;
 using DataGovernanceTool.Data.Models.Metadata.Relationships;
@@ -34,8 +35,8 @@ namespace DataGovernanceTool.Controllers
             {
                 _context.Datastores.Add( new Datastore {
                     Name = "Store1",
-                    Databases = new List<Database> {
-                        new Database {
+                    PostgresDatabases = new List<PostgresDatabase> {
+                        new PostgresDatabase {
                             Name = "UserDB",
                             Type = "PostgreSQL",
                             Schemas = new List<Schema> {
@@ -81,17 +82,23 @@ namespace DataGovernanceTool.Controllers
                     ToId = _context.Fields.Single(f => f.Name == "OwnerId").Id,
                     Type = "exact"
                 });
+                _context.Annotations.Add(new Annotation{Description = "sensitive"});
+                _context.Annotations.Add(new Annotation{Description = "encrypted"});
+                _context.Annotations.Add(new Annotation{Description = "private"});
+                _context.AnnotationBases.Add(new AnnotationBase {
+                    BaseId = _context.Fields.Single(f => f.Name == "Name").Id,
+                    AnnotationId = _context.Annotations.Single(a => a.Description == "sensitive").Id
+                });
                 _context.SaveChanges();
             }
    
-            if (_context.Databases.Count() == 0)
+            if (_context.PostgresDatabases.Count() == 0)
             {
-                _context.Databases.Add( 
-                    new Database
+                _context.PostgresDatabases.Add( 
+                    new PostgresDatabase
                     {
                         Type = "SqlServer",
                         Schemas = new List<Schema>(_context.Schemas.ToList()),
-                        Collections = new List<Collection>(_context.Collections.ToList()),
                     });
                 _context.SaveChanges();
             }
@@ -102,7 +109,8 @@ namespace DataGovernanceTool.Controllers
         {
              List<KeyValuePair<string,List<object>>> database = new List<KeyValuePair<string,List<object>>>(){
                 new KeyValuePair<string,List<object>>("Collections",new List<object>(_context.Collections.ToList())),
-                new KeyValuePair<string,List<object>>("Databases",new List<object>(_context.Databases.ToList())),
+                new KeyValuePair<string,List<object>>("PostgresDatabases",new List<object>(_context.PostgresDatabases.ToList())),
+                new KeyValuePair<string,List<object>>("MongoDatabases",new List<object>(_context.MongoDatabases.ToList())),
                 new KeyValuePair<string,List<object>>("Fields",new List<object>(_context.Fields.ToList())),
                 new KeyValuePair<string,List<object>>("KeyRelationships",new List<object>(_context.KeyRelationships.ToList())),
                 new KeyValuePair<string,List<object>>("Schemas",new List<object>(_context.Schemas.ToList())),
@@ -122,7 +130,10 @@ namespace DataGovernanceTool.Controllers
             foreach(Collection c in _context.Collections.ToList()) {
                 c.Database = null;
             }
-            foreach(Database d in _context.Databases.ToList()) {
+            foreach(PostgresDatabase d in _context.PostgresDatabases.ToList()) {
+                d.Datastore = null;
+            }
+            foreach(MongoDatabase d in _context.MongoDatabases.ToList()) {
                 d.Datastore = null;
             }
             foreach(Schema s in _context.Schemas.ToList()) {
@@ -188,11 +199,11 @@ namespace DataGovernanceTool.Controllers
             }
         }
 
-        [HttpGet("Databases/{id?}")]
-        public ActionResult<string> GetDatabase (int id){
+        [HttpGet("PostgresDatabases/{id?}")]
+        public ActionResult<string> GetPostgresDatabase (int id){
             
             if (id == 0){
-                List<Database> list = new List<Database>(_context.Databases.ToList());
+                List<PostgresDatabase> list = new List<PostgresDatabase>(_context.PostgresDatabases.ToList());
                 
                 return JsonConvert.SerializeObject(
                 list,
@@ -206,7 +217,7 @@ namespace DataGovernanceTool.Controllers
             );
             }
             else {
-                var item = _context.Databases.Find(id);
+                var item = _context.PostgresDatabases.Find(id);
                 if (item == null)
                     return NotFound();
 
@@ -461,9 +472,15 @@ namespace DataGovernanceTool.Controllers
                     _context.SaveChanges();
                 }
             }
-            if(data.jsonDatabases != null){
-                for(int i = 0; i<data.jsonDatabases.Count;i++){
-                    _context.Databases.Add(data.jsonDatabases.ElementAt(i));
+            if(data.jsonMongoDatabases != null){
+                for(int i = 0; i<data.jsonMongoDatabases.Count;i++){
+                    _context.MongoDatabases.Add(data.jsonMongoDatabases.ElementAt(i));
+                    _context.SaveChanges();
+                }
+            }
+            if(data.jsonPostgresDatabases != null){
+                for(int i = 0; i<data.jsonPostgresDatabases.Count;i++){
+                    _context.PostgresDatabases.Add(data.jsonPostgresDatabases.ElementAt(i));
                     _context.SaveChanges();
                 }
             }
@@ -527,15 +544,27 @@ namespace DataGovernanceTool.Controllers
                     }
                 }
             }
-            if(data.jsonDatabases != null){
-                for(int i = 0; i<data.jsonDatabases.Count;i++){
-                    var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).Id);
+            if(data.jsonMongoDatabases != null){
+                for(int i = 0; i<data.jsonMongoDatabases.Count;i++){
+                    var item = _context.MongoDatabases.Find(data.jsonMongoDatabases.ElementAt(i).Id);
                     if(item != null){
-                        item.Name = data.jsonDatabases.ElementAt(i).Name ?? item.Name;
-                        item.Type = data.jsonDatabases.ElementAt(i).Type ?? item.Type;
-                        item.DatastoreId = data.jsonDatabases.ElementAt(i).DatastoreId > 0 ? 
-                            data.jsonDatabases.ElementAt(i).DatastoreId : item.DatastoreId;
-                        _context.Databases.Update(item);
+                        item.Name = data.jsonMongoDatabases.ElementAt(i).Name ?? item.Name;
+                        item.Type = data.jsonMongoDatabases.ElementAt(i).Type ?? item.Type;
+                        item.DatastoreId = data.jsonMongoDatabases.ElementAt(i).DatastoreId > 0 ? 
+                            data.jsonMongoDatabases.ElementAt(i).DatastoreId : item.DatastoreId;
+                        _context.MongoDatabases.Update(item);
+                    }
+                }
+            }
+            if(data.jsonPostgresDatabases != null){
+                for(int i = 0; i<data.jsonPostgresDatabases.Count;i++){
+                    var item = _context.PostgresDatabases.Find(data.jsonPostgresDatabases.ElementAt(i).Id);
+                    if(item != null){
+                        item.Name = data.jsonPostgresDatabases.ElementAt(i).Name ?? item.Name;
+                        item.Type = data.jsonPostgresDatabases.ElementAt(i).Type ?? item.Type;
+                        item.DatastoreId = data.jsonPostgresDatabases.ElementAt(i).DatastoreId > 0 ? 
+                            data.jsonPostgresDatabases.ElementAt(i).DatastoreId : item.DatastoreId;
+                        _context.PostgresDatabases.Update(item);
                     }
                 }
             }
@@ -625,11 +654,11 @@ namespace DataGovernanceTool.Controllers
                     }
                 }
             }
-            if(data.jsonDatabases != null){
-                for(int i = 0; i<data.jsonDatabases.Count;i++){
-                    var item = _context.Databases.Find(data.jsonDatabases.ElementAt(i).Id);
+            if(data.jsonPostgresDatabases != null){
+                for(int i = 0; i<data.jsonPostgresDatabases.Count;i++){
+                    var item = _context.PostgresDatabases.Find(data.jsonPostgresDatabases.ElementAt(i).Id);
                     if(item != null){
-                        _context.Databases.Remove(item);
+                        _context.PostgresDatabases.Remove(item);
                         _context.SaveChanges();
                     }
                 }

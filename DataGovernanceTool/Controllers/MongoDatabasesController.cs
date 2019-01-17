@@ -9,9 +9,9 @@ namespace DataGovernanceTool.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DatabasesController : BaseController<Database> 
+    public class MongoDatabasesController : BaseController<MongoDatabase> 
     {
-        public DatabasesController(IDatabasesManager manager) : base(manager)
+        public MongoDatabasesController(IMongoDatabasesManager manager) : base(manager)
         {
         }
     }

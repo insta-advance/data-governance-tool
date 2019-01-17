@@ -4,9 +4,9 @@ using DataGovernanceTool.Data.Models.Metadata.Structure;
 
 namespace DataGovernanceTool.Data.Access.Repositories
 {
-    public class DatabasesRepository : Repository<Database>, IDatabasesRepository
+    public class MongoDatabasesRepository : Repository<MongoDatabase>, IMongoDatabasesRepository
     {
-        public DatabasesRepository(BaseDbContext dbContext) : base(dbContext)
+        public MongoDatabasesRepository(BaseDbContext dbContext) : base(dbContext)
         {
         }
     }

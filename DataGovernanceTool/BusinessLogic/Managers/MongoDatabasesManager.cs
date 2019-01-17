@@ -1,4 +1,4 @@
-﻿using DataGovernanceTool.Data.Access.IRepositories;
+using DataGovernanceTool.Data.Access.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,25 +9,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataGovernanceTool.BusinessLogic.Managers
 {
-    public class DatabasesManager: RepositoryManager<Database>, IDatabasesManager
+    public class MongoDatabasesManager: RepositoryManager<MongoDatabase>, IMongoDatabasesManager
     {
-        public DatabasesManager(IDatabasesRepository repository)
+        public MongoDatabasesManager(IMongoDatabasesRepository repository)
             : base(repository)
         {
         }
-        public new async Task<IEnumerable<Database>> GetAsync()
+        public new async Task<IEnumerable<MongoDatabase>> GetAsync()
         {
-            return await Repository.All().Include(d => d.Schemas).ToListAsync();
+            return await Repository.All().Include(c => c.Collections).ToListAsync();
         }
-        public new async Task<Database> GetAsync(int id)
+        public new async Task<MongoDatabase> GetAsync(int id)
         {
-            var database = await Repository.Filter(d => d.Id == id).Include(d => d.Schemas).ToListAsync();
+            var database = await Repository.Filter(d => d.Id == id).Include(c => c.Collections).ToListAsync();
             if (database.Count == 0) {
-                throw new EntityNotFoundException($@"{typeof(Database).Name} with id {id} not found.");
+                throw new EntityNotFoundException($@"{typeof(MongoDatabase).Name} with id {id} not found.");
             } 
             return database[0];
         }
-        public new async Task<Database> ReplaceAsync(int id, Database entity)
+        public new async Task<MongoDatabase> ReplaceAsync(int id, MongoDatabase entity)
         {
             var existing = await GetAsync(id);
             existing.Name = entity.Name ?? existing.Name;

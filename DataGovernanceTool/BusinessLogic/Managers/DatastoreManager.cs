@@ -19,7 +19,8 @@ namespace DataGovernanceTool.BusinessLogic.Managers
         public new async Task<IEnumerable<Datastore>> GetAsync()
         {
             return await Repository.All()
-                .Include(d => d.Databases)
+                .Include(d => d.PostgresDatabases)
+                .Include(d => d.MongoDatabases)
                 .Include(d => d.StructuredFiles)
                 .Include(d => d.UnstructuredFiles)
                 .ToListAsync();
@@ -29,7 +30,8 @@ namespace DataGovernanceTool.BusinessLogic.Managers
         {
             var datastore = await Repository
                 .Filter(d => d.Id == id)
-                .Include(d => d.Databases)
+                .Include(d => d.PostgresDatabases)
+                .Include(d => d.MongoDatabases)
                 .Include(d => d.StructuredFiles)
                 .Include(d => d.UnstructuredFiles)
                 .ToListAsync();

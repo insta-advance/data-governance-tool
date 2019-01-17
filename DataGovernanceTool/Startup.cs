@@ -30,8 +30,10 @@ namespace DataGovernanceTool
         {
 
             // Configure dependency injections.
-            services.AddTransient<IDatabasesManager, DatabasesManager>();
-            services.AddTransient<IDatabasesRepository, DatabasesRepository>();
+            services.AddTransient<IMongoDatabasesManager, MongoDatabasesManager>();
+            services.AddTransient<IMongoDatabasesRepository, MongoDatabasesRepository>();
+            services.AddTransient<IPostgresDatabasesManager, PostgresDatabasesManager>();
+            services.AddTransient<IPostgresDatabasesRepository, PostgresDatabasesRepository>();
             services.AddTransient<ISchemasManager, SchemasManager>();
             services.AddTransient<ISchemasRepository, SchemasRepository>();
             services.AddTransient<ICollectionsManager, CollectionsManager>();
@@ -62,10 +64,10 @@ namespace DataGovernanceTool
             services.AddDbContext<DataGovernanceDBContext>(opt => 
 
             // Docker
-            // opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+            opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
 
             // NOT Docker
-            opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            // opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
 
             //Use in development if sql if pg is too much hassle.

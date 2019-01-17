@@ -32,7 +32,8 @@ namespace DataGovernanceTool.Data.Access
         public DbSet<Table> Tables { get; set; }
         public DbSet<StructuredFile> StructuredFiles { get; set; }
         public DbSet<UnstructuredFile> UnstructuredFiles { get; set; }
-        public DbSet<Database> Databases { get; set; }
+        public DbSet<PostgresDatabase> PostgresDatabases { get; set; }
+        public DbSet<MongoDatabase> MongoDatabases { get; set; }
         public DbSet<KeyRelationship> KeyRelationships { get; set; }
         public DbSet<CompositeKeyField> CompositeKeyFields { get; set; }
         public DbSet<Datastore> Datastores { get; set; }
@@ -127,9 +128,15 @@ namespace DataGovernanceTool.Data.Access
                 .HasForeignKey(d => d.DatabaseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Database>()
+            modelBuilder.Entity<MongoDatabase>()
                 .HasOne(d => d.Datastore)
-                .WithMany(ds => ds.Databases)
+                .WithMany(ds => ds.MongoDatabases)
+                .HasForeignKey(d => d.DatastoreId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PostgresDatabase>()
+                .HasOne(d => d.Datastore)
+                .WithMany(ds => ds.PostgresDatabases)
                 .HasForeignKey(d => d.DatastoreId)
                 .OnDelete(DeleteBehavior.Cascade);
 

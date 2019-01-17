@@ -1,7 +1,7 @@
 Issues
 =======
 
-## SQL server
+## (Solved) Functionality issue: SQL server 
 "Introducing FOREIGN KEY constraint 'FK_RelationshipTables_Bases_BaseToId' on table 
 'RelationshipTables' may cause cycles or multiple cascade paths. Specify ON DELETE NO 
 ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints."
@@ -14,7 +14,7 @@ Solved by migrating to postgresql
 
 ---
 
-## Certificate
+## (Solved) Functionality issue: Certificate
 
 Proper certificate handling should be looked into.
 
@@ -22,15 +22,26 @@ Solved by ignoring http. Use https proxy in development or just run locally.
 
 ---
 
-## KeyRelationship POST not working
+## (Solved) Functionality issue: KeyRelationship POST not working
 
 Won't be able to post without specifying Id because of conflicting primary keys:
 Id and (FromId, ToId).
 
 Solved byt making (FromId, ToId) a alternate key.
 
-## Usability issue: PUT in KeyRelationships/CompositeKeyField
+---
+
+## (Solved) Semantic issue: Database is both Mongo and Postgres
+
+Database has a type and two Navigation properties to Schemas and Collections.
+
+Fixed by making Types MongoDatabase and PostgresDatabase.
+
+---
+## (TODO) Usability issue: PUT in KeyRelationships/CompositeKeyField
 
 You can't change a primary key (composite) to update a relationship.
 
 TODO: custom update.
+
+---

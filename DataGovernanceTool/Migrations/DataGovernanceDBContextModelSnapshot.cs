@@ -26,6 +26,8 @@ namespace DataGT.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Reason");
+
                     b.HasKey("Id");
 
                     b.ToTable("Annotations");
@@ -145,8 +147,6 @@ namespace DataGT.Migrations
 
                     b.Property<string>("Type");
 
-                    b.HasIndex("DatastoreId");
-
                     b.HasIndex("Name", "DatastoreId")
                         .IsUnique();
 
@@ -202,6 +202,31 @@ namespace DataGT.Migrations
                     b.ToTable("UnstructuredFile");
 
                     b.HasDiscriminator().HasValue("UnstructuredFile");
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.MongoDatabase", b =>
+                {
+                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Database");
+
+
+                    b.HasIndex("DatastoreId");
+
+                    b.ToTable("MongoDatabase");
+
+                    b.HasDiscriminator().HasValue("MongoDatabase");
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.PostgresDatabase", b =>
+                {
+                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Database");
+
+
+                    b.HasIndex("DatastoreId")
+                        .HasName("IX_Bases_DatastoreId1");
+
+                    b.ToTable("PostgresDatabase");
+
+                    b.HasDiscriminator().HasValue("PostgresDatabase");
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Collection", b =>
@@ -324,17 +349,9 @@ namespace DataGT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Database", b =>
-                {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
-                        .WithMany("Databases")
-                        .HasForeignKey("DatastoreId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", b =>
                 {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Database", "Database")
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.PostgresDatabase", "Database")
                         .WithMany("Schemas")
                         .HasForeignKey("DatabaseId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -348,9 +365,26 @@ namespace DataGT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.MongoDatabase", b =>
+                {
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
+                        .WithMany("MongoDatabases")
+                        .HasForeignKey("DatastoreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.PostgresDatabase", b =>
+                {
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
+                        .WithMany("PostgresDatabases")
+                        .HasForeignKey("DatastoreId")
+                        .HasConstraintName("FK_Bases_Datastores_DatastoreId1")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Collection", b =>
                 {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Database", "Database")
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.MongoDatabase", "Database")
                         .WithMany("Collections")
                         .HasForeignKey("DatabaseId")
                         .OnDelete(DeleteBehavior.Cascade);

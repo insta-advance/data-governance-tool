@@ -12,7 +12,8 @@ namespace DataGovernanceTool.Data.Models.Metadata.Structure
     public class JsonData
     {
         public List<Collection> jsonCollections;
-        public List<Database> jsonDatabases;
+        public List<MongoDatabase> jsonMongoDatabases;
+        public List<PostgresDatabase> jsonPostgresDatabases;
         public List<Field> jsonFields;
         public List<KeyRelationship> jsonKeyRelationships;
         public List<Schema> jsonSchemas;
