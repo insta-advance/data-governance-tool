@@ -27,8 +27,9 @@ This version works with the actual backend (localhost:5000/api/)
 
 # To Do
 
-* Entity renaming (PUT for each entity)
+* Datastore. database, schema, table renaming (PUT)
 * Adding, deleting and editing fields and keys
 * Adding, deleting, editing and assigning annotations
 * Minor style and forms visibility fixes
+* Forms confirmation dialogs and empty value checking
 * CSS refactoring and documentation
