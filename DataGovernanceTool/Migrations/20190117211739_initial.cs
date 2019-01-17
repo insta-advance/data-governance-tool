@@ -7,7 +7,7 @@ namespace DataGT.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+          /*   migrationBuilder.CreateTable(
                 name: "Annotations",
                 columns: table => new
                 {
@@ -307,7 +307,7 @@ namespace DataGT.Migrations
                 name: "IX_KeyRelationships_ToId",
                 table: "KeyRelationships",
                 column: "ToId");
-        }
+        }*/
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
