@@ -18,8 +18,10 @@ export class DatabaseViewComponent implements OnInit {
 
 	dbid:any = '';
  	schid:any = '';
-    dtsid:any = '';
+    	dtsid:any = '';
     
+	varform = 0;
+
 	schemaForm: FormGroup;
 	DatabaseId: number=null;    
 	Tables:  string='';

@@ -13,21 +13,21 @@
 	</div> 
 
 	 <form [formGroup]="databaseForm" (ngSubmit)="addDatabase()" *ngIf="varform === 1">
-		<input  type="text" placeholder="Database type" formControlName="Type">
-		<input  type="text" placeholder="Database name" formControlName="Name">
+		<input  type="text" placeholder="Type of a new database" formControlName="Type">
+		<input  type="text" placeholder="Name of a new database" formControlName="Name">
 		<button> Add Database </button>
 	 </form>
 
 
 	 <form [formGroup]="structFileForm" (ngSubmit)="addStructFile()" *ngIf="varform === 2">
 		<input  type="text" placeholder="Structured file path" formControlName="FilePath">
-		<button> Add Structured File </button>
+		<button> Add File </button>
 	 </form>
 
 
 	 <form [formGroup]="unstructFileForm" (ngSubmit)="addUnstructFile()" *ngIf="varform === 3">
 		<input  type="text" placeholder="Unstructured file path" formControlName="FilePath">
-		<button> Add Unstructured File </button>
+		<button> Add File </button>
 	 </form>
 	<div *ngFor="let db of databases; let i=index;">
 			<div *ngIf="db.DatastoreId==datastore.Id">
@@ -53,14 +53,14 @@
 	</div>
 
 	<div *ngFor="let str of datastore.StructuredFiles; let h=index;">
-		<div class="files">
+		<div class="file">
 			<h2 class="file-title"> Structured File | <button>Edit</button></h2>
 			<p class="file-path">{{str.FilePath}}</p>
 		</div>
     	</div>
 
 	<div *ngFor="let unstr of datastore.UnstructuredFiles; let h=index;">
-		<div class="files">
+		<div class="file">
 			<h2 class="file-title"> Untructured File | <button>Edit</button></h2>
 			<p class="file-path">{{unstr.FilePath}}</p>
 		</div>

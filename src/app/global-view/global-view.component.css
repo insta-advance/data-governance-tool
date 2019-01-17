@@ -76,7 +76,7 @@ button:hover{
 .container .global h2{
     background-color: #343434;
     padding: 12px;
-    margin:10px 0 10px 0;
+    margin:10px 0 0 0;
     color: white;
 }
 
@@ -266,28 +266,18 @@ a:hover{
         font-weight: 900;
 }
 /*FILES*/
-.files{
-    width: max-content;
-    font-size: 1em;
-    display:grid;
-    grid-template-rows: auto auto;
-    grid-gap:0;
-    padding: 0;
-}
-.files h2{
-    font-size: 1em;
-    font-weight: 900;
-    grid-column: 1;
-    color:white;
-    background-color: #9f3711;
+
+.file-title{
+    background-color: #343434;
     padding: 12px;
-    margin:0;
+    margin: 0;
+    color: white;
 }
 
 .file-path{
     background-color: #e8e8e8;
     padding: 5px;
-    margin: 0 0 0 0;
+    margin: 0;
 }
 
 /*FORMS*/

@@ -28,6 +28,7 @@ h2 button{
 	background-color:#838384;
 	margin:0;
 	padding:0;
+	color:white;
 }
 button:hover{
 	text-decoration: underline;
@@ -211,7 +212,7 @@ a:hover{
     display:grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto;
-    margin-bottom: 20px;
+    margin: 10px 0 10px 0;
     grid-gap:0;
     padding: 0;
 }
@@ -288,4 +289,8 @@ a:hover{
     background-color: #e8e8e8;
     padding: 5px;
     margin: 0 0 0 0;
+}
+
+form{
+	padding:10px 0 10px 0;
 }

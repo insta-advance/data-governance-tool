@@ -20,6 +20,8 @@ export class SchemaViewComponent implements OnInit {
  	schid:any = '';
  	dtsid:any = '';
 
+	varform = 0;
+
 	tableForm: FormGroup;
 	SchemaId:number=null;
 	Fields:string='';
@@ -76,13 +78,21 @@ export class SchemaViewComponent implements OnInit {
     }    
 
 	onFormSubmit() {
-	  this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
-          console.log(data);});
+	this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
+  	        this.getSchemaData(this.schid);
+        	this.getTablesData();
+	});
 	}
 
     	deleteSchema(){
   		this.rest.deleteSchema(this.schema.Id).subscribe((data: {}) => {
   			this.router.navigate(['/store/'+ this.dtsid +'/db/'+ this.dbid]);
+		});
+	}
+    	deleteTable(id){
+  		this.rest.deleteTable(id).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getTablesData();
 		});
 	}
     backToHome() {

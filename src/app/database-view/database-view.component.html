@@ -6,24 +6,21 @@
 		<span class="breadcrumbs-divider">►</span> 
 		<p > {{database.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
-		<p class="edit">Edit</p>
-		<span class="breadcrumbs-divider">|</span>
-		<p class="add">+ Add new schema</p>
+		<p class="add" (click)="varform=1">+ Add new schema</p>
 		<span class="breadcrumbs-divider">|</span>
 		<button (click)="deleteDatabase()" class="delete"> Delete database </button>
 	</div>
 
-	<br/>
-	<form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
-		<input  type="text" placeholder="Name of new schema" formControlName="Name"><br/>
+	<form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()" *ngIf="varform === 1">
+		<input  type="text" placeholder="Name of a new schema" formControlName="Name">
 		<button> Add Schema </button>
 	</form>
-	<br/>
+
 		<div *ngFor="let s of database.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, database.Id, s.Id)">View</button> </p>
 			<div *ngFor="let t of tables; let k=index;">
 				<div *ngIf="t.SchemaId==s.Id" class="table">
-					<p class="table-name">{{t.Name}} |  <button >Edit</button></p>
+					<p class="table-name">{{t.Name}}
 					<div *ngFor="let f of t.Fields; let l=index;">
 						<div class="table-fields">        
 						    <p class="field-id"> {{f.Id}}, </p>

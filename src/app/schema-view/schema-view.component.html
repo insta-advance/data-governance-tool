@@ -7,22 +7,19 @@
 		<span class="breadcrumbs-divider">►</span>
 		<p > {{schema.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
-		<p class="edit">Edit</p>
-		<span class="breadcrumbs-divider">|</span>
-		<p class="add">+ Add new table</p>
+		<p class="add" (click)="varform=1">+ Add new table</p>
 		<span class="breadcrumbs-divider">|</span>
 		<button (click)="deleteSchema()" class="delete"> Delete schema </button>
 	</div>
-<br/>
-<form [formGroup]="tableForm" (ngSubmit)="onFormSubmit()">
-        <input  type="text" placeholder="Fields" formControlName="Fields"><br/>
-        <input  type="text" placeholder="Name" formControlName="Name"><br/>
-	<button> Add Table </button>
-</form>
-<br/>
+
+	<form [formGroup]="tableForm" (ngSubmit)="onFormSubmit()"  *ngIf="varform === 1">
+		<input  type="text" placeholder="Name of a new table" formControlName="Name">
+		<button> Add Table </button>
+	</form>
+
 	<div *ngFor="let t of tables; let i=index;">
 		<div *ngIf="t.SchemaId==schema.Id" class="table">
-			<p class="table-name">{{t.Name}} |  <button (click)="deleteTable()">Edit</button></p>
+			<p class="table-name">{{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button></p>
 			<div *ngFor="let f of t.Fields; let j=index;">
 				<div class="table-fields">        
 				    <p class="field-id"> {{f.Id}}, </p>
