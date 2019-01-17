@@ -306,8 +306,8 @@ namespace DataGT.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_KeyRelationships_ToId",
                 table: "KeyRelationships",
-                column: "ToId");
-        }*/
+                column: "ToId");*/
+        }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
