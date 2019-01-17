@@ -38,12 +38,17 @@ export class DatastoreListComponent implements OnInit {
         });
     }  
     
-    addDatastore() {
+	addDatastore() {
 	  this.rest.addDatastore(this.datastoreForm.value).subscribe((data: {}) => {
-	   console.log(data);
-      });
+        	this.getDatastoresData();	
+	});
 	}
-    
+
+	deleteDatastore(id){
+		this.rest.deleteDatastore(id).subscribe((data: {}) => {
+		        this.getDatastoresData();
+		});
+	}
     toDatastore(dst) {
         this.router.navigate(['/store/'+ dst]);
     }

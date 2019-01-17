@@ -30,12 +30,12 @@ const appRoutes: Routes = [
   },
 
   {
-    path: 'store/:storeId/:dbId',
+    path: 'store/:storeId/db/:dbId',
     component: DatabaseViewComponent,
     data: { title: 'Database view' }
   },
   {
-    path: 'store/:storeId/:dbId/schema/:schemaId',
+    path: 'store/:storeId/db/:dbId/schema/:schemaId',
     component: SchemaViewComponent,
     data: { title: 'Schema view' }
   },

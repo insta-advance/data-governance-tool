@@ -9,12 +9,16 @@
 		<p class="edit">Edit</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add">+ Add new schema</p>
+		<span class="breadcrumbs-divider">|</span>
+		<button (click)="deleteDatabase()" class="delete"> Delete database </button>
 	</div>
 
- <form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
-        <input  type="text" placeholder="Name of new schema" formControlName="Name">
-	<button> Add Schema </button>
- </form>
+	<br/>
+	<form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()">
+		<input  type="text" placeholder="Name of new schema" formControlName="Name"><br/>
+		<button> Add Schema </button>
+	</form>
+	<br/>
 		<div *ngFor="let s of database.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, database.Id, s.Id)">View</button> </p>
 			<div *ngFor="let t of tables; let k=index;">

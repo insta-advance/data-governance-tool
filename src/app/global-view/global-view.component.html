@@ -3,61 +3,63 @@
 	<div class="homelink">
 		<p>{{datastore.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>    
-		<p class="edit">Edit</p>
+		<p class="add" (click)="varform=1">+ Add new database</p>
 		<span class="breadcrumbs-divider">|</span>
-		<p class="add">+ Add new database</p>
+		<p class="add" (click)="varform=2">+ Add new structured file</p>
 		<span class="breadcrumbs-divider">|</span>
-		<p class="add">+ Add new file</p>
-	</div>
+		<p class="add" (click)="varform=3">+ Add new unstructured file</p>
+		<span class="breadcrumbs-divider">|</span>
+		<button (click)="closeDatastore()" class="close">x Close datastore</button>
+	</div> 
 
-	 <form [formGroup]="databaseForm" (ngSubmit)="addDatabase()">
+	 <form [formGroup]="databaseForm" (ngSubmit)="addDatabase()" *ngIf="varform === 1">
 		<input  type="text" placeholder="Database type" formControlName="Type">
 		<input  type="text" placeholder="Database name" formControlName="Name">
 		<button> Add Database </button>
 	 </form>
 
 
-	 <form [formGroup]="structFileForm" (ngSubmit)="addStructFile()">
+	 <form [formGroup]="structFileForm" (ngSubmit)="addStructFile()" *ngIf="varform === 2">
 		<input  type="text" placeholder="Structured file path" formControlName="FilePath">
 		<button> Add Structured File </button>
 	 </form>
 
 
-	 <form [formGroup]="unstructFileForm" (ngSubmit)="addUnstructFile()">
+	 <form [formGroup]="unstructFileForm" (ngSubmit)="addUnstructFile()" *ngIf="varform === 3">
 		<input  type="text" placeholder="Unstructured file path" formControlName="FilePath">
 		<button> Add Unstructured File </button>
 	 </form>
-
 	<div *ngFor="let db of databases; let i=index;">
-		<h2>[{{db.Type}}] {{db.Name}}  | <a href="">Edit</a>  | <button (click)="toDB(datastore.Id, db.Id)">View</button></h2>
-		<div *ngFor="let s of db.Schemas; let j=index;">
-			<p class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, db.Id, s.Id)">View</button></p>
-			<div *ngFor="let t of tables; let k=index;">
-				<div *ngIf="t.SchemaId==s.Id" class="table">
-					<p class="table-name">{{t.Name}} |  <button (click)="deleteTable()">Edit</button></p>
-					<div *ngFor="let f of t.Fields; let l=index;">
-						<div class="table-fields">        
-						    <p class="field-id"> {{f.Id}}, </p>
-						    <p class="field-name"> {{f.Name}}, </p>
-						    <p class="field-type"> {{f.Type}}, </p>
-						    <div class="rel-from">PK, </div>
-						    <div class="rel-to">FK </div>
-						</div>	
+			<div *ngIf="db.DatastoreId==datastore.Id">
+				<h2>({{db.Type}}) {{db.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toDB(datastore.Id, db.Id)">View</button></h2>
+				<div *ngFor="let s of db.Schemas; let j=index;">
+					<p class="schema-name">{{s.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toSchema(datastore.Id, db.Id, s.Id)">View</button></p>
+					<div *ngFor="let t of tables; let k=index;">
+						<div *ngIf="t.SchemaId==s.Id" class="table">
+							<p class="table-name">{{t.Name}}</p>
+							<div *ngFor="let f of t.Fields; let l=index;">
+								<div class="table-fields">        
+								    <p class="field-id"> {{f.Id}}, </p>
+								    <p class="field-name"> {{f.Name}}, </p>
+								    <p class="field-type"> {{f.Type}}, </p>
+								    <div class="rel-from">PK, </div>
+								    <div class="rel-to">FK </div>
+								</div>	
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 
-
-	<div *ngFor="let str of structFiles; let h=index;">
+	<div *ngFor="let str of datastore.StructuredFiles; let h=index;">
 		<div class="files">
 			<h2 class="file-title"> Structured File | <button>Edit</button></h2>
 			<p class="file-path">{{str.FilePath}}</p>
 		</div>
     	</div>
 
-	<div *ngFor="let unstr of unstructFiles; let h=index;">
+	<div *ngFor="let unstr of datastore.UnstructuredFiles; let h=index;">
 		<div class="files">
 			<h2 class="file-title"> Untructured File | <button>Edit</button></h2>
 			<p class="file-path">{{unstr.FilePath}}</p>

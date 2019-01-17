@@ -77,10 +77,17 @@ export class DatabaseViewComponent implements OnInit {
 
 	onFormSubmit() {
   		this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
-  		console.log(data);});
+        		this.getDatabaseData(this.dbid);
+			this.getSchemasData();
+			this.getTablesData();
+		});
 	}
      	
-
+	deleteDatabase(){
+  		this.rest.deleteDatabase(this.database.Id).subscribe((data: {}) => {
+  			this.router.navigate(['/store/'+ this.dtsid]);
+		});
+	}
     backToHome() {
         this.router.navigate(['/store/'+ this.dtsid]);
     } 

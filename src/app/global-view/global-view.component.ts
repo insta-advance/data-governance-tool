@@ -20,6 +20,8 @@ export class GlobalViewComponent implements OnInit {
 
 	stid: any='';
 
+	varform = 0;
+
 	structFileForm: FormGroup;
 	FilePath:  string='';
 
@@ -35,10 +37,9 @@ export class GlobalViewComponent implements OnInit {
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-	//this.stid=this.route.snapshot.paramMap.get('storeId');
-	//console.log(this.stid);
+	this.stid=this.route.snapshot.paramMap.get('storeId');
 
-        this.getDatastoreData(1);
+        this.getDatastoreData(this.stid);
         this.getDatabasesData();
         this.getSchemasData();
         this.getTablesData();
@@ -48,18 +49,18 @@ export class GlobalViewComponent implements OnInit {
         this.databaseForm = this.formBuilder.group({
             'Type' : [],
             'Schemas' : [],
-            'DatastoreId' : 1,
+            'DatastoreId' : this.stid,
             'Name' : [],
           });
 
         this.structFileForm = this.formBuilder.group({
             'FilePath' : [],
-            'DatastoreId' : 1,
+            'DatastoreId' : this.stid,
           });
 
         this.unstructFileForm = this.formBuilder.group({
             'FilePath' : [],
-            'DatastoreId' : 1,
+            'DatastoreId' : this.stid,
           });
     }
 
@@ -113,20 +114,40 @@ export class GlobalViewComponent implements OnInit {
     
 	addDatabase() {
 	  this.rest.addDatabase(this.databaseForm.value).subscribe((data: {}) => {
-	  console.log(data);});
+		this.getDatastoreData(this.stid);
+		this.getDatabasesData();
+		this.getSchemasData();
+		this.getTablesData();
+		this.getStructFileData();
+		this.getUnstructFileData();
+	});
 	}
 
 	addStructFile() {
 	  this.rest.addStructFile(this.structFileForm.value).subscribe((data: {}) => {
-	  console.log(data);});
+		this.getDatastoreData(this.stid);
+		this.getDatabasesData();
+		this.getSchemasData();
+		this.getTablesData();
+		this.getStructFileData();
+		this.getUnstructFileData();
+	});
 	}
 
 	addUnstructFile() {
 	  this.rest.addUnstructFile(this.unstructFileForm.value).subscribe((data: {}) => {
-	  console.log(data);});
+		this.getDatastoreData(this.stid);
+		this.getDatabasesData();
+		this.getSchemasData();
+		this.getTablesData();
+		this.getStructFileData();
+		this.getUnstructFileData();
+	});
 	}
 
-    
+    	closeDatastore(){
+		this.router.navigate(['']);
+	}
     
     toDB(store, db) {
         this.router.navigate(['/store/'+ store +'/db/'+ db]);

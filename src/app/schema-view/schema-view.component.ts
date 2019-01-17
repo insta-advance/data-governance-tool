@@ -79,13 +79,18 @@ export class SchemaViewComponent implements OnInit {
 	  this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
           console.log(data);});
 	}
-    
+
+    	deleteSchema(){
+  		this.rest.deleteSchema(this.schema.Id).subscribe((data: {}) => {
+  			this.router.navigate(['/store/'+ this.dtsid +'/db/'+ this.dbid]);
+		});
+	}
     backToHome() {
         this.router.navigate(['/store/'+ this.dtsid]);
     } 
  
 
-    toDB(store, db) {
+    backToDb() {
         this.router.navigate(['/store/'+ this.dtsid +'/db/'+ this.dbid]);
     }
 
