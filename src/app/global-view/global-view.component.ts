@@ -18,6 +18,7 @@ export class GlobalViewComponent implements OnInit {
 	tables:any = [];
 	structFiles:any = [];
 	unstructFiles: any = [];
+	keyRelationships: any = [];
 
 	stid: any='';
 
@@ -46,10 +47,14 @@ export class GlobalViewComponent implements OnInit {
         this.getDatastoreData(this.stid);
         this.getPostgresDatabasesData();
         this.getMongoDatabasesData();
+	this.getKeyRelationshipData();
         this.getSchemasData();
         this.getTablesData();
         this.getStructFileData();
         this.getUnstructFileData();
+
+
+
 
         this.postgresDatabaseForm = this.formBuilder.group({
             'Type' : 'PostgreSQL',
@@ -76,6 +81,13 @@ export class GlobalViewComponent implements OnInit {
           });
     }
 
+	getKeyRelationshipData() {
+		this.keyRelationships = [];
+		this.rest.getKeyRelationships().subscribe((data: {}) => {
+		  console.log(data);
+		  this.keyRelationships = data;
+		});
+	}
     getDatastoreData(id) {
         this.datastore = [];
         this.rest.getDatastore(id).subscribe((data: {}) => {

@@ -264,14 +264,14 @@ a:hover{
     padding: 5px;
     margin: 0;
     color: #ad6002;
-    font-weight: 900;
+
 }
 .rel-to{
     grid-column: 5;
     padding: 5px;
     margin: 0;
     color: darkblue;
-        font-weight: 900;
+
 }
 .table #add-field{
 	background-color: #e8e8e8;
@@ -316,7 +316,7 @@ a:hover{
 	color: gray; 
 }
 #delete-field{ 
-	grid-column:8;
+	grid-column:9;
 	background-color: #f9f9f9;
 	color: red;
 	margin:0 5px 0 5px;
@@ -360,7 +360,7 @@ a:hover{
 	color:white;
 }
 #delete-key-relationship{ 
-	grid-column:9;
+	grid-column:8;
 	background-color: #f9f9f9;
 	color: red;
 	margin:0 5px 0 5px;

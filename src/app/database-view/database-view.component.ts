@@ -15,6 +15,7 @@ export class DatabaseViewComponent implements OnInit {
 	postgresDatabase:any = [];
 	schemas:any = [];
 	tables:any = [];
+	keyRelationships: any = [];
 
 	dbid:any = '';
  	schid:any = '';
@@ -36,6 +37,7 @@ export class DatabaseViewComponent implements OnInit {
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData(this.dtsid);
         this.getPostgresDatabaseData(this.dbid);
+	this.getKeyRelationshipData();
         this.getSchemasData();
         this.getTablesData();
         this.schemaForm = this.formBuilder.group({
@@ -44,6 +46,14 @@ export class DatabaseViewComponent implements OnInit {
 	    'Name' : [],
 	  });
     }
+
+    getKeyRelationshipData() {
+        this.keyRelationships = [];
+        this.rest.getKeyRelationships().subscribe((data: {}) => {
+          console.log(data);
+          this.keyRelationships = data;
+        });
+    } 
 
     getDatastoreData(id) {
         this.datastore = [];

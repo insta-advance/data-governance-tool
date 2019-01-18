@@ -18,7 +18,7 @@
 
 		<div *ngFor="let s of postgresDatabase.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, postgresDatabase.Id, s.Id)">View</button> </p>
-			<ng-container class="table-list">
+			<div class="table-list">
 				<div *ngFor="let t of tables; let k=index;">
 					<div *ngIf="t.SchemaId==s.Id" class="table">
 						<p class="table-name">[{{t.Id}}] {{t.Name}}
@@ -27,13 +27,19 @@
 							    <p class="field-id"> {{f.Id}}</p>
 							    <p class="field-name"> {{f.Name}}, </p>
 							    <p class="field-type"> {{f.Type}}, </p>
-							    <div class="rel-from">PK, </div>
-							    <div class="rel-to">FK </div>
+					<ng-container *ngFor="let k of keyRelationships; let n=index;">
+						<ng-container *ngFor="let t2 of tables; let n=index;">
+								<ng-container *ngFor="let f2 of t2.Fields; let j=index;">
+				    					<div class="rel-from" *ngIf="k.FromId==f.Id && f2.Id==k.ToId">PK</div>
+				    					<div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
+								</ng-container>
+						</ng-container>
+					</ng-container>
 							</div>	
 						</div>
 					</div>
 				</div>
-			</ng-container>
+			</div>
 		</div>
 
 	

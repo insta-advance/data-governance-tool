@@ -26,11 +26,17 @@
 					    <p class="field-id"> {{f.Id}}</p>
 					    <p class="field-name"> {{f.Name}}, </p>
 					    <p class="field-type"> {{f.Type}}, </p>
-					    <div class="rel-from">PK, </div>
-					    <div class="rel-to">FK </div>
-<button id="delete-field" *ngIf="varform === t.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
-<button id="delete-key-relationship" *ngIf="varform === t.Id*(-2)" (click)="deleteKeyRelationship(k.Id)"> Delete KR</button>
-<button id="delete-field-cancel" *ngIf="varform === t.Id*(-2)" (click)="varform=0"> Cancel </button>
+					<ng-container *ngFor="let k of keyRelationships; let n=index;">
+						<ng-container *ngFor="let t2 of tables; let n=index;">
+								<ng-container *ngFor="let f2 of t2.Fields; let j=index;">
+				    					<div class="rel-from" *ngIf="k.FromId==f.Id && f2.Id==k.ToId">PK</div>
+				    					<div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
+								</ng-container>
+						</ng-container>
+					<button id="delete-key-relationship" *ngIf="varform == t.Id*(-2) && k.ToId == f.Id" (click)="deleteKeyRelationship(k.Id)"> Delete KR</button>
+					</ng-container>
+					<button id="delete-field" *ngIf="varform === t.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
+					<button id="delete-field-cancel" *ngIf="varform === t.Id*(-2)" (click)="varform=0"> Cancel </button>
 						
 					</div>	
 				</div>
