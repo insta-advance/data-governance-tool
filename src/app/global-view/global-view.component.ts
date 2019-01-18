@@ -192,6 +192,30 @@ export class GlobalViewComponent implements OnInit {
 	});
 	}
 
+	deleteStructFile(id) {
+	  this.rest.deleteStructFile(id).subscribe((data: {}) => {
+		this.getDatastoreData(this.stid);
+		this.getPostgresDatabasesData();
+        	this.getMongoDatabasesData();
+		this.getSchemasData();
+		this.getTablesData();
+		this.getStructFileData();
+		this.getUnstructFileData();
+	});
+	}
+
+
+	deleteUnstructFile(id) {
+	  this.rest.deleteUnstructFile(id).subscribe((data: {}) => {
+		this.getDatastoreData(this.stid);
+		this.getPostgresDatabasesData();
+        	this.getMongoDatabasesData();
+		this.getSchemasData();
+		this.getTablesData();
+		this.getStructFileData();
+		this.getUnstructFileData();
+	});
+	}
     	closeDatastore(){
 		this.router.navigate(['']);
 	}

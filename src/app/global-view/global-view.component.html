@@ -75,14 +75,14 @@
 
 	<div *ngFor="let str of datastore.StructuredFiles; let h=index;">
 		<div class="file">
-			<h2 class="file-title"> Structured File | <button>Edit</button></h2>
+			<h2 class="file-title"> Structured File | <button (click)="deleteStructFile(str.Id)">Delete</button></h2>
 			<p class="file-path">{{str.FilePath}}</p>
 		</div>
     	</div>
 
 	<div *ngFor="let unstr of datastore.UnstructuredFiles; let h=index;">
 		<div class="file">
-			<h2 class="file-title"> Untructured File | <button>Edit</button></h2>
+			<h2 class="file-title"> Untructured File | <button (click)="deleteStructFile(str.Id)">Delete</button></h2>
 			<p class="file-path">{{unstr.FilePath}}</p>
 		</div>
     	</div>
