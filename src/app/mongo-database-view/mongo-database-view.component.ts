@@ -33,7 +33,8 @@ export class MongoDatabaseViewComponent implements OnInit {
     
     annotationBaseForm: FormGroup;
 	BaseId: number=null;
-    
+    	AnnotationId: number=null;
+
     annotationForm: FormGroup;
 	Description: string='';
     
@@ -45,6 +46,8 @@ export class MongoDatabaseViewComponent implements OnInit {
         this.getDatastoreData(this.dtsid);
         this.getMongoDatabaseData(this.dbid);
         this.getCollectionData();
+        this.getAnnotationBases();
+        this.getAnnotations();
       
       this.collectionForm = this.formBuilder.group({
             'DatabaseId' : this.dbid,
@@ -61,6 +64,7 @@ export class MongoDatabaseViewComponent implements OnInit {
       
       this.annotationBaseForm = this.formBuilder.group({
             'BaseId' :  this.dbid,
+           'AnnotationId' : [],
        });  
       
       this.annotationForm = this.formBuilder.group({
@@ -110,59 +114,80 @@ export class MongoDatabaseViewComponent implements OnInit {
     
     addAnnotationBase() {
 		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();
 		});
 	}
     
     addAnnotation() {
 		this.rest.addAnnotation(this.annotationForm.value).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();            
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();            
 		});
 	}    
     
     addCollection() {
 		this.rest.addCollection(this.collectionForm.value).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();            
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();            
 		});
 	}
     
     addField() {
 		this.rest.addField(this.fieldForm.value).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();      
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
 		});
 	}
     
     deleteMongoDatabase(id) {
 		this.rest.deleteMongoDatabase(id).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();      
+			this.router.navigate(['/store/'+ this.dtsid]);     
 		});
 	}  
     
     deleteCollection(id) {
 		this.rest.deleteCollection(id).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();      
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
 		});
 	}  
     
     deleteField(id) {
 		this.rest.deleteField(id).subscribe((data: {}) => {
-                this.getCollectionData();
-                this.getAnnotationBases();
-                this.getAnnotations();      
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
 		});
-	}    
+	}  
+ 
+    deleteAnnotation(id) {
+		this.rest.deleteAnnotation(id).subscribe((data: {}) => {
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
+		});
+	}
+ 
+    deleteAnnotationBase(id) {
+		this.rest.deleteAnnotationBase(id).subscribe((data: {}) => {
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
+		});
+	}  
     
     backToHome() {
         this.router.navigate(['/store/'+ this.dtsid]);

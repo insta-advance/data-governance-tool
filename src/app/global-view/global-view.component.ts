@@ -205,7 +205,7 @@ export class GlobalViewComponent implements OnInit {
     }
 
     toMongoDatabase(storeId, mongoDatabaseId) {
-        this.router.navigate(['/store/'+ storeId +'/mongo/'+ mongoDatabaseId]);
+        this.router.navigate(['/store/'+ storeId +'/mongo/'+ mongoDatabaseId + '/collections']);
     }
 
 }

@@ -76,7 +76,8 @@ export interface Annotation{
 }
 
 export interface AnnotationBase{
-	BaseId: string;
-    AnnotationId: number;
+	BaseId: number;
+    	AnnotationId: number;
+    	Id: number;
 }
 

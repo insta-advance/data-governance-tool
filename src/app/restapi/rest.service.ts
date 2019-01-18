@@ -253,7 +253,7 @@ export class RestService {
     }
     /*---------------------ANNOTATIONS--------------------*/
     getAnnotations(): Observable<any> {
-      return this.http.get(endpointKeyRelationships).pipe(
+      return this.http.get(endpointAnnotations).pipe(
         map(this.extractData));
     }
 
@@ -288,12 +288,12 @@ export class RestService {
       return this.http.put(endpointAnnotationBases + '/' + id, httpOptions, annotationbase);
     }
 
-    deleteAnnotationBase (id): Observable<KeyRelationship> {
-      return this.http.delete<KeyRelationship>(endpointAnnotationBases + '/' + id, httpOptions);
+    deleteAnnotationBase (id): Observable<AnnotationBase> {
+      return this.http.delete<AnnotationBase>(endpointAnnotationBases + '/' + id, httpOptions);
     }
     
-    addAnnotationBase (annotationbase): Observable<KeyRelationship> {
-	   return this.http.post<KeyRelationship>(endpointAnnotationBases, annotationbase, httpOptions);
+    addAnnotationBase (annotationbase): Observable<AnnotationBase> {
+	   return this.http.post<AnnotationBase>(endpointAnnotationBases, annotationbase, httpOptions);
     }
     /*---------------------ERROR HANDLING--------------------*/
     private handleError<T> (operation = 'operation', result?: T) {
