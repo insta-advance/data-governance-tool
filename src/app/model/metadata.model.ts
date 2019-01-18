@@ -71,7 +71,7 @@ export interface KeyRelationship{
 }
 
 export interface Annotation{
-	description: string;
+	Description: string;
     Id: number;
 }
 

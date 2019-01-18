@@ -14,6 +14,8 @@ export class MongoDatabaseViewComponent implements OnInit {
     datastore:any = [];
     mongoDatabase:any = [];
     collections:any = [];
+    annotationBases:any = [];
+    annotations:any = [];
     
     dbid:any = '';
     dtsid:any = '';
@@ -28,6 +30,12 @@ export class MongoDatabaseViewComponent implements OnInit {
 	fieldForm: FormGroup;
 	Type: string='';
 	StructuredId: number=null;
+    
+    annotationBaseForm: FormGroup;
+	BaseId: number=null;
+    
+    annotationForm: FormGroup;
+	Description: string='';
     
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
@@ -49,6 +57,14 @@ export class MongoDatabaseViewComponent implements OnInit {
             'StructuredId' : [],
             'Fields' : [],
             'Name' : [],
+       });  
+      
+      this.annotationBaseForm = this.formBuilder.group({
+            'BaseId' :  this.dbid,
+       });  
+      
+      this.annotationForm = this.formBuilder.group({
+            'Description' : [],
        });
       
   }
@@ -73,36 +89,78 @@ export class MongoDatabaseViewComponent implements OnInit {
           console.log(data);
           this.collections = data;
         });
+    }  
+    
+    getAnnotationBases() {
+        this.annotationBases = [];
+        this.rest.getAnnotationBases().subscribe((data: {}) => {
+          console.log(data);
+          this.annotationBases = data;
+        });
+    } 
+    
+    getAnnotations() {
+        this.annotations = [];
+        this.rest.getAnnotations().subscribe((data: {}) => {
+          console.log(data);
+          this.annotations = data;
+        });
     }
     
+    
+    addAnnotationBase() {
+		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
+                this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();
+		});
+	}
+    
+    addAnnotation() {
+		this.rest.addAnnotation(this.annotationForm.value).subscribe((data: {}) => {
+                this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();            
+		});
+	}    
     
     addCollection() {
 		this.rest.addCollection(this.collectionForm.value).subscribe((data: {}) => {
                 this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();            
 		});
 	}
     
     addField() {
 		this.rest.addField(this.fieldForm.value).subscribe((data: {}) => {
                 this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();      
 		});
 	}
     
     deleteMongoDatabase(id) {
 		this.rest.deleteMongoDatabase(id).subscribe((data: {}) => {
                 this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();      
 		});
 	}  
     
     deleteCollection(id) {
 		this.rest.deleteCollection(id).subscribe((data: {}) => {
                 this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();      
 		});
 	}  
     
     deleteField(id) {
 		this.rest.deleteField(id).subscribe((data: {}) => {
                 this.getCollectionData();
+                this.getAnnotationBases();
+                this.getAnnotations();      
 		});
 	}    
     

@@ -6,6 +6,8 @@
 		<p>[{{mongoDatabase.Type}}] {{postgresDatabase.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add" (click)="varform=1">+ Add collection</p>
+		<span class="breadcrumbs-divider">|</span>		
+        <p class="add" (click)="varform=1.5">+ Add annotation</p>
 		<span class="breadcrumbs-divider">|</span>
 		<button (click)="deleteMongoDatabase()" class="delete"> Delete database </button>
 	</div>
@@ -13,6 +15,14 @@
 	<form [formGroup]="collectionForm" (ngSubmit)="addCollection()"  *ngIf="varform === 1">
 		<input  type="text" placeholder="Name of a new collection" formControlName="Name">
 		<button> Add collection </button>
+	</form>
+
+	<form [formGroup]="annotationBaseForm" (ngSubmit)="addAnnotationBase()"  *ngIf="varform === 1.5">
+		<button> Add annotation </button>
+	</form>
+    <form [formGroup]="annotationForm" (ngSubmit)="addAnnotation()"  *ngIf="varform === 1.5">
+        <input  type="text" placeholder="Annotation description" formControlName="Description">
+		<button> Add description </button>
 	</form>
 
 	<div class="table-list">
