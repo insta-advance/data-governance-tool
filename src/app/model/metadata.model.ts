@@ -13,6 +13,13 @@ export interface Table{
     Id: number;
 }
 
+export interface Collection{
+    databaseId: number;
+    Fields: Field[];
+    Name: string;
+    Id: number;
+}
+
 
 export interface Schema{
     databaseId: number;    
@@ -21,9 +28,17 @@ export interface Schema{
     id: number;
 }
 
-export interface Database{
+export interface PostgresDatabase{
     type: string;
     schemas: Schema[];
+    datastoreId: number;
+    name: string;
+    id: number;
+}
+
+export interface MongoDatabase{
+    type: string;
+    collections: Collection[];
     datastoreId: number;
     name: string;
     id: number;
@@ -40,7 +55,8 @@ export interface StructuredFile{
 }   
 export interface Datastore{
     Name: string;
-    Databases: Database[];
+    PostgresDatabases: PostgresDatabase[];
+    MongoDatabases: MongoDatabase[];
     StructuredFiles: StructuredFile[];
     UnstructuredFiles: UnstructuredFile[];
     Id: string;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from '../restapi/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Datastore, Database, Table, Schema, Field } from '../model/metadata.model';
+import { Datastore, MongoDatabase, PostgresDatabase, Table, Schema, Field } from '../model/metadata.model';
 
 @Component({
   selector: 'app-global-view',
@@ -12,7 +12,8 @@ import { Datastore, Database, Table, Schema, Field } from '../model/metadata.mod
 export class GlobalViewComponent implements OnInit {
 
 	datastore:any = [];
-	databases:any = [];
+	postgresDatabases:any = [];
+	mongoDatabases:any = [];
 	schemas:any = [];
 	tables:any = [];
 	structFiles:any = [];
@@ -27,11 +28,14 @@ export class GlobalViewComponent implements OnInit {
 
 	unstructFileForm: FormGroup;
 
-	databaseForm: FormGroup;
+	postgresDatabaseForm: FormGroup;
 	Type: string='';    
 	Schemas:  string='';
 	DatastoreId: number=null;
 	Name: string='';
+
+	mongoDatabaseForm: FormGroup;
+	Collections:  string='';
  
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
@@ -40,15 +44,23 @@ export class GlobalViewComponent implements OnInit {
 	this.stid=this.route.snapshot.paramMap.get('storeId');
 
         this.getDatastoreData(this.stid);
-        this.getDatabasesData();
+        this.getPostgresDatabasesData();
+        this.getMongoDatabasesData();
         this.getSchemasData();
         this.getTablesData();
         this.getStructFileData();
         this.getUnstructFileData();
 
-        this.databaseForm = this.formBuilder.group({
-            'Type' : [],
+        this.postgresDatabaseForm = this.formBuilder.group({
+            'Type' : 'PostgreSQL',
             'Schemas' : [],
+            'DatastoreId' : this.stid,
+            'Name' : [],
+          });
+
+        this.mongoDatabaseForm = this.formBuilder.group({
+            'Type' : 'MongoDB',
+            'Collections' : [],
             'DatastoreId' : this.stid,
             'Name' : [],
           });
@@ -72,13 +84,21 @@ export class GlobalViewComponent implements OnInit {
         });
     }    
     
-    getDatabasesData() {
-        this.databases = [];
-        this.rest.getDatabases().subscribe((data: {}) => {
+    getPostgresDatabasesData() {
+        this.postgresDatabases = [];
+        this.rest.getPostgresDatabases().subscribe((data: {}) => {
           console.log(data);
-          this.databases = data;
+          this.postgresDatabases = data;
         });
     }    
+    
+    getMongoDatabasesData() {
+        this.mongoDatabases = [];
+        this.rest.getMongoDatabases().subscribe((data: {}) => {
+          console.log(data);
+          this.mongoDatabases = data;
+        });
+    }
     
     getSchemasData() {
         this.schemas = [];
@@ -112,10 +132,23 @@ export class GlobalViewComponent implements OnInit {
 
 
     
-	addDatabase() {
-	  this.rest.addDatabase(this.databaseForm.value).subscribe((data: {}) => {
+	addPostgresDatabase() {
+	  this.rest.addPostgresDatabase(this.postgresDatabaseForm.value).subscribe((data: {}) => {
 		this.getDatastoreData(this.stid);
-		this.getDatabasesData();
+		this.getPostgresDatabasesData();
+        	this.getMongoDatabasesData();
+		this.getSchemasData();
+		this.getTablesData();
+		this.getStructFileData();
+		this.getUnstructFileData();
+	});
+	}
+
+	addMongoDatabase() {
+	  this.rest.addMongoDatabase(this.mongoDatabaseForm.value).subscribe((data: {}) => {
+		this.getDatastoreData(this.stid);
+		this.getPostgresDatabasesData();
+        	this.getMongoDatabasesData();
 		this.getSchemasData();
 		this.getTablesData();
 		this.getStructFileData();
@@ -126,7 +159,8 @@ export class GlobalViewComponent implements OnInit {
 	addStructFile() {
 	  this.rest.addStructFile(this.structFileForm.value).subscribe((data: {}) => {
 		this.getDatastoreData(this.stid);
-		this.getDatabasesData();
+		this.getPostgresDatabasesData();
+        	this.getMongoDatabasesData();
 		this.getSchemasData();
 		this.getTablesData();
 		this.getStructFileData();
@@ -137,7 +171,8 @@ export class GlobalViewComponent implements OnInit {
 	addUnstructFile() {
 	  this.rest.addUnstructFile(this.unstructFileForm.value).subscribe((data: {}) => {
 		this.getDatastoreData(this.stid);
-		this.getDatabasesData();
+		this.getPostgresDatabasesData();
+        	this.getMongoDatabasesData();
 		this.getSchemasData();
 		this.getTablesData();
 		this.getStructFileData();
@@ -149,12 +184,16 @@ export class GlobalViewComponent implements OnInit {
 		this.router.navigate(['']);
 	}
     
-    toDB(store, db) {
-        this.router.navigate(['/store/'+ store +'/db/'+ db]);
+    toPostgresDatabase(storeId, postgresDatabaseId) {
+        this.router.navigate(['/store/'+ storeId +'/postgres/'+ postgresDatabaseId]);
     }
 
-    toSchema(store, db, schema) {
-        this.router.navigate(['/store/'+ store +'/db/'+ db + '/schema/' + schema]);
+    toPostgresSchema(store, postgresDatabaseId, schemaId) {
+        this.router.navigate(['/store/'+ store +'/postgres/'+ postgresDatabaseId + '/schema/' + schemaId]);
+    }
+
+    toMongoDatabase(storeId, mongoDatabaseId) {
+        this.router.navigate(['/store/'+ storeId +'/mongo/'+ mongoDatabaseId]);
     }
 
 }

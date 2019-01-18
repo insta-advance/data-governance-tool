@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from '../restapi/rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Database, Table, Schema, Field } from '../model/metadata.model';
+import { PostgresDatabase, Table, Schema, Field } from '../model/metadata.model';
 
 @Component({
   selector: 'app-relational-view',
@@ -12,7 +12,7 @@ import { Database, Table, Schema, Field } from '../model/metadata.model';
 export class DatabaseViewComponent implements OnInit {
 
         datastore:any = [];
-	database:any = [];
+	postgresDatabase:any = [];
 	schemas:any = [];
 	tables:any = [];
 
@@ -35,7 +35,7 @@ export class DatabaseViewComponent implements OnInit {
         this.schid=this.route.snapshot.paramMap.get('schemaId');
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData();
-        this.getDatabaseData(this.dbid);
+        this.getPostgresDatabaseData(this.dbid);
         this.getSchemasData();
         this.getTablesData();
         this.schemaForm = this.formBuilder.group({
@@ -53,11 +53,11 @@ export class DatabaseViewComponent implements OnInit {
         });
     }    
     
-    getDatabaseData(id) {
-        this.database = [];
-        this.rest.getDatabase(id).subscribe((data: {}) => {
+    getPostgresDatabaseData(id) {
+        this.postgresDatabase = [];
+        this.rest.getPostgresDatabase(id).subscribe((data: {}) => {
           console.log(data);
-          this.database = data;
+          this.postgresDatabase = data;
         });
     }    
     
@@ -79,14 +79,14 @@ export class DatabaseViewComponent implements OnInit {
 
 	onFormSubmit() {
   		this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
-        		this.getDatabaseData(this.dbid);
+        		this.getPostgresDatabaseData(this.dbid);
 			this.getSchemasData();
 			this.getTablesData();
 		});
 	}
      	
-	deleteDatabase(){
-  		this.rest.deleteDatabase(this.database.Id).subscribe((data: {}) => {
+	deletePostgresDatabase(){
+  		this.rest.deletePostgresDatabase(this.postgresDatabase.Id).subscribe((data: {}) => {
   			this.router.navigate(['/store/'+ this.dtsid]);
 		});
 	}
@@ -94,8 +94,8 @@ export class DatabaseViewComponent implements OnInit {
         this.router.navigate(['/store/'+ this.dtsid]);
     } 
 
-    toSchema(store, db, schema) {
-        this.router.navigate(['/store/'+ store +'/db/'+ db + '/schema/' + schema]);
+    toSchema(store, postgresDatabaseId, schemaId) {
+        this.router.navigate(['/store/'+ store +'/postgres/'+ postgresDatabaseId + '/schema/' + schemaId]);
     }
 
 }

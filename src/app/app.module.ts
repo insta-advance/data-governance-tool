@@ -26,24 +26,20 @@ const appRoutes: Routes = [
   {
     path: 'store/:storeId',
     component: GlobalViewComponent,
-    data: { title: 'Global View' }
+    data: { title: 'Global view' }
   },
 
   {
-    path: 'store/:storeId/db/:dbId',
+    path: 'store/:storeId/postgres/:dbId',
     component: DatabaseViewComponent,
-    data: { title: 'Database view' }
+    data: { title: 'Postgres database view' }
   },
   {
-    path: 'store/:storeId/db/:dbId/schema/:schemaId',
+    path: 'store/:storeId/postgres/:dbId/schema/:schemaId',
     component: SchemaViewComponent,
-    data: { title: 'Schema view' }
+    data: { title: 'Postgres schema view' }
   },
-  /*{
-    path: 'db/:dbId/schema/:schemaId/table/:tableId',
-    component: TableViewComponent,
-    data: { title: 'Table view' }
-  },*/
+
 ];
 
 @NgModule({

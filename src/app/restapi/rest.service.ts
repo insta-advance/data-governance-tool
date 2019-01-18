@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import {  Datastore, Database, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
+import {  Datastore, MongoDatabase, PostgresDatabase, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
 
 const endpointDatastores = 'http://localhost:5000/api/datastores';
-const endpointDatabases = 'http://localhost:5000/api/databases';
+const endpointPostgresDatabases = 'http://localhost:5000/api/postgresdatabases';
+const endpointMongoDatabases = 'http://localhost:5000/api/mongodatabases';
 const endpointSchemas = 'http://localhost:5000/api/schemas';
 const endpointTables = 'http://localhost:5000/api/tables';
 const endpointFields = 'http://localhost:5000/api/fields';
@@ -55,26 +56,47 @@ export class RestService {
     addDatastore (datastore): Observable<Datastore> {
 	   return this.http.post<Datastore>(endpointDatastores, datastore, httpOptions);
     }
-    /*------------------------DATABASES------------------------*/
-    getDatabases(): Observable<any> {
-      return this.http.get(endpointDatabases).pipe(
+    /*------------------------POSTGRES DATABASES------------------------*/
+    getPostgresDatabases(): Observable<any> {
+      return this.http.get(endpointPostgresDatabases).pipe(
         map(this.extractData));
     }
 
-    getDatabase(id): Observable<any> {
-      return this.http.get(endpointDatabases + '/' + id).pipe(
+    getPostgresDatabase(id): Observable<any> {
+      return this.http.get(endpointPostgresDatabases + '/' + id).pipe(
         map(this.extractData));
     }
     
-    updateDatabase (id, database): Observable<any> {
-      return this.http.put(endpointDatabases + '/' + id, httpOptions, database);
+    updatePostgresDatabase (id, postgresDatabase): Observable<any> {
+      return this.http.put(endpointPostgresDatabases + '/' + id, httpOptions, postgresDatabase);
     }
 
-    deleteDatabase (id): Observable<Database> {
-      return this.http.delete<Database>(endpointDatabases + '/' + id, httpOptions);
+    deletePostgresDatabase (id): Observable<PostgresDatabase> {
+      return this.http.delete<PostgresDatabase>(endpointPostgresDatabases + '/' + id, httpOptions);
     }
-    addDatabase (database): Observable<Database> {
-	   return this.http.post<Database>(endpointDatabases, database, httpOptions);
+    addPostgresDatabase (postgresDatabase): Observable<PostgresDatabase> {
+	   return this.http.post<PostgresDatabase>(endpointPostgresDatabases, postgresDatabase, httpOptions);
+    }
+    /*------------------------MONGO DATABASES------------------------*/
+    getMongoDatabases(): Observable<any> {
+      return this.http.get(endpointMongoDatabases).pipe(
+        map(this.extractData));
+    }
+
+    getMongoDatabase(id): Observable<any> {
+      return this.http.get(endpointMongoDatabases + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateMongoDatabase (id, mongoDatabase): Observable<any> {
+      return this.http.put(endpointMongoDatabases + '/' + id, httpOptions, mongoDatabase);
+    }
+
+    deleteMongoDatabase (id): Observable<MongoDatabase> {
+      return this.http.delete<MongoDatabase>(endpointMongoDatabases + '/' + id, httpOptions);
+    }
+    addMongoDatabase (mongoDatabase): Observable<MongoDatabase> {
+	   return this.http.post<MongoDatabase>(endpointMongoDatabases, mongoDatabase, httpOptions);
     }
     /*------------------------SCHEMAS------------------------*/
     getSchemas(): Observable<any> {

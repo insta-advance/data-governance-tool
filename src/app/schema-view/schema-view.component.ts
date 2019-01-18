@@ -12,7 +12,7 @@ import { Table, Schema, Field } from '../model/metadata.model';
 export class SchemaViewComponent implements OnInit {
 
     datastore:any = [];
-	database:any = [];
+	postgresDatabase:any = [];
 	schema:any = [];
 	tables:any = [];
 
@@ -35,7 +35,7 @@ export class SchemaViewComponent implements OnInit {
         this.schid=this.route.snapshot.paramMap.get('schemaId');
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData();
-        this.getDatabaseData(this.dbid);
+        this.getPostgresDatabaseData(this.dbid);
         this.getSchemaData(this.schid);
         this.getTablesData();
         this.tableForm = this.formBuilder.group({
@@ -53,11 +53,11 @@ export class SchemaViewComponent implements OnInit {
         });
     }    
     
-    getDatabaseData(id) {
-        this.database = [];
-        this.rest.getDatabase(id).subscribe((data: {}) => {
+    getPostgresDatabaseData(id) {
+        this.postgresDatabase = [];
+        this.rest.getPostgresDatabase(id).subscribe((data: {}) => {
           console.log(data);
-          this.database = data;
+          this.postgresDatabase = data;
         });
     }    
     
@@ -86,7 +86,7 @@ export class SchemaViewComponent implements OnInit {
 
     	deleteSchema(){
   		this.rest.deleteSchema(this.schema.Id).subscribe((data: {}) => {
-  			this.router.navigate(['/store/'+ this.dtsid +'/db/'+ this.dbid]);
+  			this.router.navigate(['/store/'+ this.dtsid +'/postgres/'+ this.dbid]);
 		});
 	}
     	deleteTable(id){
@@ -100,8 +100,8 @@ export class SchemaViewComponent implements OnInit {
     } 
  
 
-    backToDb() {
-        this.router.navigate(['/store/'+ this.dtsid +'/db/'+ this.dbid]);
+    backToPostgresDatabase() {
+        this.router.navigate(['/store/'+ this.dtsid +'/postgres/'+ this.dbid]);
     }
 
   
