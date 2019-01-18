@@ -4,7 +4,7 @@
 	<div class="homelink">
         	<button (click)="backToHome()">{{datastore.Name}} </button>
 		<span class="breadcrumbs-divider">►</span> 
-		<p > {{postgresDatabase.Name}}</p>
+		<p > [{{postgresDatabase.Type}}] {{postgresDatabase.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add" (click)="varform=1">+ Add schema</p>
 		<span class="breadcrumbs-divider">|</span>
@@ -18,20 +18,22 @@
 
 		<div *ngFor="let s of postgresDatabase.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, postgresDatabase.Id, s.Id)">View</button> </p>
-			<div *ngFor="let t of tables; let k=index;">
-				<div *ngIf="t.SchemaId==s.Id" class="table">
-					<p class="table-name">{{t.Name}}
-					<div *ngFor="let f of t.Fields; let l=index;">
-						<div class="table-fields">        
-						    <p class="field-id"> {{f.Id}}</p>
-						    <p class="field-name"> {{f.Name}}, </p>
-						    <p class="field-type"> {{f.Type}}, </p>
-						    <div class="rel-from">PK, </div>
-						    <div class="rel-to">FK </div>
-						</div>	
+			<ng-container class="table-list">
+				<div *ngFor="let t of tables; let k=index;">
+					<div *ngIf="t.SchemaId==s.Id" class="table">
+						<p class="table-name">[{{t.Id}}] {{t.Name}}
+						<div *ngFor="let f of t.Fields; let l=index;">
+							<div class="table-fields">        
+							    <p class="field-id"> {{f.Id}}</p>
+							    <p class="field-name"> {{f.Name}}, </p>
+							    <p class="field-type"> {{f.Type}}, </p>
+							    <div class="rel-from">PK, </div>
+							    <div class="rel-to">FK </div>
+							</div>	
+						</div>
 					</div>
 				</div>
-			</div>
+			</ng-container>
 		</div>
 
 	

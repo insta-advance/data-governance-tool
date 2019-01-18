@@ -205,13 +205,18 @@ a:hover{
     margin: 0 0 10px 0;
 }
 /*tables*/
+.table-list{
+	display:grid;
+	grid-template-columns: auto auto auto;
+	grid-auto-rows: auto;
+	grid-gap:20px;
+}
 .table{
-    width: max-content;
     font-size: 1em;
     display:grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto;
-    margin: 10px 0 10px 0;
+    margin: 10px;
     grid-gap:0;
     padding: 0;
 }
@@ -227,7 +232,7 @@ a:hover{
 .table-fields{
     grid-column: 1;
     display:grid;
-    grid-template-columns: 30px max-content max-content max-content max-content 1fr 50px 50px;
+    grid-template-columns: 30px max-content max-content max-content max-content 1fr ;
     grid-row-gap: 10px;
     background-color: #f9f9f9;
 

@@ -3,7 +3,7 @@
 	<div class="homelink">
         	<button (click)="backToHome()">{{datastore.Name}} </button>
 		<span class="breadcrumbs-divider">►</span>    
-		<button (click)="backToPostgresDatabase()">{{postgresDatabase.Name}}</button>
+		<button (click)="backToPostgresDatabase()">[{{postgresDatabase.Type}}] {{postgresDatabase.Name}}</button>
 		<span class="breadcrumbs-divider">►</span>
 		<p > {{schema.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>
@@ -17,43 +17,58 @@
 		<button> Add Table </button>
 	</form>
 
+	<div class="table-list">
+		<ng-container *ngFor="let t of tables; let i=index;">
+			<div *ngIf="t.SchemaId==schema.Id" class="table">
+				<p class="table-name">[{{t.Id}}] {{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button></p>
+				<div *ngFor="let f of t.Fields; let j=index;">
+					<div class="table-fields">        
+					    <p class="field-id"> {{f.Id}}</p>
+					    <p class="field-name"> {{f.Name}}, </p>
+					    <p class="field-type"> {{f.Type}}, </p>
+					    <div class="rel-from">PK, </div>
+					    <div class="rel-to">FK </div>
+<button id="delete-field" *ngIf="varform === t.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
+<button id="delete-key-relationship" *ngIf="varform === t.Id*(-2)" (click)="deleteKeyRelationship(k.Id)"> Delete KR</button>
+<button id="delete-field-cancel" *ngIf="varform === t.Id*(-2)" (click)="varform=0"> Cancel </button>
+						
+					</div>	
+				</div>
+				<p id="add-field" (click)="varform=t.Id"> + Add field </p>
+				<p id="add-keys" (click)="varform=t.Id*(-1)"> + Add key relationships </p>
+				<p id="delete-field-toggle" (click)="varform=t.Id*(-2)"> x Delete fields / keys</p>
+				<form [formGroup]="fieldForm" (ngSubmit)="addPostgresField()"  *ngIf="varform === t.Id">
 
-	<div *ngFor="let t of tables; let i=index;">
-		<div *ngIf="t.SchemaId==schema.Id" class="table">
-			<p class="table-name">({{t.Id}}) {{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button></p>
-			<div *ngFor="let f of t.Fields; let j=index;">
-				<div class="table-fields">        
-				    <p class="field-id"> {{f.Id}}</p>
-				    <p class="field-name"> {{f.Name}}, </p>
-				    <p class="field-type"> {{f.Type}}, </p>
-				    <div class="rel-from">PK, </div>
-				    <div class="rel-to">FK </div>
-				    <button id="delete-field" *ngIf="varform === t.Id*(-1)" (click)="deleteField(f.Id)"> Delete </button>
-				    <button id="delete-field-cancel" *ngIf="varform === t.Id*(-1)" (click)="varform=0"> Cancel </button>
-				</div>	
+					<input  type="text" placeholder="Field name" formControlName="Name">
+
+					<select name="types" formControlName="Type">
+						  <option value="int">int</option>
+						  <option value="nvarchar(max)">nvarchar(max)</option>
+						  <option value="JSON">JSON</option>
+						  <option value="bool">bool</option>
+						  <option value="float8">float8</option>
+					</select> 
+
+					 <select name="types" formControlName="StructuredId">
+						  <option >{{t.Id}}</option>
+					</select> 
+					<button> Add Field </button>
+					<button (click)="varform=0" id="cancel"> Cancel </button>
+				</form>
+
+				<form [formGroup]="keyForm" (ngSubmit)="addKeyRelationship()"  *ngIf="varform === t.Id*(-1)">
+
+					<input  type="text" placeholder="From ID" formControlName="FromId">
+					<input  type="text" placeholder="To ID" formControlName="ToId">
+					<select name="types" formControlName="Type">
+						  <option value="exact">exact</option>
+						  <option value="regex">regex</option>
+					</select> 
+					<button> Add Relationship </button>
+					<button (click)="varform=0" id="cancel"> Cancel </button>
+				</form>
 			</div>
-			<p id="add-field" (click)="varform=t.Id"> + Add field </p>
-			<p id="delete-field-toggle" (click)="varform=t.Id*(-1)"> x Delete fields </p>
-			<form [formGroup]="fieldForm" (ngSubmit)="addPostgresField()"  *ngIf="varform === t.Id">
-
-				<input  type="text" placeholder="Field name" formControlName="Name">
-
-				<select name="types" formControlName="Type">
-					  <option value="" disabled selected hidden>-Select type-</option>
-					  <option value="int">int</option>
-					  <option value="nvarchar(max)">nvarchar(max)</option>
-					  <option value="JSON">JSON</option>
-					  <option value="bool">bool</option>
-					  <option value="float8">float8</option>
-				</select> 
-
-				 <select name="types" formControlName="StructuredId">
-					  <option >{{t.Id}}</option>
-				</select> 
-				<button> Add Field </button>
-				<button (click)="varform=0" id="cancel"> Cancel </button>
-			</form>
-		</div>
+		</ng-container>
 	</div>
     </div>
 </div>

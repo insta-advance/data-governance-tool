@@ -34,7 +34,7 @@ export class DatabaseViewComponent implements OnInit {
         this.dbid=this.route.snapshot.paramMap.get('dbId');
         this.schid=this.route.snapshot.paramMap.get('schemaId');
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
-        this.getDatastoreData();
+        this.getDatastoreData(this.dtsid);
         this.getPostgresDatabaseData(this.dbid);
         this.getSchemasData();
         this.getTablesData();
@@ -45,9 +45,9 @@ export class DatabaseViewComponent implements OnInit {
 	  });
     }
 
-    getDatastoreData() {
+    getDatastoreData(id) {
         this.datastore = [];
-        this.rest.getDatastore(1).subscribe((data: {}) => {
+        this.rest.getDatastore(id).subscribe((data: {}) => {
           console.log(data);
           this.datastore = data;
         });

@@ -15,7 +15,7 @@ export class SchemaViewComponent implements OnInit {
 	postgresDatabase:any = [];
 	schema:any = [];
 	tables:any = [];
-
+	keyRelationships: any = [];
 
 	dbid:any = '';
  	schid:any = '';
@@ -32,6 +32,10 @@ export class SchemaViewComponent implements OnInit {
 	Type: string='';
 	StructuredId: number=null;
 
+	keyForm: FormGroup;
+	FromId: number=null;
+	ToId: number=null;
+
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
@@ -40,8 +44,10 @@ export class SchemaViewComponent implements OnInit {
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData();
         this.getPostgresDatabaseData(this.dbid);
+	this.getKeyRelationshipData();
         this.getSchemaData(this.schid);
         this.getTablesData();
+
         this.tableForm = this.formBuilder.group({
             'SchemaId' : this.schid,
             'Fields' : [],
@@ -53,11 +59,24 @@ export class SchemaViewComponent implements OnInit {
             'Fields' : [],
             'Name' : [],
 	   });
+        this.keyForm = this.formBuilder.group({
+            'FromId' : [],
+            'ToId' : [],
+            'Type' : [],
+	   });
     }
+
+    getKeyRelationshipData() {
+        this.keyRelationships = [];
+        this.rest.getKeyRelationships().subscribe((data: {}) => {
+          console.log(data);
+          this.keyRelationships = data;
+        });
+    } 
 
     getDatastoreData() {
         this.datastore = [];
-        this.rest.getDatastore(1).subscribe((data: {}) => {
+        this.rest.getDatastore(this.dtsid).subscribe((data: {}) => {
           console.log(data);
           this.datastore = data;
         });
@@ -90,13 +109,22 @@ export class SchemaViewComponent implements OnInit {
 	addPostgresTable() {
 		this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+		});
+	}
+	addPostgresField() {
+		this.rest.addField(this.fieldForm.value).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
 			this.getTablesData();
 		});
 	}
 
-	addPostgresField() {
-		this.rest.addField(this.fieldForm.value).subscribe((data: {}) => {
+	addKeyRelationship() {
+		this.rest.addKeyRelationship(this.keyForm.value).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
 			this.getTablesData();
 		});
 	}
@@ -109,12 +137,21 @@ export class SchemaViewComponent implements OnInit {
     	deleteTable(id){
   		this.rest.deleteTable(id).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
 			this.getTablesData();
 		});
 	}
     	deleteField(id){
   		this.rest.deleteField(id).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+		});
+	}
+    	deleteKeyRelationship(id){
+  		this.rest.deleteKeyRelationship(id).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
 			this.getTablesData();
 		});
 	}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import {  Datastore, MongoDatabase, PostgresDatabase, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
+import {  KeyRelationship, Datastore, MongoDatabase, PostgresDatabase, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
 
 const endpointDatastores = 'http://localhost:5000/api/datastores';
 const endpointPostgresDatabases = 'http://localhost:5000/api/postgresdatabases';
@@ -13,6 +13,7 @@ const endpointFields = 'http://localhost:5000/api/fields';
 const endpointStructFiles = 'http://localhost:5000/api/structuredfiles';
 const endpointUnstructFiles = 'http://localhost:5000/api/unstructuredfiles';
 const endpointAnnotations = 'http://localhost:5000/api/annotations';
+const endpointKeyRelationships = 'http://localhost:5000/api/keyrelationships';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -204,6 +205,27 @@ export class RestService {
     } 
     addUnstructFile (unstructFile): Observable<UnstructuredFile> {
 	   return this.http.post<UnstructuredFile>(endpointUnstructFiles, unstructFile, httpOptions);
+    }
+    /*---------------------KEY RELATIONSHIPS--------------------*/
+    getKeyRelationships(): Observable<any> {
+      return this.http.get(endpointKeyRelationships).pipe(
+        map(this.extractData));
+    }
+
+    getKeyRelationship(id): Observable<any> {
+      return this.http.get(endpointKeyRelationships + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateKeyRelationship (id, keyRelationship): Observable<any> {
+      return this.http.put(endpointKeyRelationships + '/' + id, httpOptions, keyRelationship);
+    }
+
+    deleteKeyRelationship (id): Observable<KeyRelationship> {
+      return this.http.delete<KeyRelationship>(endpointKeyRelationships + '/' + id, httpOptions);
+    } 
+    addKeyRelationship (keyRelationship): Observable<KeyRelationship> {
+	   return this.http.post<KeyRelationship>(endpointKeyRelationships, keyRelationship, httpOptions);
     }
     /*---------------------ERROR HANDLING--------------------*/
     private handleError<T> (operation = 'operation', result?: T) {

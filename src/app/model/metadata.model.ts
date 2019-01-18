@@ -6,6 +6,12 @@ export interface Field{
     Id: number;
 }
 
+export interface KeyRelationship{
+	FromId: number;
+	ToId: number;
+	Type: string;
+    	Id: number;
+}
 export interface Table{
     SchemaId: number;
     Fields: Field[];

@@ -206,12 +206,18 @@ a:hover{
     margin: 0 0 10px 0;
 }
 /*tables*/
+.table-list{
+	display:grid;
+	grid-template-columns: auto auto auto;
+	grid-auto-rows: auto;
+	grid-gap:20px;
+}
 .table{
-    width: max-content;
+
     font-size: 1em;
     display:grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     margin: 10px 0 10px 0;
     grid-gap:0;
     padding: 0;
@@ -228,7 +234,7 @@ a:hover{
 .table-fields{
     grid-column: 1;
     display:grid;
-    grid-template-columns: 30px max-content max-content max-content max-content 1fr 50px 50px;
+    grid-template-columns: 30px max-content max-content max-content max-content 1fr max-content max-content max-content;
     grid-row-gap: 10px;
     background-color: #f9f9f9;
 
@@ -331,11 +337,35 @@ a:hover{
 }
 #delete-field-cancel{
 	background-color: #f9f9f9;
-	grid-column:9; 
+	grid-column:10; 
 	color: black; 
 	margin:0 5px 0 5px;
 }
 #delete-field-cancel:hover{
+	cursor:pointer;
+	text-decoration: underline;
+}
+#add-keys{
+	background-color: #e8e8e8;
+	color: blue;
+	display:flex;
+	align-items: center;
+	border-bottom: 1px solid #f2f2f2;
+	padding:5px;
+	margin:0;
+}
+#add-keys:hover{
+	cursor:pointer;
+    	background-color:darkblue;
+	color:white;
+}
+#delete-key-relationship{ 
+	grid-column:9;
+	background-color: #f9f9f9;
+	color: red;
+	margin:0 5px 0 5px;
+}
+#delete-key-relationship:hover{
 	cursor:pointer;
 	text-decoration: underline;
 }
