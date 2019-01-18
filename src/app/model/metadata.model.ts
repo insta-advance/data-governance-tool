@@ -6,12 +6,6 @@ export interface Field{
     Id: number;
 }
 
-export interface KeyRelationship{
-	FromId: number;
-	ToId: number;
-	Type: string;
-    	Id: number;
-}
 export interface Table{
     SchemaId: number;
     Fields: Field[];
@@ -20,7 +14,7 @@ export interface Table{
 }
 
 export interface Collection{
-    databaseId: number;
+    DatabaseId: number;
     Fields: Field[];
     Name: string;
     Id: number;
@@ -43,11 +37,11 @@ export interface PostgresDatabase{
 }
 
 export interface MongoDatabase{
-    type: string;
-    collections: Collection[];
-    datastoreId: number;
-    name: string;
-    id: number;
+    Type: string;
+    Collections: Collection[];
+    DatastoreId: number;
+    Name: string;
+    Id: number;
 }
  
 export interface UnstructuredFile{
@@ -67,4 +61,22 @@ export interface Datastore{
     UnstructuredFiles: UnstructuredFile[];
     Id: string;
 }  
+
+
+export interface KeyRelationship{
+	FromId: number;
+	ToId: number;
+	Type: string;
+    	Id: number;
+}
+
+export interface Annotation{
+	description: string;
+    Id: number;
+}
+
+export interface AnnotationBase{
+	BaseId: string;
+    AnnotationId: number;
+}
 

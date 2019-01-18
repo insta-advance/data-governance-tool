@@ -15,6 +15,7 @@ import { GlobalViewComponent } from './global-view/global-view.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatastoreListComponent } from './datastore-list/datastore-list.component';
+import { MongoDatabaseViewComponent } from './mongo-database-view/mongo-database-view.component';
 
 
 const appRoutes: Routes = [
@@ -39,7 +40,11 @@ const appRoutes: Routes = [
     component: SchemaViewComponent,
     data: { title: 'Postgres schema view' }
   },
-
+  {
+    path: 'store/:storeId/mongo/:dbId/collections',
+    component: MongoDatabaseViewComponent,
+    data: { title: 'Mongo schema view' }
+  },
 ];
 
 @NgModule({
@@ -50,6 +55,7 @@ const appRoutes: Routes = [
     GlobalViewComponent,
     DatabaseViewComponent,
     DatastoreListComponent,
+    MongoDatabaseViewComponent,
   ],
   imports: [
       RouterModule.forRoot(appRoutes),

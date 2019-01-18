@@ -1,0 +1,400 @@
+.container{
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+}
+.global{
+    grid-column: 1;
+    grid-row:1; 
+}
+h2 button{
+	border:0;
+	background-color:#343434;
+	margin:0;
+	padding:0;
+	color:white;
+}
+.schema-name button{
+	border:0;
+	background-color:white;
+	margin:0;
+	padding:0;
+}
+.table button{
+	border:0;
+	background-color:#838384;
+	margin:0;
+	padding:0;
+	color:white;
+}
+button:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+
+.side{
+    grid-column: 2;
+    grid-row:1;
+    position: sticky;
+    top:0;
+    height: 100vh;
+    right: 0;
+
+}
+.side ul{
+    margin: 0 0 0 0px;
+    padding: 0;
+    cursor: pointer;
+    list-style: none;
+    cursor:pointer;
+    border-left: 4px solid #39396d;
+}
+.side ul li{
+    padding: 10px 0 10px 10px;
+    margin: 0 0 0 0;
+    
+}
+.side ul li a{
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+
+.side ul li:hover {
+    background-color: #d1d1d1;
+}
+
+.side .title{
+    font-size: 0.8em;
+    padding: 3px;
+    color:grey;
+}
+
+.container .global h2{
+    background-color: #343434;
+    padding: 12px;
+    margin:10px 0 10px 0;
+    color: white;
+}
+
+.container .global h2 a{
+    color: white;
+    font-size: 0.8em;
+    text-decoration: underline;
+}
+
+.container .global h2 a:hover{
+    color: #cbcbcb;
+}
+/*breadcrumbs*/
+.homelink{
+    display:grid;
+    grid-auto-columns: max-content;
+    margin:0;
+    font-size: 1em;
+    
+}
+.homelink button{
+    grid-row: 1;
+    font-weight: bold; 
+    border: 0;
+    background-color: white;
+    padding: 5px;
+    margin:0;
+    font-size: 1em;   
+}
+.homelink button:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.homelink p{
+    grid-row: 1;
+    padding: 5px;
+    margin:0;
+    font-size: 1em;
+    font-weight: bolder;
+    background-color: #39396d;
+    color:white;
+}
+
+.homelink .breadcrumbs-divider{
+    grid-row: 1;
+    padding: 5px; 
+    margin:0;
+    color:lightgrey;
+}
+.homelink .add{
+    font-size: 0.8em;
+    background-color: white;
+    border-radius: 15px;
+    color: darkgreen;
+    display:flex;
+    align-items: center;
+}
+.homelink .add:hover{
+    cursor: pointer;
+	text-decoration: underline;
+    transition: 200ms;
+}
+.homelink .edit{
+    font-size: 0.8em;
+    background-color: white;
+    border-radius: 15px;
+    color: darkblue;
+    display:flex;
+    align-items: center;
+}
+.homelink .edit:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 200ms;
+}
+.homelink .delete{
+    font-size: 0.8em;
+    background-color: white;
+    border: 0;
+    color: darkred;
+    display:flex;
+    align-items: center;
+}
+.homelink .delete:hover{
+    cursor: pointer;
+	text-decoration: underline;
+    transition: 200ms;
+}
+/*titles*/
+.schema-name{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+/*links*/
+a{
+    text-decoration: none;
+    color:#39396d;
+}
+a:hover{
+    text-decoration: underline;
+    color:#505093;
+} 
+/*collections*/
+.collection{
+    width: 300px;
+    font-size: 1em;
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    grid-gap:0;
+    padding: 0;
+}
+.collection-name{
+    font-size: 1em;
+    font-weight: 900;
+    grid-column: 1;
+    color:white;
+    background-color: #647b27;
+    padding: 10px;
+    margin:0;
+}
+
+.collection-fields{
+    background-color: #e8e8e8;
+    padding: 5px;
+    margin: 0 0 10px 0;
+}
+/*tables*/
+.table-list{
+	display:grid;
+	grid-template-columns: auto auto auto;
+	grid-auto-rows: auto;
+	grid-gap:20px;
+}
+.table{
+
+    font-size: 1em;
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto;
+    margin: 10px 0 10px 0;
+    grid-gap:0;
+    padding: 0;
+}
+.table-name{
+    font-size: 1em;
+    font-weight: 900;
+    grid-column: 1;
+    color:white;
+    background-color: #838384;
+    padding: 7px;
+    margin:0;
+}
+.table-fields{
+    grid-column: 1;
+    display:grid;
+    grid-template-columns: 30px max-content max-content max-content max-content 1fr max-content max-content max-content;
+    grid-row-gap: 10px;
+    background-color: #f9f9f9;
+
+	border-bottom: 2px solid #f2f2f2;
+}
+.field-id{
+    grid-column: 1;
+    padding: 5px;
+    margin: 0;
+    color: grey;
+    background-color: #f2f2f2;
+}
+.field-name{
+    grid-column: 2;
+    padding: 5px;
+    margin: 0;
+    font-weight: bold;
+}
+.field-type{
+    grid-column: 3;
+    padding: 5px;
+    margin: 0;
+    color: grey;
+}
+.rel-from{
+    grid-column: 4;
+    padding: 5px;
+    margin: 0;
+    color: #ad6002;
+
+}
+.rel-to{
+    grid-column: 5;
+    padding: 5px;
+    margin: 0;
+    color: darkblue;
+
+}
+.table #add-field{
+	background-color: #e8e8e8;
+	color: green;
+	display:flex;
+	align-items: center;
+	border-bottom: 1px solid #f2f2f2;
+	padding:5px;
+	margin:0;
+}
+.table #add-field:hover{
+	cursor:pointer;
+    	background-color:#68b75f;
+	color:white;
+}
+.table #cancel{
+	padding:10px;
+    	background-color: white;
+    	color: black;
+	margin: 0 5px 0 5px;
+}
+.table #cancel:hover{
+	text-decoration: none;
+    	background-color: lightgrey;
+}
+.table input, .table select{
+	margin: 0 5px 0 5px;
+	padding:5px;
+}
+.table form button{
+	padding:10px;
+    	background-color: green;
+    	color: white;
+	margin: 0 5px 0 5px;
+}
+.table form button:hover{
+	text-decoration: none;
+    	background-color: darkgreen;
+
+}
+.table    select:invalid{ 
+	color: gray; 
+}
+#delete-field{ 
+	grid-column:9;
+	background-color: #f9f9f9;
+	color: red;
+	margin:0 5px 0 5px;
+}
+#delete-field-toggle:hover{
+	cursor:pointer;
+    	background-color:#b75f5f;
+	color:white;
+}
+#delete-field-toggle{ 
+	background-color: #e8e8e8;
+	color: red;
+	display:flex;
+	align-items: center;
+	border-bottom: 1px solid #f2f2f2;
+	padding:5px;
+	margin:0;
+}
+#delete-field-cancel{
+	background-color: #f9f9f9;
+	grid-column:10; 
+	color: black; 
+	margin:0 5px 0 5px;
+}
+#delete-field-cancel:hover{
+	cursor:pointer;
+	text-decoration: underline;
+}
+#add-keys{
+	background-color: #e8e8e8;
+	color: blue;
+	display:flex;
+	align-items: center;
+	border-bottom: 1px solid #f2f2f2;
+	padding:5px;
+	margin:0;
+}
+#add-keys:hover{
+	cursor:pointer;
+    	background-color:darkblue;
+	color:white;
+}
+#delete-key-relationship{ 
+	grid-column:8;
+	background-color: #f9f9f9;
+	color: red;
+	margin:0 5px 0 5px;
+}
+#delete-key-relationship:hover{
+	cursor:pointer;
+	text-decoration: underline;
+}
+/*UNSTRUCTURED FILES*/
+.files{
+    width: max-content;
+    font-size: 1em;
+    display:grid;
+    grid-template-rows: auto auto;
+    grid-gap:0;
+    padding: 0;
+   padding: 5px;
+}
+.file-title{
+    font-size: 1em;
+    font-weight: 900;
+    grid-column: 1;
+    color:white;
+    background-color: #9f3711;
+    padding: 10px;
+    margin:0;
+}
+
+.file-path{
+    background-color: #e8e8e8;
+    padding: 5px;
+    margin: 0 0 0 0;
+}
+
+form{
+	padding:10px 0 10px 0;
+}

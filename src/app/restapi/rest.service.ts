@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import {  KeyRelationship, Datastore, MongoDatabase, PostgresDatabase, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
+import { AnnotationBase, Annotation, KeyRelationship, Datastore, MongoDatabase, PostgresDatabase, Collection, Schema, Table, Field, UnstructuredFile, StructuredFile} from '../model/metadata.model'
 
 const endpointDatastores = 'http://localhost:5000/api/datastores';
 const endpointPostgresDatabases = 'http://localhost:5000/api/postgresdatabases';
@@ -12,8 +12,10 @@ const endpointTables = 'http://localhost:5000/api/tables';
 const endpointFields = 'http://localhost:5000/api/fields';
 const endpointStructFiles = 'http://localhost:5000/api/structuredfiles';
 const endpointUnstructFiles = 'http://localhost:5000/api/unstructuredfiles';
-const endpointAnnotations = 'http://localhost:5000/api/annotations';
 const endpointKeyRelationships = 'http://localhost:5000/api/keyrelationships';
+const endpointCollections = 'http://localhost:5000/api/collections';
+const endpointAnnotations = 'http://localhost:5000/api/annotations';
+const endpointAnnotationBases = 'http://localhost:5000/api/annotationbases';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -119,6 +121,28 @@ export class RestService {
     }
     addSchema (schema): Observable<Schema> {
 	return this.http.post<Schema>(endpointSchemas, schema, httpOptions);
+    }
+    /*------------------------MONGO COLLECTIONS------------------------*/
+    getCollections(): Observable<any> {
+      return this.http.get(endpointCollections).pipe(
+        map(this.extractData));
+    }
+
+    getCollection(id): Observable<any> {
+      return this.http.get(endpointCollections + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateCollection (id, collection): Observable<any> {
+      return this.http.put(endpointCollections + '/' + id, httpOptions, collection);
+    }
+
+    deleteCollection (id): Observable<Collection> {
+      return this.http.delete<Collection>(endpointCollections + '/' + id, httpOptions);
+    }  
+  
+    addCollection (collection): Observable<Collection> {
+	   return this.http.post<Collection>(endpointCollections, collection, httpOptions);
     }
     /*------------------------POSTGRES TABLES------------------------*/
     getTables(): Observable<any> {
@@ -226,6 +250,50 @@ export class RestService {
     } 
     addKeyRelationship (keyRelationship): Observable<KeyRelationship> {
 	   return this.http.post<KeyRelationship>(endpointKeyRelationships, keyRelationship, httpOptions);
+    }
+    /*---------------------ANNOTATIONS--------------------*/
+    getAnnotations(): Observable<any> {
+      return this.http.get(endpointKeyRelationships).pipe(
+        map(this.extractData));
+    }
+
+    getAnnotation(id): Observable<any> {
+      return this.http.get(endpointAnnotations + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateAnnotation (id, annotation): Observable<any> {
+      return this.http.put(endpointAnnotations + '/' + id, httpOptions, annotation);
+    }
+
+    deleteAnnotation (id): Observable<Annotation> {
+      return this.http.delete<Annotation>(endpointAnnotations + '/' + id, httpOptions);
+    } 
+    
+    addAnnotation (annotation): Observable<Annotation> {
+	   return this.http.post<Annotation>(endpointAnnotations, annotation, httpOptions);
+    }
+    /*---------------------ANNOTATION BASES--------------------*/
+    getAnnotationBases(): Observable<any> {
+      return this.http.get(endpointAnnotationBases).pipe(
+        map(this.extractData));
+    }
+
+    getAnnotationBase(id): Observable<any> {
+      return this.http.get(endpointAnnotationBases + '/' + id).pipe(
+        map(this.extractData));
+    }
+    
+    updateAnnotationBases (id, annotationbase): Observable<any> {
+      return this.http.put(endpointAnnotationBases + '/' + id, httpOptions, annotationbase);
+    }
+
+    deleteAnnotationBases (id): Observable<KeyRelationship> {
+      return this.http.delete<KeyRelationship>(endpointAnnotationBases + '/' + id, httpOptions);
+    }
+    
+    addAnnotationBases (annotationbase): Observable<KeyRelationship> {
+	   return this.http.post<KeyRelationship>(endpointAnnotationBases, annotationbase, httpOptions);
     }
     /*---------------------ERROR HANDLING--------------------*/
     private handleError<T> (operation = 'operation', result?: T) {

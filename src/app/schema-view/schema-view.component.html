@@ -26,27 +26,24 @@
 					    <p class="field-id"> {{f.Id}}</p>
 					    <p class="field-name"> {{f.Name}}, </p>
 					    <p class="field-type"> {{f.Type}}, </p>
-					<ng-container *ngFor="let k of keyRelationships; let n=index;">
-						<ng-container *ngFor="let t2 of tables; let n=index;">
-								<ng-container *ngFor="let f2 of t2.Fields; let j=index;">
-				    					<div class="rel-from" *ngIf="k.FromId==f.Id && f2.Id==k.ToId">PK</div>
-				    					<div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
-								</ng-container>
-						</ng-container>
-					<button id="delete-key-relationship" *ngIf="varform == t.Id*(-2) && k.ToId == f.Id" (click)="deleteKeyRelationship(k.Id)"> Delete KR</button>
-					</ng-container>
-					<button id="delete-field" *ngIf="varform === t.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
-					<button id="delete-field-cancel" *ngIf="varform === t.Id*(-2)" (click)="varform=0"> Cancel </button>
-						
+                        <ng-container *ngFor="let k of keyRelationships; let n=index;">
+                            <ng-container *ngFor="let t2 of tables; let n=index;">
+                                    <ng-container *ngFor="let f2 of t2.Fields; let j=index;">
+                                            <div class="rel-from" *ngIf="k.FromId==f.Id && f2.Id==k.ToId">PK</div>
+                                            <div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
+                                    </ng-container>
+                            </ng-container>
+                        <button id="delete-key-relationship" *ngIf="varform == t.Id*(-2) && k.ToId == f.Id" (click)="deleteKeyRelationship(k.Id)"> Delete KR</button>
+                        </ng-container>
+                        <button id="delete-field" *ngIf="varform === t.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
+                        <button id="delete-field-cancel" *ngIf="varform === t.Id*(-2)" (click)="varform=0"> Cancel </button>
 					</div>	
 				</div>
 				<p id="add-field" (click)="varform=t.Id"> + Add field </p>
 				<p id="add-keys" (click)="varform=t.Id*(-1)"> + Add key relationships </p>
 				<p id="delete-field-toggle" (click)="varform=t.Id*(-2)"> x Delete fields / keys</p>
 				<form [formGroup]="fieldForm" (ngSubmit)="addPostgresField()"  *ngIf="varform === t.Id">
-
 					<input  type="text" placeholder="Field name" formControlName="Name">
-
 					<select name="types" formControlName="Type">
 						  <option value="int">int</option>
 						  <option value="nvarchar(max)">nvarchar(max)</option>
@@ -54,16 +51,13 @@
 						  <option value="bool">bool</option>
 						  <option value="float8">float8</option>
 					</select> 
-
 					 <select name="types" formControlName="StructuredId">
 						  <option >{{t.Id}}</option>
 					</select> 
 					<button> Add Field </button>
 					<button (click)="varform=0" id="cancel"> Cancel </button>
 				</form>
-
 				<form [formGroup]="keyForm" (ngSubmit)="addKeyRelationship()"  *ngIf="varform === t.Id*(-1)">
-
 					<input  type="text" placeholder="From ID" formControlName="FromId">
 					<input  type="text" placeholder="To ID" formControlName="ToId">
 					<select name="types" formControlName="Type">

@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="global">
+	<div class="homelink">
+        <button (click)="backToHome()">{{datastore.Name}} </button>
+		<span class="breadcrumbs-divider">►</span>    
+		<p>[{{mongoDatabase.Type}}] {{postgresDatabase.Name}}</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add" (click)="varform=1">+ Add collection</p>
+		<span class="breadcrumbs-divider">|</span>
+		<button (click)="deleteMongoDatabase()" class="delete"> Delete database </button>
+	</div>
+
+	<form [formGroup]="collectionForm" (ngSubmit)="addCollection()"  *ngIf="varform === 1">
+		<input  type="text" placeholder="Name of a new collection" formControlName="Name">
+		<button> Add collection </button>
+	</form>
+
+	<div class="table-list">
+		<ng-container *ngFor="let c of collections; let i=index;">
+			<div *ngIf="c.StructuredId==mongoDatabase.Id" class="table">
+				<p class="table-name">[{{c.Id}}] {{c.Name}} |  <button (click)="deleteCollection(t.Id)">Delete</button></p>
+				<div *ngFor="let f of c.Fields; let j=index;">
+					<div class="table-fields">        
+					    <p class="field-id"> {{f.Id}}</p>
+					    <p class="field-name"> {{f.Name}}, </p>
+					    <p class="field-type"> {{f.Type}}, </p>
+					<button id="delete-field" *ngIf="varform === c.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
+					<button id="delete-field-cancel" *ngIf="varform === c.Id*(-2)" (click)="varform=0"> Cancel </button>
+					</div>	
+				</div>
+				<p id="add-field" (click)="varform=t.Id"> + Add field </p>
+				<p id="delete-field-toggle" (click)="varform=t.Id*(-2)"> x Delete fields</p>
+				<form [formGroup]="fieldForm" (ngSubmit)="addCollection()"  *ngIf="varform === t.Id">
+					<input  type="text" placeholder="Field name" formControlName="Name">
+					<select name="types" formControlName="Type">
+						  <option value="int">int</option>
+						  <option value="String">String</option>
+					</select> 
+					 <select name="types" formControlName="StructuredId">
+						  <option >{{t.Id}}</option>
+					</select> 
+					<button> Add Field </button>
+					<button (click)="varform=0" id="cancel"> Cancel </button>
+				</form>
+			</div>
+		</ng-container>
+	</div>
+    </div>
+</div>
+
+
+
+
+

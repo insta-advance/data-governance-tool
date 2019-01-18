@@ -42,9 +42,9 @@ export class SchemaViewComponent implements OnInit {
         this.dbid=this.route.snapshot.paramMap.get('dbId');
         this.schid=this.route.snapshot.paramMap.get('schemaId');
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
-        this.getDatastoreData();
+        this.getDatastoreData(this.dtsid);
         this.getPostgresDatabaseData(this.dbid);
-	this.getKeyRelationshipData();
+            this.getKeyRelationshipData();
         this.getSchemaData(this.schid);
         this.getTablesData();
 
@@ -74,9 +74,9 @@ export class SchemaViewComponent implements OnInit {
         });
     } 
 
-    getDatastoreData() {
+    getDatastoreData(id) {
         this.datastore = [];
-        this.rest.getDatastore(this.dtsid).subscribe((data: {}) => {
+        this.rest.getDatastore(id).subscribe((data: {}) => {
           console.log(data);
           this.datastore = data;
         });
