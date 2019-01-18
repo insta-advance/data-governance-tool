@@ -211,7 +211,7 @@ a:hover{
     font-size: 1em;
     display:grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto auto;
     margin: 10px 0 10px 0;
     grid-gap:0;
     padding: 0;
@@ -228,43 +228,116 @@ a:hover{
 .table-fields{
     grid-column: 1;
     display:grid;
-    grid-template-columns: max-content max-content max-content max-content max-content;
+    grid-template-columns: 30px max-content max-content max-content max-content 1fr 50px 50px;
     grid-row-gap: 10px;
-    background-color: #e8e8e8;
-    padding: 5px;
-    border-bottom: 1px solid #cbcbcb;
+    background-color: #f9f9f9;
+
+	border-bottom: 2px solid #f2f2f2;
 }
 .field-id{
     grid-column: 1;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     color: grey;
+    background-color: #f2f2f2;
 }
 .field-name{
     grid-column: 2;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     font-weight: bold;
 }
 .field-type{
     grid-column: 3;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     color: grey;
 }
 .rel-from{
     grid-column: 4;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     color: #ad6002;
     font-weight: 900;
 }
 .rel-to{
     grid-column: 5;
-   padding: 0;
+    padding: 5px;
     margin: 0;
     color: darkblue;
         font-weight: 900;
+}
+.table #add-field{
+	background-color: #e8e8e8;
+	color: green;
+	display:flex;
+	align-items: center;
+	border-bottom: 1px solid #f2f2f2;
+	padding:5px;
+	margin:0;
+}
+.table #add-field:hover{
+	cursor:pointer;
+    	background-color:#68b75f;
+	color:white;
+}
+.table #cancel{
+	padding:10px;
+    	background-color: white;
+    	color: black;
+	margin: 0 5px 0 5px;
+}
+.table #cancel:hover{
+	text-decoration: none;
+    	background-color: lightgrey;
+}
+.table input, .table select{
+	margin: 0 5px 0 5px;
+	padding:5px;
+}
+.table form button{
+	padding:10px;
+    	background-color: green;
+    	color: white;
+	margin: 0 5px 0 5px;
+}
+.table form button:hover{
+	text-decoration: none;
+    	background-color: darkgreen;
+
+}
+.table    select:invalid{ 
+	color: gray; 
+}
+#delete-field{ 
+	grid-column:8;
+	background-color: #f9f9f9;
+	color: red;
+	margin:0 5px 0 5px;
+}
+#delete-field-toggle:hover{
+	cursor:pointer;
+    	background-color:#b75f5f;
+	color:white;
+}
+#delete-field-toggle{ 
+	background-color: #e8e8e8;
+	color: red;
+	display:flex;
+	align-items: center;
+	border-bottom: 1px solid #f2f2f2;
+	padding:5px;
+	margin:0;
+}
+#delete-field-cancel{
+	background-color: #f9f9f9;
+	grid-column:9; 
+	color: black; 
+	margin:0 5px 0 5px;
+}
+#delete-field-cancel:hover{
+	cursor:pointer;
+	text-decoration: underline;
 }
 /*UNSTRUCTURED FILES*/
 .files{
@@ -274,6 +347,7 @@ a:hover{
     grid-template-rows: auto auto;
     grid-gap:0;
     padding: 0;
+   padding: 5px;
 }
 .file-title{
     font-size: 1em;

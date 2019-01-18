@@ -1,9 +1,9 @@
 export interface Field{
-    type: string;
-    structureId: number;
-    fields: Field[];
-    name: string;
-    id: number;
+    Type: string;
+    StructureId: number;
+    Fields: Field[];
+    Name: string;
+    Id: number;
 }
 
 export interface Table{

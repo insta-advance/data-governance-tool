@@ -98,7 +98,7 @@ export class RestService {
     addMongoDatabase (mongoDatabase): Observable<MongoDatabase> {
 	   return this.http.post<MongoDatabase>(endpointMongoDatabases, mongoDatabase, httpOptions);
     }
-    /*------------------------SCHEMAS------------------------*/
+    /*------------------------POSTGRES SCHEMAS------------------------*/
     getSchemas(): Observable<any> {
       return this.http.get(endpointSchemas).pipe(
         map(this.extractData));
@@ -119,7 +119,7 @@ export class RestService {
     addSchema (schema): Observable<Schema> {
 	return this.http.post<Schema>(endpointSchemas, schema, httpOptions);
     }
-    /*------------------------TABLES------------------------*/
+    /*------------------------POSTGRES TABLES------------------------*/
     getTables(): Observable<any> {
       return this.http.get(endpointTables).pipe(
         map(this.extractData));
@@ -141,7 +141,7 @@ export class RestService {
     addTable (table): Observable<Table> {
 	   return this.http.post<Table>(endpointTables, table, httpOptions);
     }
-    /*---------------------FIELDS--------------------*/
+    /*---------------------POSTGRES FIELDS--------------------*/
     getFields(): Observable<any> {
       return this.http.get(endpointFields).pipe(
         map(this.extractData));
@@ -159,6 +159,10 @@ export class RestService {
     deleteField (id): Observable<Field> {
       return this.http.delete<Field>(endpointFields + '/' + id, httpOptions);
     } 
+
+    addField (field): Observable<Field> {
+	   return this.http.post<Field>(endpointFields, field, httpOptions);
+    }
     /*---------------------STRUCTURED FILES--------------------*/
     getStructFiles(): Observable<any> {
       return this.http.get(endpointStructFiles).pipe(

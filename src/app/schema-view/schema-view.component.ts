@@ -16,6 +16,7 @@ export class SchemaViewComponent implements OnInit {
 	schema:any = [];
 	tables:any = [];
 
+
 	dbid:any = '';
  	schid:any = '';
  	dtsid:any = '';
@@ -27,6 +28,9 @@ export class SchemaViewComponent implements OnInit {
 	Fields:string='';
 	Name:string='';
 
+	fieldForm: FormGroup;
+	Type: string='';
+	StructuredId: number=null;
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
@@ -40,6 +44,12 @@ export class SchemaViewComponent implements OnInit {
         this.getTablesData();
         this.tableForm = this.formBuilder.group({
             'SchemaId' : this.schid,
+            'Fields' : [],
+            'Name' : [],
+	   });
+        this.fieldForm = this.formBuilder.group({
+            'Type' : [],
+            'StructuredId' : [],
             'Fields' : [],
             'Name' : [],
 	   });
@@ -77,11 +87,18 @@ export class SchemaViewComponent implements OnInit {
         });
     }    
 
-	onFormSubmit() {
-	this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
-  	        this.getSchemaData(this.schid);
-        	this.getTablesData();
-	});
+	addPostgresTable() {
+		this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getTablesData();
+		});
+	}
+
+	addPostgresField() {
+		this.rest.addField(this.fieldForm.value).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getTablesData();
+		});
 	}
 
     	deleteSchema(){
@@ -91,6 +108,12 @@ export class SchemaViewComponent implements OnInit {
 	}
     	deleteTable(id){
   		this.rest.deleteTable(id).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getTablesData();
+		});
+	}
+    	deleteField(id){
+  		this.rest.deleteField(id).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
 			this.getTablesData();
 		});
