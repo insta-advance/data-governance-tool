@@ -146,7 +146,8 @@ namespace DataGovernanceTool.Data.Access
             /* because HasAlternativeKey() does not work on derived classes!*/
             modelBuilder.Entity<Field>()
                  .HasIndex(f => new {f.Name, f.StructuredId})
-                 .IsUnique();
+                 .IsUnique()
+                 .HasName("asdf");
 
             /* Datastore can have one unique filename. */
             modelBuilder.Entity<StructuredFile>()

@@ -9,6 +9,7 @@ namespace DataGovernanceTool.BusinessLogic.IManagers
 {
     public interface IRepositoryManager<TEntity> : IManager// where TEntity : Base
     {
+        Task<String> GetType(int id);
         Task<IEnumerable<TEntity>> GetAsync();
         Task<TEntity> GetAsync(int id);
         Task<TEntity> FindAsync(params object[] keys);

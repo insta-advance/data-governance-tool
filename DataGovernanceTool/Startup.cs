@@ -59,6 +59,8 @@ namespace DataGovernanceTool
             services.AddTransient<IAnnotationsManager, AnnotationsManager>();
             services.AddTransient<IAnnotationBasesRepository, AnnotationBasesRepository>();
             services.AddTransient<IAnnotationBasesManager, AnnotationBasesManager>();
+            services.AddTransient<IBasesRepository, BasesRepository>();
+            services.AddTransient<IBasesManager, BasesManager>();
 
             // Comment next 2 lines for Docker, otherwise uncomment
             services.AddDbContext<DataGovernanceDBContext>(opt => 

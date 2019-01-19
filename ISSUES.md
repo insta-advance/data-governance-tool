@@ -10,7 +10,7 @@ If metadata is deleted and it contains a foreign key you cannot automatically
 delete the relationship from the KeyRelationship table because SQL server is 
 over paranoid about cascading loops. Either we have to do this on backend or use postgresql.
 
-Solved by migrating to postgresql
+Solved by migrating to postgresql.
 
 ---
 
@@ -27,7 +27,7 @@ Solved by ignoring http. Use https proxy in development or just run locally.
 Won't be able to post without specifying Id because of conflicting primary keys:
 Id and (FromId, ToId).
 
-Solved byt making (FromId, ToId) a alternate key.
+Solved by making (FromId, ToId) an alternate key.
 
 ---
 
@@ -38,6 +38,15 @@ Database has a type and two Navigation properties to Schemas and Collections.
 Fixed by making Types MongoDatabase and PostgresDatabase.
 
 ---
+
+## <span style="color:green">(Solved)</span> Usability issue: Can't know the derived type of the Base type.
+
+When using the API especially KeyRelationships the derived type of the other Base type is not known.
+
+Fix: So that you don't have to guess from structure (impossible in some cases) or check in what endpoint
+the id exists at, a new endpoint Bases is introduced with a api/bases/gettype/{id} endpoint.
+
+ ---
 ## <span style="color:red">(TODO)</span> Usability issue: PUT in KeyRelationships/CompositeKeyField
 
 You can't change a primary key (composite) to update a relationship.
