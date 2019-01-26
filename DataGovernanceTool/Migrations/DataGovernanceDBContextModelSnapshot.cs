@@ -184,26 +184,6 @@ namespace DataGT.Migrations
                     b.HasDiscriminator().HasValue("Structured");
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.UnstructuredFile", b =>
-                {
-                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Base");
-
-                    b.Property<int>("DatastoreId")
-                        .HasColumnName("UnstructuredFile_DatastoreId");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnName("UnstructuredFile_FilePath");
-
-                    b.HasIndex("DatastoreId");
-
-                    b.HasIndex("FilePath", "DatastoreId")
-                        .IsUnique();
-
-                    b.ToTable("UnstructuredFile");
-
-                    b.HasDiscriminator().HasValue("UnstructuredFile");
-                });
-
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.MongoDatabase", b =>
                 {
                     b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Database");
@@ -257,30 +237,29 @@ namespace DataGT.Migrations
                     b.HasIndex("StructuredId");
 
                     b.HasIndex("Name", "StructuredId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasName("asdf");
 
                     b.ToTable("Field");
 
                     b.HasDiscriminator().HasValue("Field");
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.StructuredFile", b =>
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.File", b =>
                 {
                     b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Structured");
 
                     b.Property<int>("DatastoreId")
-                        .HasColumnName("StructuredFile_DatastoreId");
+                        .HasColumnName("File_DatastoreId");
 
                     b.Property<string>("FilePath");
-
-                    b.HasIndex("DatastoreId");
 
                     b.HasIndex("FilePath", "DatastoreId")
                         .IsUnique();
 
-                    b.ToTable("StructuredFile");
+                    b.ToTable("File");
 
-                    b.HasDiscriminator().HasValue("StructuredFile");
+                    b.HasDiscriminator().HasValue("File");
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Table", b =>
@@ -296,6 +275,31 @@ namespace DataGT.Migrations
                     b.ToTable("Table");
 
                     b.HasDiscriminator().HasValue("Table");
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.StructuredFile", b =>
+                {
+                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.File");
+
+
+                    b.HasIndex("DatastoreId");
+
+                    b.ToTable("StructuredFile");
+
+                    b.HasDiscriminator().HasValue("StructuredFile");
+                });
+
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.UnstructuredFile", b =>
+                {
+                    b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.File");
+
+
+                    b.HasIndex("DatastoreId")
+                        .HasName("IX_Bases_File_DatastoreId1");
+
+                    b.ToTable("UnstructuredFile");
+
+                    b.HasDiscriminator().HasValue("UnstructuredFile");
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.AnnotationBase", b =>
@@ -357,14 +361,6 @@ namespace DataGT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.UnstructuredFile", b =>
-                {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
-                        .WithMany("UnstructuredFiles")
-                        .HasForeignKey("DatastoreId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.MongoDatabase", b =>
                 {
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
@@ -398,6 +394,14 @@ namespace DataGT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Table", b =>
+                {
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", "Schema")
+                        .WithMany("Tables")
+                        .HasForeignKey("SchemaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.StructuredFile", b =>
                 {
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
@@ -406,11 +410,12 @@ namespace DataGT.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Table", b =>
+            modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.UnstructuredFile", b =>
                 {
-                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", "Schema")
-                        .WithMany("Tables")
-                        .HasForeignKey("SchemaId")
+                    b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Datastore", "Datastore")
+                        .WithMany("UnstructuredFiles")
+                        .HasForeignKey("DatastoreId")
+                        .HasConstraintName("FK_Bases_Datastores_File_DatastoreId1")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

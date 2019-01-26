@@ -6,10 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataGovernanceTool.Data.Models.Metadata.Structure
 {
-    public class UnstructuredFile : Base
+    public class UnstructuredFile : File
     {
-        public string FilePath { get; set; }
-        public Datastore Datastore { get; set; }
-        public int DatastoreId { get; set; }
     }
 }

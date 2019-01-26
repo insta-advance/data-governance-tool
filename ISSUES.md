@@ -46,7 +46,18 @@ When using the API especially KeyRelationships the derived type of the other Bas
 Fix: So that you don't have to guess from structure (impossible in some cases) or check in what endpoint
 the id exists at, a new endpoint Bases is introduced with a api/bases/gettype/{id} endpoint.
 
+---
+
+## <span style="color:green">(Solved)</span> Functionality issue: It's possible to have two files with same name.
+
+Because files exists both in UnstructuredFiles and StructuredFiles they have separate constraints preventing
+a datostore from having two files with a same path. This means there could exists a StructuredFile
+and a UnstructuredFile with identical names in the same datastore.
+
+Fix: Common base table File from which Structured-/UnstructuredFiles are derived.
+
  ---
+
 ## <span style="color:red">(TODO)</span> Usability issue: PUT in KeyRelationships/CompositeKeyField
 
 You can't change a primary key (composite) to update a relationship.

@@ -30,6 +30,7 @@ namespace DataGovernanceTool.Data.Access
         public DbSet<Collection> Collections { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<StructuredFile> StructuredFiles { get; set; }
         public DbSet<UnstructuredFile> UnstructuredFiles { get; set; }
         public DbSet<PostgresDatabase> PostgresDatabases { get; set; }
@@ -150,11 +151,7 @@ namespace DataGovernanceTool.Data.Access
                  .HasName("asdf");
 
             /* Datastore can have one unique filename. */
-            modelBuilder.Entity<StructuredFile>()
-                 .HasIndex(s => new {s.FilePath, s.DatastoreId})
-                 .IsUnique();
-
-            modelBuilder.Entity<UnstructuredFile>()
+            modelBuilder.Entity<File>()
                  .HasIndex(u => new {u.FilePath, u.DatastoreId})
                  .IsUnique();
 

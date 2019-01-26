@@ -17,6 +17,11 @@ namespace DataGovernanceTool.Controllers
             this.manager = manager;
         }
 
+        /// <summary>
+        /// Get API values by ID
+        /// </summary>
+        /// <param name="id">Id of the entity</param>
+        /// <returns>blaablaa</returns>
         [HttpGet]
         public async Task<IEnumerable<T>> List(int id)
         {

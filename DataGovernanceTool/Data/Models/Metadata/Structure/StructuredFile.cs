@@ -2,10 +2,7 @@
 
 namespace DataGovernanceTool.Data.Models.Metadata.Structure
 {
-    public class StructuredFile : Structured
+    public class StructuredFile : File 
     {
-        public string FilePath { get; set; }
-        public Datastore Datastore { get; set; }
-        public int DatastoreId { get; set; }
     }
 }
