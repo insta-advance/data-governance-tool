@@ -1,5 +1,6 @@
 <div class="container">
     <div class="global">
+	<!--           Breadcrumbs           -->
 	<div class="homelink">
         <button (click)="backToHome()">{{datastore.Name}} </button>
 		<span class="breadcrumbs-divider">►</span>    
@@ -9,6 +10,7 @@
 		<span class="breadcrumbs-divider">|</span>		
 		<button (click)="deleteMongoDatabase(mongoDatabase.Id)" class="delete"> Delete database </button>
 	</div>
+	<!--           Display annotations assigned to MongoDB          -->
 	<div class="annotation-list">
 		<ng-container *ngFor="let ab of annotationBases; let i=index;">
 			<ng-container *ngFor="let a of annotations; let i=index;">
@@ -18,7 +20,7 @@
 			</ng-container>
 		</ng-container>
 
-
+	<!--           Annotations panel           -->
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add-annotation" (click)="varform=1.5">+ Add annotation</p>
 		<span class="breadcrumbs-divider">|</span>		
@@ -26,28 +28,28 @@
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add-annotation" (click)="varform=3.5"> Manage annotations</p>
 	</div>
-
+	<!--           Form to add annotations           -->
 	<form [formGroup]="annotationForm" (ngSubmit)="addAnnotation()"  *ngIf="varform === 1.5">
       		<input  type="text" placeholder="Description" formControlName="Description">
 		<button> Add annotation </button>
 	</form>
-
+	<!--           Form to assign annotation to a MongoDB           -->
     	<form [formGroup]="annotationBaseForm" (ngSubmit)="addAnnotationBase()"  *ngIf="varform === 2.5">
         	<input  type="text" placeholder="Target ID" formControlName="BaseId">
 			<select name="annotations" formControlName="AnnotationId">
 				<ng-container *ngFor="let a of annotations; let i=index;">
-				  	<option>{{a.Id}}</option> 
+				  	<option [value]="a.Id">{{a.Description}}</option> 
 				</ng-container>
 			</select> 
 		<button> Assign annotation </button>
 	</form>
-
+	<!--           Form to add mongo collections           -->
 	<form [formGroup]="collectionForm" (ngSubmit)="addCollection()"  *ngIf="varform === 1">
 		<input  type="text" placeholder="Name of a new collection" formControlName="Name">
 		<button> Add collection </button>
 	</form>
 	<div class="annotation-list-manage">
-
+	<!--           Display all annotations          -->
 		<ng-container  *ngIf="varform === 3.5">
 			<p>List of annotations</p>
 			<ng-container *ngFor="let a of annotations; let i=index;">
@@ -55,10 +57,7 @@
 			</ng-container>
 		</ng-container>
 	</div>
-
-
-
-
+	<!--           Display collections           -->
 	<div class="table-list">
 		<ng-container *ngFor="let c of collections; let i=index;">
 			<div *ngIf="c.DatabaseId==mongoDatabase.Id" class="table">

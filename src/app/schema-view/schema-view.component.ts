@@ -16,6 +16,8 @@ export class SchemaViewComponent implements OnInit {
 	schema:any = [];
 	tables:any = [];
 	keyRelationships: any = [];
+    	annotationBases:any = [];
+    	annotations:any = [];
 
 	dbid:any = '';
  	schid:any = '';
@@ -36,6 +38,13 @@ export class SchemaViewComponent implements OnInit {
 	FromId: number=null;
 	ToId: number=null;
 
+    annotationBaseForm: FormGroup;
+	BaseId: number=null;
+    	AnnotationId: number=null;
+
+    annotationForm: FormGroup;
+	Description: string='';
+
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
@@ -47,6 +56,8 @@ export class SchemaViewComponent implements OnInit {
         this.getKeyRelationshipData();
         this.getSchemaData(this.schid);
         this.getTablesData();
+        this.getAnnotationBases();
+        this.getAnnotations();
 
         this.tableForm = this.formBuilder.group({
             'SchemaId' : this.schid,
@@ -64,6 +75,14 @@ export class SchemaViewComponent implements OnInit {
             'ToId' : [],
             'Type' : [],
 	   });
+      this.annotationBaseForm = this.formBuilder.group({
+            'BaseId' :  this.schid,
+           'AnnotationId' : [],
+       });  
+      
+      this.annotationForm = this.formBuilder.group({
+            'Description' : [],
+       });
     }
 
     getKeyRelationshipData() {
@@ -104,13 +123,50 @@ export class SchemaViewComponent implements OnInit {
           console.log(data);
           this.tables = data;
         });
-    }    
+    }
+    getAnnotationBases() {
+        this.annotationBases = [];
+        this.rest.getAnnotationBases().subscribe((data: {}) => {
+          console.log(data);
+          this.annotationBases = data;
+        });
+    } 
+    
+    getAnnotations() {
+        this.annotations = [];
+        this.rest.getAnnotations().subscribe((data: {}) => {
+          console.log(data);
+          this.annotations = data;
+        });
+    }
+
+    addAnnotationBase() {
+		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
+ 	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();
+		});
+	}
+    
+    addAnnotation() {
+		this.rest.addAnnotation(this.annotationForm.value).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();            
+		});
+	}      
 
 	addPostgresTable() {
 		this.rest.addTable(this.tableForm.value).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations(); 
 		});
 	}
 	addPostgresField() {
@@ -118,6 +174,8 @@ export class SchemaViewComponent implements OnInit {
 	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations(); 
 		});
 	}
 
@@ -126,6 +184,8 @@ export class SchemaViewComponent implements OnInit {
 	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations(); 
 		});
 	}
 
@@ -139,6 +199,8 @@ export class SchemaViewComponent implements OnInit {
 	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations(); 
 		});
 	}
     	deleteField(id){
@@ -146,6 +208,8 @@ export class SchemaViewComponent implements OnInit {
 	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations(); 
 		});
 	}
     	deleteKeyRelationship(id){
@@ -153,6 +217,8 @@ export class SchemaViewComponent implements OnInit {
 	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations(); 
 		});
 	}
     backToHome() {

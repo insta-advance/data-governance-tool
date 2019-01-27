@@ -16,6 +16,8 @@ export class DatabaseViewComponent implements OnInit {
 	schemas:any = [];
 	tables:any = [];
 	keyRelationships: any = [];
+    annotationBases:any = [];
+    annotations:any = [];
 
 	dbid:any = '';
  	schid:any = '';
@@ -28,6 +30,12 @@ export class DatabaseViewComponent implements OnInit {
 	Tables:  string='';
 	Name: string='';
 
+    annotationBaseForm: FormGroup;
+	BaseId: number=null;
+    	AnnotationId: number=null;
+
+    annotationForm: FormGroup;
+	Description: string='';
 
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
@@ -40,11 +48,21 @@ export class DatabaseViewComponent implements OnInit {
 	this.getKeyRelationshipData();
         this.getSchemasData();
         this.getTablesData();
+        this.getAnnotationBases();
+        this.getAnnotations();
         this.schemaForm = this.formBuilder.group({
 	    'DatabaseId' : this.dbid,
 	    'Tables' : [],
 	    'Name' : [],
 	  });
+      this.annotationBaseForm = this.formBuilder.group({
+            'BaseId' :  this.dbid,
+           'AnnotationId' : [],
+       });  
+      
+      this.annotationForm = this.formBuilder.group({
+            'Description' : [],
+       });
     }
 
     getKeyRelationshipData() {
@@ -85,13 +103,50 @@ export class DatabaseViewComponent implements OnInit {
           console.log(data);
           this.tables = data;
         });
-    }    
+    }   
+    getAnnotationBases() {
+        this.annotationBases = [];
+        this.rest.getAnnotationBases().subscribe((data: {}) => {
+          console.log(data);
+          this.annotationBases = data;
+        });
+    } 
+    
+    getAnnotations() {
+        this.annotations = [];
+        this.rest.getAnnotations().subscribe((data: {}) => {
+          console.log(data);
+          this.annotations = data;
+        });
+    }
+
+    addAnnotationBase() {
+		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
+        		this.getPostgresDatabaseData(this.dbid);
+			this.getSchemasData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();
+		});
+	}
+    
+    addAnnotation() {
+		this.rest.addAnnotation(this.annotationForm.value).subscribe((data: {}) => {
+        		this.getPostgresDatabaseData(this.dbid);
+			this.getSchemasData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();            
+		});
+	}   
 
 	onFormSubmit() {
   		this.rest.addSchema(this.schemaForm.value).subscribe((data: {}) => {
         		this.getPostgresDatabaseData(this.dbid);
 			this.getSchemasData();
 			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();   
 		});
 	}
      	
@@ -100,6 +155,27 @@ export class DatabaseViewComponent implements OnInit {
   			this.router.navigate(['/store/'+ this.dtsid]);
 		});
 	}
+
+    	deleteAnnotation(id) {
+		this.rest.deleteAnnotation(id).subscribe((data: {}) => {
+        		this.getPostgresDatabaseData(this.dbid);
+			this.getSchemasData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
+		});
+	}
+ 
+    	deleteAnnotationBase(id) {
+		this.rest.deleteAnnotationBase(id).subscribe((data: {}) => {
+        		this.getPostgresDatabaseData(this.dbid);
+			this.getSchemasData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();      
+		});
+	}  
+
     backToHome() {
         this.router.navigate(['/store/'+ this.dtsid]);
     } 

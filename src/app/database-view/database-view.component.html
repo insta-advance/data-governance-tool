@@ -1,6 +1,7 @@
 <div class="container">
 
     <div class="global">
+	<!--           Breadcrumbs           -->
 	<div class="homelink">
         	<button (click)="backToHome()">{{datastore.Name}} </button>
 		<span class="breadcrumbs-divider">►</span> 
@@ -10,12 +11,54 @@
 		<span class="breadcrumbs-divider">|</span>
 		<button (click)="deletePostgresDatabase()" class="delete"> Delete database </button>
 	</div>
+	<!--           Display annotations assigned to PostgreSQL          -->
+	<div class="annotation-list">
+		<ng-container *ngFor="let ab of annotationBases; let i=index;">
+			<ng-container *ngFor="let a of annotations; let i=index;">
+				<ng-container *ngIf="postgresDatabase.Id===ab.BaseId && ab.AnnotationId===a.Id">
+					<p class="annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="remove-annotation">Remove</button></p>
+				</ng-container>
+			</ng-container>
+		</ng-container>
 
+	<!--           Annotations panel           -->
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add-annotation" (click)="varform=1.5">+ Add annotation</p>
+		<span class="breadcrumbs-divider">|</span>		
+		<p class="add-annotation" (click)="varform=2.5"> Assign annotation</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add-annotation" (click)="varform=3.5"> Manage annotations</p>
+	</div>
+	<!--           Form to add annotations           -->
+	<form [formGroup]="annotationForm" (ngSubmit)="addAnnotation()"  *ngIf="varform === 1.5">
+      		<input  type="text" placeholder="Description" formControlName="Description">
+		<button> Add annotation </button>
+	</form>
+	<!--           Form to assign annotation to a PostgreSQL DB           -->
+    	<form [formGroup]="annotationBaseForm" (ngSubmit)="addAnnotationBase()"  *ngIf="varform === 2.5">
+        	<input  type="text" placeholder="Target ID" formControlName="BaseId">
+			<select name="annotations" formControlName="AnnotationId">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+				  	<option [value]="a.Id">{{a.Description}}</option>  
+				</ng-container>
+			</select> 
+		<button> Assign annotation </button>
+	</form>
+	<div class="annotation-list-manage">
+	<!--           Display all annotations          -->
+		<ng-container  *ngIf="varform === 3.5">
+			<p>List of annotations</p>
+			<ng-container *ngFor="let a of annotations; let i=index;">
+					<p class="annotation-manage" (click)="varform=2.5"> {{a.Description}}|<button (click)="deleteAnnotation(a.Id)" class="delete-annotation"> Delete </button></p>
+			</ng-container>
+		</ng-container>
+	</div>
+	<!--           Form to add schema          -->
 	<form [formGroup]="schemaForm" (ngSubmit)="onFormSubmit()" *ngIf="varform === 1">
 		<input  type="text" placeholder="Schema name" formControlName="Name">
 		<button> Add schema </button>
 	</form>
-
+	<!--           Display schema          -->
 		<div *ngFor="let s of postgresDatabase.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, postgresDatabase.Id, s.Id)">View</button> </p>
 			<div class="table-list">
