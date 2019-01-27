@@ -44,7 +44,7 @@ export class SchemaViewComponent implements OnInit {
         this.dtsid=this.route.snapshot.paramMap.get('storeId');
         this.getDatastoreData(this.dtsid);
         this.getPostgresDatabaseData(this.dbid);
-            this.getKeyRelationshipData();
+        this.getKeyRelationshipData();
         this.getSchemaData(this.schid);
         this.getTablesData();
 

@@ -19,7 +19,7 @@
 		<div *ngFor="let s of postgresDatabase.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, postgresDatabase.Id, s.Id)">View</button> </p>
 			<div class="table-list">
-				<div *ngFor="let t of tables; let k=index;">
+				<ng-container *ngFor="let t of tables; let k=index;">
 					<div *ngIf="t.SchemaId==s.Id" class="table">
 						<p class="table-name">[{{t.Id}}] {{t.Name}}
 						<div *ngFor="let f of t.Fields; let l=index;">
@@ -38,7 +38,7 @@
 							</div>	
 						</div>
 					</div>
-				</div>
+				</ng-container>
 			</div>
 		</div>
 

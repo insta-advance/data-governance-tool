@@ -19,6 +19,9 @@ export class GlobalViewComponent implements OnInit {
 	structFiles:any = [];
 	unstructFiles: any = [];
 	keyRelationships: any = [];
+	    collections:any = [];
+	    annotationBases:any = [];
+	    annotations:any = [];
 
 	stid: any='';
 
@@ -52,7 +55,9 @@ export class GlobalViewComponent implements OnInit {
         this.getTablesData();
         this.getStructFileData();
         this.getUnstructFileData();
-
+        this.getCollectionData();
+        this.getAnnotationBases();
+        this.getAnnotations();
 
 
 
@@ -141,7 +146,29 @@ export class GlobalViewComponent implements OnInit {
           this.unstructFiles = data;
         });
     }
-
+    getCollectionData() {
+        this.collections = [];
+        this.rest.getCollections().subscribe((data: {}) => {
+          console.log(data);
+          this.collections = data;
+        });
+    }  
+    
+    getAnnotationBases() {
+        this.annotationBases = [];
+        this.rest.getAnnotationBases().subscribe((data: {}) => {
+          console.log(data);
+          this.annotationBases = data;
+        });
+    } 
+    
+    getAnnotations() {
+        this.annotations = [];
+        this.rest.getAnnotations().subscribe((data: {}) => {
+          console.log(data);
+          this.annotations = data;
+        });
+    }
 
     
 	addPostgresDatabase() {

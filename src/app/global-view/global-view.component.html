@@ -1,5 +1,6 @@
 <div class="container">
     <div class="global">
+	<!--           BREADCRUMBS           -->
 	<div class="homelink">
 		<p>{{datastore.Name}}</p>
 		<span class="breadcrumbs-divider">|</span>    
@@ -13,36 +14,38 @@
 		<span class="breadcrumbs-divider">|</span>
 		<button (click)="closeDatastore()" class="close">x Close datastore</button>
 	</div> 
-
+	<!--           Form to add postgres db           -->
 	 <form [formGroup]="postgresDatabaseForm" (ngSubmit)="addPostgresDatabase()" *ngIf="varform === 1">
 		<input  type="text" placeholder="PostgreSQL database name" formControlName="Name">
 		<button> Add PostgreSQL </button>
 	 </form>
-
+	<!--           Form to add mongo db           -->
 	 <form [formGroup]="mongoDatabaseForm" (ngSubmit)="addMongoDatabase()" *ngIf="varform === 2">
 		<input  type="text" placeholder="MongoDB database name" formControlName="Name">
 		<button> Add MongoDB </button>
 	 </form>
 
-
+	<!--           Form to add structured file           -->
 	 <form [formGroup]="structFileForm" (ngSubmit)="addStructFile()" *ngIf="varform === 3">
 		<input  type="text" placeholder="Structured file path" formControlName="FilePath">
 		<button> Add File </button>
 	 </form>
 
-
+	<!--           Form to add unstructured file           -->
 	 <form [formGroup]="unstructFileForm" (ngSubmit)="addUnstructFile()" *ngIf="varform === 4">
 		<input  type="text" placeholder="Unstructured file path" formControlName="FilePath">
 		<button> Add File </button>
 	 </form>
-
+	<!--           Display postgres db           -->
 	<div *ngFor="let db of postgresDatabases; let i=index;">
 			<div *ngIf="db.DatastoreId==datastore.Id">
 				<h2>[{{db.Type}}] {{db.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toPostgresDatabase(datastore.Id, db.Id)">View</button></h2>
+	<!--           Display postgres schemas          -->
 				<div *ngFor="let s of db.Schemas; let j=index;">
 					<p class="schema-name">{{s.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toPostgresSchema(datastore.Id, db.Id, s.Id)">View</button></p>
+	<!--           Display postgres tables and fields          -->
 					<div class="table-list">
-						<div *ngFor="let t of tables; let k=index;">
+						<ng-container *ngFor="let t of tables; let k=index;">
 							<div *ngIf="t.SchemaId==s.Id" class="table">
 								<p class="table-name">[{{t.Id}}] {{t.Name}}</p>
 								<div *ngFor="let f of t.Fields; let l=index;">
@@ -53,7 +56,6 @@
 					<ng-container *ngFor="let k of keyRelationships; let n=index;">
 						<ng-container *ngFor="let t2 of tables; let n=index;">
 								<ng-container *ngFor="let f2 of t2.Fields; let j=index;">
-				    					<div class="rel-from" *ngIf="k.FromId==f.Id && f2.Id==k.ToId">PK</div>
 				    					<div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
 								</ng-container>
 						</ng-container>
@@ -61,25 +63,41 @@
 									</div>	
 								</div>
 							</div>
-						</div>
+						</ng-container>
 					</div>
 				</div>
 			</div>
 	</div>
-
+	<!--           Display mongo db           -->
 	<div *ngFor="let mdb of mongoDatabases; let i=index;">
 		<div *ngIf="mdb.DatastoreId==datastore.Id">
-			<h2>({{mdb.Type}}) {{mdb.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toMongoDatabase(datastore.Id, mdb.Id)">View</button></h2>
+			<h2>[{{mdb.Type}}] {{mdb.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toMongoDatabase(datastore.Id, mdb.Id)">View</button></h2>
+	<!--           Display mongo collections           -->
+			<div class="table-list">
+				<ng-container *ngFor="let c of collections; let i=index;">
+					<div *ngIf="c.DatabaseId==mdb.Id" class="table">
+						<p class="table-name">[{{c.Id}}] {{c.Name}} |  <button (click)="deleteCollection(c.Id)">Delete</button></p>
+						<div *ngFor="let f of c.Fields; let j=index;">
+							<div class="table-fields">        
+							    <p class="field-id"> {{f.Id}}</p>
+							    <p class="field-name"> {{f.Name}}, </p>
+							    <p class="field-type"> {{f.Type}}, </p>
+							</div>	
+						</div>
+					</div>
+				</ng-container>
+			</div>
 		</div>
 	</div>
 
+	<!--           Display structured files           -->
 	<div *ngFor="let str of datastore.StructuredFiles; let h=index;">
 		<div class="file">
 			<h2 class="file-title"> Structured File | <button (click)="deleteStructFile(str.Id)">Delete</button></h2>
 			<p class="file-path">{{str.FilePath}}</p>
 		</div>
     	</div>
-
+	<!--           Display unstructured files           -->
 	<div *ngFor="let unstr of datastore.UnstructuredFiles; let h=index;">
 		<div class="file">
 			<h2 class="file-title"> Untructured File | <button (click)="deleteStructFile(str.Id)">Delete</button></h2>
