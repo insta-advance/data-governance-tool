@@ -77,10 +77,14 @@ namespace DataGovernanceTool.Data.Access.Repositories
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            
-            var newEntry = DbSet.Add(entity);
-            await DbContext.SaveChangesAsync();
-            return newEntry.Entity;
+            try{
+                var newEntry = DbSet.Add(entity);
+                await DbContext.SaveChangesAsync();
+                return newEntry.Entity;
+            }
+            catch(DbUpdateException ex){
+                throw new EntityAlreadyExistsException($@"{typeof(TEntity).Name} already exists.");
+            }
             
         }
 

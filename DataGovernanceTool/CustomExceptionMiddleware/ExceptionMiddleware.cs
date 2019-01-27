@@ -6,7 +6,8 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System;
- 
+using DataGovernanceTool.Data.Models.Exceptions;
+
 
 public class ExceptionMiddleware
 {
@@ -24,6 +25,11 @@ public class ExceptionMiddleware
         {
             await _next(httpContext);
         }
+        catch(BaseException ex)
+        {
+            await HandleCustomException(httpContext, ex);
+
+        }
         catch (Exception ex)
         {
             await HandleExceptionAsync(httpContext, ex);
@@ -35,6 +41,25 @@ public class ExceptionMiddleware
         
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+        string errorMessage;
+        if(exception.InnerException == null)
+            errorMessage = exception.Message;
+        else
+            errorMessage = exception.InnerException.Message;
+ 
+        return context.Response.WriteAsync(new ErrorDetails()
+        {
+            StatusCode = context.Response.StatusCode,
+            Message = errorMessage
+        }.ToString());
+    }
+
+     private static Task HandleCustomException(HttpContext context, BaseException exception)
+    {
+        
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)exception.StatusCode;
 
         string errorMessage;
         if(exception.InnerException == null)
