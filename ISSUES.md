@@ -56,7 +56,15 @@ and a UnstructuredFile with identical names in the same datastore.
 
 Fix: Common base table File from which Structured-/UnstructuredFiles are derived.
 
- ---
+---
+
+## <span style="color:green">(Solved)</span> Usability issue: Can't get easily the fields belonging to a composite key.
+
+API is missing a way to get the fields of a composite key:w.
+
+Fixed by adding business logic that includes the fields in GET requests.
+ 
+---
 
 ## <span style="color:red">(TODO)</span> Usability issue: PUT in KeyRelationships/CompositeKeyField
 

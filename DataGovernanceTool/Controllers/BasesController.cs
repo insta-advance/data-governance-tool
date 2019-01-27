@@ -16,6 +16,9 @@ namespace DataGovernanceTool.Controllers
         {
         }
 
+        /// <summary>Get the type of an entity.</summary>
+        /// <param name="id">Id of the entity.</param>
+        /// <returns>Error message if classification fails.</returns>
         [HttpGet("GetType/{id}")]
         public async Task<Object> GetType(int id)
         {

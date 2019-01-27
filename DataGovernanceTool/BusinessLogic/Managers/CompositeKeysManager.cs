@@ -17,5 +17,18 @@ namespace DataGovernanceTool.BusinessLogic.Managers
             : base(repository)
         {
         }
+        public new async Task<IEnumerable<CompositeKey>> GetAsync()
+        {
+            return await Repository.All().Include(c => c.CompositeKeyFields).ToListAsync();
+        }
+
+        public new async Task<CompositeKey> GetAsync(int id)
+        {
+            var compositeKey = await Repository.Filter(c => c.Id == id).Include(c => c.CompositeKeyFields).ToListAsync();
+            if (compositeKey.Count == 0) {
+                throw new EntityNotFoundException($@"{typeof(CompositeKey).Name} with id {id} not found.");
+            } 
+            return compositeKey[0];
+        }
     }
 }
