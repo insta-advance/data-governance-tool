@@ -65,23 +65,23 @@ export class GlobalViewComponent implements OnInit {
             'Type' : 'PostgreSQL',
             'Schemas' : [],
             'DatastoreId' : this.stid,
-            'Name' : [],
+            'Name' : ['',[Validators.required,Validators.minLength(3)]],
           });
 
         this.mongoDatabaseForm = this.formBuilder.group({
             'Type' : 'MongoDB',
             'Collections' : [],
             'DatastoreId' : this.stid,
-            'Name' : [],
+            'Name' : ['',[Validators.required,Validators.minLength(3)]],
           });
 
         this.structFileForm = this.formBuilder.group({
-            'FilePath' : [],
+            'FilePath' : ['',[Validators.required,Validators.minLength(3)]],
             'DatastoreId' : this.stid,
           });
 
         this.unstructFileForm = this.formBuilder.group({
-            'FilePath' : [],
+            'FilePath' : ['',[Validators.required,Validators.minLength(3)]],
             'DatastoreId' : this.stid,
           });
     }

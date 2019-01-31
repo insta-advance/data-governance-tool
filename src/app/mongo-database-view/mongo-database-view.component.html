@@ -22,31 +22,31 @@
 
 	<!--           Annotations panel           -->
 		<span class="breadcrumbs-divider">|</span>
-		<p class="add-annotation" (click)="varform=1.5">+ Add annotation</p>
+		<p class="add-annotation" (click)="varform=1.5">+ New annotation</p>
 		<span class="breadcrumbs-divider">|</span>		
-		<p class="add-annotation" (click)="varform=2.5"> Assign annotation</p>
+		<p class="add-annotation" (click)="varform=2.5"> Assign annotation to database</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add-annotation" (click)="varform=3.5"> Manage annotations</p>
 	</div>
 	<!--           Form to add annotations           -->
 	<form [formGroup]="annotationForm" (ngSubmit)="addAnnotation()"  *ngIf="varform === 1.5">
       		<input  type="text" placeholder="Description" formControlName="Description">
-		<button> Add annotation </button>
+		<button [disabled]="annotationForm.pristine || annotationForm.invalid"> Add annotation </button>
 	</form>
 	<!--           Form to assign annotation to a MongoDB           -->
     	<form [formGroup]="annotationBaseForm" (ngSubmit)="addAnnotationBase()"  *ngIf="varform === 2.5">
-        	<input  type="text" placeholder="Target ID" formControlName="BaseId">
+
 			<select name="annotations" formControlName="AnnotationId">
 				<ng-container *ngFor="let a of annotations; let i=index;">
 				  	<option [value]="a.Id">{{a.Description}}</option> 
 				</ng-container>
 			</select> 
-		<button> Assign annotation </button>
+		<button [disabled]="annotationBaseForm.pristine || annotationBaseForm.invalid"> Assign annotation </button>
 	</form>
 	<!--           Form to add mongo collections           -->
 	<form [formGroup]="collectionForm" (ngSubmit)="addCollection()"  *ngIf="varform === 1">
 		<input  type="text" placeholder="Name of a new collection" formControlName="Name">
-		<button> Add collection </button>
+		<button [disabled]="collectionForm.pristine || collectionForm.invalid"> Add collection </button>
 	</form>
 	<div class="annotation-list-manage">
 	<!--           Display all annotations          -->
@@ -79,10 +79,10 @@
 						  <option value="int">int</option>
 						  <option value="String">String</option>
 					</select> 
-					 <select name="types" formControlName="StructuredId">
-						  <option >{{c.Id}}</option>
+					<select  formControlName="StructuredId" >
+						  <option [value]="c.Id">{{c.Name}}</option>
 					</select> 
-					<button> Add Field </button>
+					<button [disabled]="fieldForm.pristine || fieldForm.invalid"> Add Field </button>
 					<button (click)="varform=0" id="cancel"> Cancel </button>
 				</form>
 			</div>

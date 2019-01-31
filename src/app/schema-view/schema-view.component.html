@@ -28,26 +28,25 @@
 
 	<!--           Annotations panel           -->
 		<span class="breadcrumbs-divider">|</span>
-		<p class="add-annotation" (click)="varform=1.5">+ Add annotation</p>
+		<p class="add-annotation" (click)="varform=1.5">+ New annotation</p>
 		<span class="breadcrumbs-divider">|</span>		
-		<p class="add-annotation" (click)="varform=2.5"> Assign annotation</p>
+		<p class="add-annotation" (click)="varform=2.5"> Assign annotation to schema</p>
 		<span class="breadcrumbs-divider">|</span>
 		<p class="add-annotation" (click)="varform=3.5"> Manage annotations</p>
 	</div>
 	<!--           Form to add annotations           -->
 	<form [formGroup]="annotationForm" (ngSubmit)="addAnnotation()"  *ngIf="varform === 1.5">
       		<input  type="text" placeholder="Description" formControlName="Description">
-		<button> Add annotation </button>
+		<button [disabled]="annotationForm.pristine || annotationForm.invalid"> Add annotation </button>
 	</form>
 	<!--           Form to assign annotation to schema           -->
     	<form [formGroup]="annotationBaseForm" (ngSubmit)="addAnnotationBase()"  *ngIf="varform === 2.5">
-        	<input  type="text" placeholder="Target ID" formControlName="BaseId">
-			<select name="annotations" formControlName="AnnotationId">
-				<ng-container *ngFor="let a of annotations; let i=index;">
-				  	<option [value]="a.Id">{{a.Description}}</option>  
-				</ng-container>
-			</select> 
-		<button> Assign annotation </button>
+		<select name="annotations" formControlName="AnnotationId">
+			<ng-container *ngFor="let a of annotations; let i=index;">
+			  	<option [value]="a.Id">{{a.Description}}</option>  
+			</ng-container>
+		</select> 
+		<button [disabled]="annotationBaseForm.pristine || annotationBaseForm.invalid"> Assign annotation </button>
 	</form>
 	<div class="annotation-list-manage">
 	<!--           Display all annotations          -->
@@ -96,8 +95,10 @@
 						  <option value="bool">bool</option>
 						  <option value="float8">float8</option>
 					</select> 
-					<input  formControlName="StructuredId" [value]="t.Id" type="text">
-					<button > Add Field </button>
+					<select  formControlName="StructuredId" >
+						  <option [value]="t.Id">{{t.Name}}</option>
+					</select> 
+					<button [disabled]="fieldForm.pristine || fieldForm.invalid"> Add Field </button>
 					<button (click)="varform=0" id="cancel"> Cancel </button>
 				</form>
 	<!--           Form to add a KR          -->
@@ -121,7 +122,7 @@
 						  <option value="exact">exact</option>
 						  <option value="regex">regex</option>
 					</select> 
-					<button> Add Relationship </button>
+					<button [disabled]="keyForm.pristine || keyForm.invalid"> Add Relationship </button>
 					<button (click)="varform=0" id="cancel"> Cancel </button>
 				</form>
 			</div>

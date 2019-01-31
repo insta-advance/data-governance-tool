@@ -52,23 +52,23 @@ export class MongoDatabaseViewComponent implements OnInit {
       this.collectionForm = this.formBuilder.group({
             'DatabaseId' : this.dbid,
             'Fields' : [],
-            'Name' : [],
+            'Name' : ['',[Validators.required,Validators.minLength(3)]],
        });  
       
       this.fieldForm = this.formBuilder.group({
-            'Type' : [],
+            'Type' : ['',[Validators.required]],
             'StructuredId' : [],
             'Fields' : [],
-            'Name' : [],
+            'Name' : ['',[Validators.required,Validators.minLength(3)]],
        });  
       
       this.annotationBaseForm = this.formBuilder.group({
             'BaseId' :  this.dbid,
-           'AnnotationId' : [],
+           'AnnotationId' : ['',[Validators.required]],
        });  
       
       this.annotationForm = this.formBuilder.group({
-            'Description' : [],
+            'Description' : ['',[Validators.required,Validators.minLength(3)]],
        });
       
   }

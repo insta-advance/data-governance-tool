@@ -17,24 +17,24 @@
 	<!--           Form to add postgres db           -->
 	 <form [formGroup]="postgresDatabaseForm" (ngSubmit)="addPostgresDatabase()" *ngIf="varform === 1">
 		<input  type="text" placeholder="PostgreSQL database name" formControlName="Name">
-		<button> Add PostgreSQL </button>
+		<button [disabled]="postgresDatabaseForm.pristine || postgresDatabaseForm.invalid"> Add PostgreSQL </button>
 	 </form>
 	<!--           Form to add mongo db           -->
 	 <form [formGroup]="mongoDatabaseForm" (ngSubmit)="addMongoDatabase()" *ngIf="varform === 2">
 		<input  type="text" placeholder="MongoDB database name" formControlName="Name">
-		<button> Add MongoDB </button>
+		<button [disabled]="mongoDatabaseForm.pristine || mongoDatabaseForm.invalid"> Add MongoDB </button>
 	 </form>
 
 	<!--           Form to add structured file           -->
 	 <form [formGroup]="structFileForm" (ngSubmit)="addStructFile()" *ngIf="varform === 3">
 		<input  type="text" placeholder="Structured file path" formControlName="FilePath">
-		<button> Add File </button>
+		<button [disabled]="structFileForm.pristine || structFileForm.invalid"> Add File </button>
 	 </form>
 
 	<!--           Form to add unstructured file           -->
 	 <form [formGroup]="unstructFileForm" (ngSubmit)="addUnstructFile()" *ngIf="varform === 4">
 		<input  type="text" placeholder="Unstructured file path" formControlName="FilePath">
-		<button> Add File </button>
+		<button [disabled]="unstructFileForm.pristine || unstructFileForm.invalid"> Add File </button>
 	 </form>
 	<!--           Display postgres db           -->
 	<div *ngFor="let db of postgresDatabases; let i=index;">

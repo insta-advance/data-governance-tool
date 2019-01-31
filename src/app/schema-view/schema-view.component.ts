@@ -62,26 +62,26 @@ export class SchemaViewComponent implements OnInit {
         this.tableForm = this.formBuilder.group({
             'SchemaId' : this.schid,
             'Fields' : [],
-            'Name' : [],
+            'Name' : ['',[Validators.required,Validators.minLength(3)]],
 	   });
         this.fieldForm = this.formBuilder.group({
-            'Type' : [],
+            'Type' : ['',[Validators.required]],
             'StructuredId' : [],
             'Fields' : [],
-            'Name' : [],
+            'Name' : ['',[Validators.required,Validators.minLength(3)]],
 	   });
         this.keyForm = this.formBuilder.group({
-            'FromId' : [],
-            'ToId' : [],
-            'Type' : [],
+            'FromId' : ['',[Validators.required]],
+            'ToId' : ['',[Validators.required]],
+            'Type' : ['',[Validators.required]],
 	   });
       this.annotationBaseForm = this.formBuilder.group({
             'BaseId' :  this.schid,
-           'AnnotationId' : [],
+           'AnnotationId' : ['',[Validators.required]],
        });  
       
       this.annotationForm = this.formBuilder.group({
-            'Description' : [],
+            'Description' : ['',[Validators.required,Validators.minLength(3)]],
        });
     }
 
@@ -221,6 +221,27 @@ export class SchemaViewComponent implements OnInit {
 		        this.getAnnotations(); 
 		});
 	}
+    	deleteAnnotation(id) {
+		this.rest.deleteAnnotation(id).subscribe((data: {}) => {
+
+	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();    
+		});
+	}
+ 
+    	deleteAnnotationBase(id) {
+		this.rest.deleteAnnotationBase(id).subscribe((data: {}) => {
+ 
+	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();     
+		});
+	}  
     backToHome() {
         this.router.navigate(['/store/'+ this.dtsid]);
     } 

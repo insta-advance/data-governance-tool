@@ -26,7 +26,7 @@ export class DatastoreListComponent implements OnInit {
         'Databases' : [],
         'StructuredFiles' : [],
         'UnstructuredFiles' : [],
-        'Name' : [],
+        'Name' : ['',[Validators.required,Validators.minLength(3)]],
     });
     }
     

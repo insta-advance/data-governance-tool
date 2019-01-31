@@ -363,18 +363,27 @@ a:hover{
 
 }
 .table #add-field{
-	background-color: #e8e8e8;
+
 	color: green;
-	display:flex;
-	align-items: center;
-	border-bottom: 1px solid #f2f2f2;
 	padding:5px;
 	margin:0;
+	font-size: 0.8em;
+	font-weight:bold;
+}
+
+.table form button:disabled{
+	text-decoration: none;
+    	background-color: lightgrey;
+	color:grey;
+
+}
+.table form {
+	width:max-content;
+
 }
 .table #add-field:hover{
 	cursor:pointer;
-    	background-color:#68b75f;
-	color:white;
+    	text-decoration:underline;
 }
 .table #cancel{
 	padding:10px;
@@ -412,17 +421,15 @@ a:hover{
 }
 #delete-field-toggle:hover{
 	cursor:pointer;
-    	background-color:#b75f5f;
-	color:white;
+    	text-decoration:underline;
 }
 #delete-field-toggle{ 
-	background-color: #e8e8e8;
+
 	color: red;
-	display:flex;
-	align-items: center;
-	border-bottom: 1px solid #f2f2f2;
 	padding:5px;
 	margin:0;
+	font-size: 0.8em;
+	font-weight:bold;
 }
 #delete-field-cancel{
 	background-color: #f9f9f9;
@@ -435,18 +442,16 @@ a:hover{
 	text-decoration: underline;
 }
 #add-keys{
-	background-color: #e8e8e8;
+
 	color: blue;
-	display:flex;
-	align-items: center;
-	border-bottom: 1px solid #f2f2f2;
 	padding:5px;
 	margin:0;
+	font-size: 0.8em;
+	font-weight:bold;
 }
 #add-keys:hover{
 	cursor:pointer;
-    	background-color:darkblue;
-	color:white;
+	text-decoration: underline;
 }
 #delete-key-relationship{ 
 	grid-column:8;
