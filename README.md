@@ -6,7 +6,7 @@ This version works with the actual backend (localhost:5000/api/)
 2. Clone the project
 3. Install npm in project folder - `npm install`
 4. Compile and run - `npm start`
-5. Go to [http://localhost:4200](http://localhost:4200) to start working on datastore
+5. Go to [http://localhost:4200](http://localhost:4200) to start working
 
 # Structure
 
@@ -20,16 +20,15 @@ This version works with the actual backend (localhost:5000/api/)
 
 ### Components
 
-* `datastore-list` - view to list of datastores (fetching, displaying, adding and deleting datastores done)
-* `global-view` - overall view to datastore (fetching, displaying datastore's content, adding databases done)
-* `database-view` - view to singular database with schemas and tables (fetching, displaying database's content, deleting database, adding schemas done)
-* `schema-view` - view to schema with fields (fetching, displaying database's content, deleting schema, adding and deleting tables done)
+* `datastore-list` - view to list of datastores (done)
+* `global-view` - overall view to datastore (done)
+* `database-view` - view to singular PostgreSQL database with schemas and tables (done)
+* `mongo-database-view` - view to singular MongoDB database with schemas and tables (done)
+* `schema-view` - view to schema with fields (done)
 
 # To Do
 
 * Datastore. database, schema, table renaming (PUT)
-* Adding, deleting and editing fields and keys
-* Adding, deleting, editing and assigning annotations
-* Minor style and forms visibility fixes
-* Forms confirmation dialogs and empty value checking
+* Editing fields and keys (PUT)
+* Adding, deleting, editing and assigning annotations to fields, files, collections and tables
 * CSS refactoring and documentation

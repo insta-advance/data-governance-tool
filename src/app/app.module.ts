@@ -52,7 +52,6 @@ const appRoutes: Routes = [
     AppComponent,
     GlobalViewComponent,
     SchemaViewComponent,
-    GlobalViewComponent,
     DatabaseViewComponent,
     DatastoreListComponent,
     MongoDatabaseViewComponent,
