@@ -15,8 +15,5 @@ namespace DataGovernanceTool.BusinessLogic.Managers
             : base(repository)
         {
         }
-        public virtual async Task<String> GetType(int id) {
-            return (await Repository.GetAsync(id)).GetType().Name;
-        }
     }
 }

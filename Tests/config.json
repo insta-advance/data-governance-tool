@@ -1,0 +1,3 @@
+{
+    "ConnectionString" : "Host=localhost;Database=DataGovernanceToolDB;Username=datagovernancetool;Password=datagovernancetool"
+}
