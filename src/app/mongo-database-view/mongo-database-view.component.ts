@@ -37,7 +37,9 @@ export class MongoDatabaseViewComponent implements OnInit {
 
     annotationForm: FormGroup;
 	Description: string='';
-    
+
+    annotationBaseTableForm: FormGroup;
+
   constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -52,23 +54,26 @@ export class MongoDatabaseViewComponent implements OnInit {
       this.collectionForm = this.formBuilder.group({
             'DatabaseId' : this.dbid,
             'Fields' : [],
-            'Name' : ['',[Validators.required,Validators.minLength(3)]],
+            'Name' : ['',[Validators.required,Validators.minLength(1)]],
        });  
       
       this.fieldForm = this.formBuilder.group({
             'Type' : ['',[Validators.required]],
             'StructuredId' : [],
             'Fields' : [],
-            'Name' : ['',[Validators.required,Validators.minLength(3)]],
+            'Name' : ['',[Validators.required,Validators.minLength(1)]],
        });  
-      
+    	this.annotationBaseTableForm = this.formBuilder.group({
+            'BaseId' :  ['',[Validators.required]],
+           'AnnotationId' : ['',[Validators.required]],
+       	});
       this.annotationBaseForm = this.formBuilder.group({
             'BaseId' :  this.dbid,
            'AnnotationId' : ['',[Validators.required]],
        });  
       
       this.annotationForm = this.formBuilder.group({
-            'Description' : ['',[Validators.required,Validators.minLength(3)]],
+            'Description' : ['',[Validators.required,Validators.minLength(1)]],
        });
       
   }
@@ -111,9 +116,17 @@ export class MongoDatabaseViewComponent implements OnInit {
         });
     }
     
-    
+	addAnnotationBaseTable() {
+		this.rest.addAnnotationBase(this.annotationBaseTableForm.value).subscribe((data: {}) => {
+        		this.getMongoDatabaseData(this.dbid);
+		        this.getCollectionData();
+		        this.getAnnotationBases();
+		        this.getAnnotations();
+		});
+	}
     addAnnotationBase() {
 		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
+        		this.getMongoDatabaseData(this.dbid);
 		        this.getCollectionData();
 		        this.getAnnotationBases();
 		        this.getAnnotations();

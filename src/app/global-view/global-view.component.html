@@ -79,17 +79,49 @@
 	<div *ngFor="let db of postgresDatabases; let i=index;">
 			<div *ngIf="db.DatastoreId==datastore.Id">
 				<h2>[{{db.Type}}] {{db.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toPostgresDatabase(datastore.Id, db.Id)">View</button></h2>
+	<!--           Display database    annotation       -->
+			<ng-container *ngFor="let ab of annotationBases; let i=index;">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+					<ng-container *ngIf="db.Id===ab.BaseId && ab.AnnotationId===a.Id">
+						<p class="database-annotation"> {{a.Description}}</p>		
+					</ng-container>
+				</ng-container>
+			</ng-container>
 	<!--           Display postgres schemas          -->
 				<div *ngFor="let s of db.Schemas; let j=index;">
 					<p class="schema-name">{{s.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toPostgresSchema(datastore.Id, db.Id, s.Id)">View</button></p>
+	<!--           Display schema    annotation       -->
+			<ng-container *ngFor="let ab of annotationBases; let i=index;">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+					<ng-container *ngIf="s.Id===ab.BaseId && ab.AnnotationId===a.Id">
+						<p class="schema-annotation"> {{a.Description}}</p>		
+					</ng-container>
+				</ng-container>
+			</ng-container>
 	<!--           Display postgres tables and fields          -->
 					<div class="table-list">
 						<ng-container *ngFor="let t of tables; let k=index;">
 							<div *ngIf="t.SchemaId==s.Id" class="table">
 								<p class="table-name">[{{t.Id}}] {{t.Name}}</p>
+					<!--           Display table    annotation       -->
+								<ng-container *ngFor="let ab of annotationBases; let i=index;">
+									<ng-container *ngFor="let a of annotations; let i=index;">
+										<ng-container *ngIf="t.Id===ab.BaseId && ab.AnnotationId===a.Id">
+											<p class="table-annotation"> {{a.Description}}</p>		
+										</ng-container>
+									</ng-container>
+								</ng-container>
 								<div *ngFor="let f of t.Fields; let l=index;">
 									<div class="table-fields">        
 									    <p class="field-id"> {{f.Id}}</p>
+								<!--           Display field    annotation       -->
+										<ng-container *ngFor="let ab of annotationBases; let i=index;">
+											<ng-container *ngFor="let a of annotations; let i=index;">
+												<ng-container *ngIf="f.Id===ab.BaseId && ab.AnnotationId===a.Id">
+													<p class="field-annotation"> {{a.Description}}</p>
+												</ng-container>
+											</ng-container>
+										</ng-container> 
 									    <p class="field-name"> {{f.Name}}, </p>
 									    <p class="field-type"> {{f.Type}}, </p>
 					<ng-container *ngFor="let k of keyRelationships; let n=index;">
@@ -111,14 +143,37 @@
 	<div *ngFor="let mdb of mongoDatabases; let i=index;">
 		<div *ngIf="mdb.DatastoreId==datastore.Id">
 			<h2>[{{mdb.Type}}] {{mdb.Name}} <span class="breadcrumbs-divider"> | </span> <button (click)="toMongoDatabase(datastore.Id, mdb.Id)">View</button></h2>
+	<!--           Display database    annotation       -->
+			<ng-container *ngFor="let ab of annotationBases; let i=index;">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+					<ng-container *ngIf="mdb.Id===ab.BaseId && ab.AnnotationId===a.Id">
+						<p class="database-annotation"> {{a.Description}}</p>		
+					</ng-container>
+				</ng-container>
+			</ng-container>
 	<!--           Display mongo collections           -->
 			<div class="table-list">
 				<ng-container *ngFor="let c of collections; let i=index;">
 					<div *ngIf="c.DatabaseId==mdb.Id" class="table">
 						<p class="table-name">[{{c.Id}}] {{c.Name}}</p>
+					<!--           Display table    annotation       -->
+						<ng-container *ngFor="let ab of annotationBases; let i=index;">
+							<ng-container *ngFor="let a of annotations; let i=index;">
+								<ng-container *ngIf="c.Id===ab.BaseId && ab.AnnotationId===a.Id">
+									<p class="table-annotation"> {{a.Description}}</p>		
+								</ng-container>
+							</ng-container>
+						</ng-container>
 						<div *ngFor="let f of c.Fields; let j=index;">
 							<div class="table-fields">        
 							    <p class="field-id"> {{f.Id}}</p>
+							<ng-container *ngFor="let ab of annotationBases; let i=index;">
+								<ng-container *ngFor="let a of annotations; let i=index;">
+									<ng-container *ngIf="f.Id===ab.BaseId && ab.AnnotationId===a.Id">
+										<p class="field-annotation"> {{a.Description}}</p>		
+									</ng-container>
+								</ng-container>
+							</ng-container>
 							    <p class="field-name"> {{f.Name}}, </p>
 							    <p class="field-type"> {{f.Type}}, </p>
 							</div>	

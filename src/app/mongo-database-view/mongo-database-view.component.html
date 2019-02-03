@@ -61,10 +61,24 @@
 	<div class="table-list">
 		<ng-container *ngFor="let c of collections; let i=index;">
 			<div *ngIf="c.DatabaseId==mongoDatabase.Id" class="table">
-				<p class="table-name">[{{c.Id}}] {{c.Name}} |  <button (click)="deleteCollection(c.Id)">Delete</button></p>
+				<div class="table-name">[{{c.Id}}] {{c.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button> |  <p class="add-annotation" (click)="varform=5.5"> Assign annotation to field or collection</p></div>
+				<ng-container *ngFor="let ab of annotationBases; let i=index;">
+					<ng-container *ngFor="let a of annotations; let i=index;">
+						<ng-container *ngIf="c.Id===ab.BaseId && ab.AnnotationId===a.Id">
+							<p class="table-annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="delete-annotation">Remove</button></p>		
+						</ng-container>
+					</ng-container>
+				</ng-container>
 				<div *ngFor="let f of c.Fields; let j=index;">
 					<div class="table-fields">        
 					    <p class="field-id"> {{f.Id}}</p>
+						<ng-container *ngFor="let ab of annotationBases; let i=index;">
+							<ng-container *ngFor="let a of annotations; let i=index;">
+								<ng-container *ngIf="f.Id===ab.BaseId && ab.AnnotationId===a.Id">
+									<p class="field-annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="delete-annotation">Remove</button></p>		
+								</ng-container>
+							</ng-container>
+						</ng-container>
 					    <p class="field-name"> {{f.Name}}, </p>
 					    <p class="field-type"> {{f.Type}}, </p>
 					<button id="delete-field" *ngIf="varform === c.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
@@ -73,6 +87,7 @@
 				</div>
 				<p id="add-field" (click)="varform=c.Id"> + Add field </p>
 				<p id="delete-field-toggle" (click)="varform=c.Id*(-2)"> x Delete fields</p>
+	<!--           Form to add a field          -->
 				<form [formGroup]="fieldForm" (ngSubmit)="addField()"  *ngIf="varform === c.Id">
 					<input  type="text" placeholder="Field name" formControlName="Name">
 					<select name="types" formControlName="Type">
@@ -84,6 +99,21 @@
 					</select> 
 					<button [disabled]="fieldForm.pristine || fieldForm.invalid"> Add Field </button>
 					<button (click)="varform=0" id="cancel"> Cancel </button>
+				</form>
+	<!--           Form to add annotation to field or           -->
+				<form [formGroup]="annotationBaseTableForm" (ngSubmit)="addAnnotationBaseTable()"  *ngIf="varform === 5.5">
+					<select name="annotations" formControlName="BaseId">
+						  	<option [value]="c.Id">{{c.Name}}</option>
+							<ng-container *ngFor="let f6 of c.Fields; let i=index;">
+								<option [value]="f6.Id">{{c.Name}}:{{f6.Name}}</option>
+							</ng-container>
+					</select> 
+					<select name="annotations" formControlName="AnnotationId">
+						<ng-container *ngFor="let a of annotations; let i=index;">
+						  	<option [value]="a.Id">{{a.Description}}</option>  
+						</ng-container>
+					</select> 
+					<button [disabled]="annotationBaseTableForm.pristine || annotationBaseTableForm.invalid"> Assign annotation </button>
 				</form>
 			</div>
 		</ng-container>

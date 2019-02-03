@@ -89,6 +89,91 @@ button:hover{
 .container .global h2 a:hover{
     color: #cbcbcb;
 }
+/*annotations*/
+.annotation-list{
+    display:grid;
+    grid-auto-columns: max-content;
+    margin:5px 0 5px 0;
+    font-size: 1em;
+}
+.annotation-list-manage{
+    display:grid;
+    grid-auto-rows: auto;
+    grid-auto-columns: max-content;
+    margin:15px 0 15px 0;
+    font-size: 1em;
+	grid-row-gap:5px;
+}
+.annotation-list-manage p{
+
+	margin:0;
+	padding-left:8px;
+ 
+
+}
+.annotation-list button, .delete-annotation{
+	border:0;
+	background-color: white;
+	border-radius:0;
+}
+.annotation-list button:hover, .delete-annotation{
+	cursor: pointer;
+	text-decoration: underline;
+	transition: 200ms;
+}
+.annotation-manage
+{
+ grid-column:1;
+    display:flex;
+    align-items: center;
+    margin:0 5px 0 5px;
+    padding:5px;
+    font-size: 1em;
+    font-weight: bold;
+    border: 3px solid grey;
+color:black;
+}
+.annotation
+{
+	display:flex;
+	align-items: center;
+	grid-row:1;
+	margin:5px;
+	padding:5px;
+	font-size: 1em;
+	font-weight: bold;
+	border: 3px solid grey;
+	color:black;
+}
+.annotation-list p{
+
+}
+
+.annotation-list .breadcrumbs-divider{
+    display:flex;
+    align-items: center;
+    grid-row: 1;
+    padding: 5px; 
+    margin:0;
+    color:lightgrey;
+}
+.add-annotation{
+   grid-row: 1;
+    padding: 5px;
+    margin:0;
+    font-size: 1em;
+    font-weight: bolder;
+    font-size: 0.8em;
+    background-color: white;
+    color: darkblue;
+    display:flex;
+    align-items: center;
+}
+.add-annotation:hover{
+    cursor: pointer;
+	text-decoration: underline;
+    transition: 200ms;
+}
 /*breadcrumbs*/
 .homelink{
     display:grid;
@@ -170,6 +255,7 @@ button:hover{
 .schema-name{
     font-size: 1.1em;
     font-weight: bold;
+	margin:0;
 }
 /*links*/
 a{
@@ -180,30 +266,13 @@ a:hover{
     text-decoration: underline;
     color:#505093;
 } 
-/*collections*/
-.collection{
-    width: 300px;
-    font-size: 1em;
-    display:grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    grid-gap:0;
-    padding: 0;
-}
-.collection-name{
-    font-size: 1em;
-    font-weight: 900;
-    grid-column: 1;
-    color:white;
-    background-color: #647b27;
-    padding: 10px;
-    margin:0;
-}
 
-.collection-fields{
-    background-color: #e8e8e8;
-    padding: 5px;
-    margin: 0 0 10px 0;
+.schema-annotation{
+	width:max-content;
+	border: 2px solid grey;
+	margin:0;
+	padding:2px;
+	font-weight:bold;
 }
 /*tables*/
 .table-list{
@@ -217,7 +286,7 @@ a:hover{
     font-size: 1em;
     display:grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
     margin: 10px 0 10px 0;
     grid-gap:0;
     padding: 0;
@@ -231,13 +300,35 @@ a:hover{
     padding: 7px;
     margin:0;
 }
+.table .add-annotation{
+   	grid-row: auto;
+	background-color:#838384;
+	padding: 0 0 0 5px;
+	margin:0;
+	font-size:0.9em;
+	font-weight:400;
+	color:white;
+}
+.table .table-annotation{
+	border: 1px solid grey;
+	margin:2px;
+	padding:2px;
+	font-weight:bold;
+}
+.table .field-annotation{
+	border: 1px solid lightgrey;
+grid-row:auto;
+	margin:2px;
+	padding:2px;
+	grid-column:2;
+	font-weight:bold;
+}
 .table-fields{
-    grid-column: 1;
-    display:grid;
-    grid-template-columns: 30px max-content max-content max-content max-content 1fr;
-    grid-row-gap: 10px;
-    background-color: #f9f9f9;
-
+	grid-column: 1;
+	display:grid;
+	grid-template-columns: auto max-content max-content max-content max-content max-content 1fr;
+	grid-row-gap: 10px;
+	background-color: #f9f9f9;
 	border-bottom: 2px solid #f2f2f2;
 }
 .field-id{
@@ -248,143 +339,30 @@ a:hover{
     background-color: #f2f2f2;
 }
 .field-name{
-    grid-column: 2;
+    grid-column: 3;
     padding: 5px;
     margin: 0;
     font-weight: bold;
 }
 .field-type{
-    grid-column: 3;
+    grid-column: 4;
     padding: 5px;
     margin: 0;
     color: grey;
 }
 .rel-from{
-    grid-column: 4;
+    grid-column: 5;
     padding: 5px;
     margin: 0;
     color: #ad6002;
 
 }
 .rel-to{
-    grid-column: 5;
+    grid-column: 6;
     padding: 5px;
     margin: 0;
     color: darkblue;
 
 }
-/*UNSTRUCTURED FILES*/
-.files{
-    width: max-content;
-    font-size: 1em;
-    display:grid;
-    grid-template-rows: auto auto;
-    grid-gap:0;
-    padding: 0;
-}
-.file-title{
-    font-size: 1em;
-    font-weight: 900;
-    grid-column: 1;
-    color:white;
-    background-color: #9f3711;
-    padding: 10px;
-    margin:0;
-}
 
-.file-path{
-    background-color: #e8e8e8;
-    padding: 5px;
-    margin: 0 0 0 0;
-}
-
-form{
-	padding:10px 0 10px 0;
-}
-/*annotations*/
-.annotation-list{
-    display:grid;
-    grid-auto-columns: max-content;
-    margin:5px 0 5px 0;
-    font-size: 1em;
-}
-.annotation-list-manage{
-    display:grid;
-    grid-auto-rows: auto;
-    grid-auto-columns: max-content;
-    margin:15px 0 15px 0;
-    font-size: 1em;
-	grid-row-gap:5px;
-}
-.annotation-list-manage p{
-
-    margin:0;
-padding-left:8px;
- 
-
-}
-.annotation-list button, .delete-annotation{
-    	border:0;
-    background-color: white;
-	border-radius:0;
-
-}
-.annotation-list button:hover, .delete-annotation{
-    cursor: pointer;
-	text-decoration: underline;
-    transition: 200ms;
-}
-.annotation-manage
-{
- grid-column:1;
-    display:flex;
-    align-items: center;
-    margin:0 5px 0 5px;
-    padding:5px;
-    font-size: 1em;
-    font-weight: bold;
-    border: 3px solid grey;
-color:black;
-}
-.annotation
-{
-    display:flex;
-    align-items: center;
- grid-row:1;
-    margin:5px;
-    padding:5px;
-    font-size: 1em;
-    font-weight: bold;
-    border: 3px solid grey;
-	color:black;
-}
-.annotation-list p{
-
-}
-
-.annotation-list .breadcrumbs-divider{
-    display:flex;
-    align-items: center;
-    grid-row: 1;
-    padding: 5px; 
-    margin:0;
-    color:lightgrey;
-}
-.add-annotation{
-   grid-row: 1;
-    padding: 5px;
-    margin:0;
-    font-size: 1em;
-    font-weight: bolder;
-    font-size: 0.8em;
-    background-color: white;
-    color: darkblue;
-    display:flex;
-    align-items: center;
-}
-.add-annotation:hover{
-    cursor: pointer;
-	text-decoration: underline;
-    transition: 200ms;
-}
 

@@ -255,6 +255,7 @@ border:0;
 .schema-name{
     font-size: 1.1em;
     font-weight: bold;
+	margin:10px 0 0 0;
 }
 /*links*/
 a{
@@ -265,6 +266,20 @@ a:hover{
     text-decoration: underline;
     color:#505093;
 } 
+.database-annotation{
+	width:max-content;
+	border: 3px solid grey;
+	margin:0 0 20px 0;
+	padding:5px;
+	font-weight:bold;
+}
+.schema-annotation{
+	width:max-content;
+	border: 2px solid grey;
+	margin:0;
+	padding:2px;
+	font-weight:bold;
+}
 /*collections*/
 .collection{
     width: 300px;
@@ -301,7 +316,7 @@ a:hover{
     font-size: 1em;
     display:grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto  auto  auto;
     margin: 10px;
     grid-gap:0;
     padding: 0;
@@ -315,10 +330,24 @@ a:hover{
     padding: 7px;
     margin:0;
 }
+.table .table-annotation{
+	border: 1px solid grey;
+	margin:2px;
+	padding:2px;
+	font-weight:bold;
+}
+.table .field-annotation{
+	border: 1px solid lightgrey;
+grid-row:auto;
+	margin:2px;
+	padding:2px;
+	grid-column:2;
+	font-weight:bold;
+}
 .table-fields{
     grid-column: 1;
     display:grid;
-    grid-template-columns: 30px max-content max-content max-content max-content 1fr ;
+    grid-template-columns: auto max-content max-content max-content max-content max-content 1fr ;
     grid-row-gap: 10px;
     background-color: #f9f9f9;
 
@@ -332,26 +361,26 @@ a:hover{
     background-color: #f2f2f2;
 }
 .field-name{
-    grid-column: 2;
+    grid-column: 3;
     padding: 5px;
     margin: 0;
     font-weight: bold;
 }
 .field-type{
-    grid-column: 3;
+    grid-column: 4;
     padding: 5px;
     margin: 0;
     color: grey;
 }
 .rel-from{
-    grid-column: 4;
+    grid-column: 5;
     padding: 5px;
     margin: 0;
     color: #ad6002;
 
 }
 .rel-to{
-    grid-column: 5;
+    grid-column: 6;
     padding: 5px;
     margin: 0;
     color: darkblue;
@@ -376,6 +405,7 @@ a:hover{
     padding: 5px;
     margin: 0;
     border: 3px solid grey;
+	font-weight:bold;
 }
 
 /*FORMS*/

@@ -62,15 +62,42 @@
 	<!--           Display schema          -->
 		<div *ngFor="let s of postgresDatabase.Schemas; let j=index;">
 			<p *ngIf="s.DatabaseId==dbid" class="schema-name">{{s.Name}} | <button (click)="toSchema(datastore.Id, postgresDatabase.Id, s.Id)">View</button> </p>
+	<!--           Display schema    annotation       -->
+			<ng-container *ngFor="let ab of annotationBases; let i=index;">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+					<ng-container *ngIf="s.Id===ab.BaseId && ab.AnnotationId===a.Id">
+						<p class="schema-annotation"> {{a.Description}}</p>		
+					</ng-container>
+				</ng-container>
+			</ng-container>
+		<!--           Display schema  tables       -->
 			<div class="table-list">
 				<ng-container *ngFor="let t of tables; let k=index;">
 					<div *ngIf="t.SchemaId==s.Id" class="table">
-						<p class="table-name">[{{t.Id}}] {{t.Name}}
+						<p class="table-name">[{{t.Id}}] {{t.Name}}</p>
+			<!--           Display table    annotation       -->
+						<ng-container *ngFor="let ab of annotationBases; let i=index;">
+							<ng-container *ngFor="let a of annotations; let i=index;">
+								<ng-container *ngIf="t.Id===ab.BaseId && ab.AnnotationId===a.Id">
+									<p class="table-annotation"> {{a.Description}}</p>		
+								</ng-container>
+							</ng-container>
+						</ng-container>
+					<!--           Display fields       -->
 						<div *ngFor="let f of t.Fields; let l=index;">
-							<div class="table-fields">        
-							    <p class="field-id"> {{f.Id}}</p>
-							    <p class="field-name"> {{f.Name}}, </p>
-							    <p class="field-type"> {{f.Type}}, </p>
+							<div class="table-fields">      
+							    	<p class="field-id"> {{f.Id}}</p>
+						<!--           Display field    annotation       -->
+								<ng-container *ngFor="let ab of annotationBases; let i=index;">
+									<ng-container *ngFor="let a of annotations; let i=index;">
+										<ng-container *ngIf="f.Id===ab.BaseId && ab.AnnotationId===a.Id">
+											<p class="field-annotation"> {{a.Description}}</p>
+										</ng-container>
+									</ng-container>
+								</ng-container>  
+							    	<p class="field-name"> {{f.Name}}, </p>
+							    	<p class="field-type"> {{f.Type}}, </p>
+			<!--           Display KR       -->
 					<ng-container *ngFor="let k of keyRelationships; let n=index;">
 						<ng-container *ngFor="let t2 of tables; let n=index;">
 								<ng-container *ngFor="let f2 of t2.Fields; let j=index;">

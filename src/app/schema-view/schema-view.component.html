@@ -62,7 +62,7 @@
 		<ng-container *ngFor="let t of tables; let i=index;">
 		
 			<div *ngIf="t.SchemaId==schema.Id" class="table">
-				<div class="table-name">[{{t.Id}}] {{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button> |  <p class="add-annotation" (click)="varform=5.5"> Assign annotation</p></div>
+				<div class="table-name">[{{t.Id}}] {{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button> |  <p class="add-annotation" (click)="varform=5.5"> Assign annotation to field or table</p></div>
 			<!--           Display table annotations          -->
 				<ng-container *ngFor="let ab of annotationBases; let i=index;">
 					<ng-container *ngFor="let a of annotations; let i=index;">
@@ -73,10 +73,17 @@
 				</ng-container>
 		<!--           Display  table fields          -->
 				<div *ngFor="let f of t.Fields; let j=index;">
-					<div class="table-fields">        
-					    <p class="field-id"> {{f.Id}}</p>
-					    <p class="field-name"> {{f.Name}}, </p>
-					    <p class="field-type"> {{f.Type}}, </p>
+					<div class="table-fields"> 
+						<p class="field-id"> {{f.Id}}</p>
+						<ng-container *ngFor="let ab of annotationBases; let i=index;">
+							<ng-container *ngFor="let a of annotations; let i=index;">
+								<ng-container *ngIf="f.Id===ab.BaseId && ab.AnnotationId===a.Id">
+									<p class="field-annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="delete-annotation">Remove</button></p>		
+								</ng-container>
+							</ng-container>
+						</ng-container>
+						<p class="field-name"> {{f.Name}}, </p>
+						<p class="field-type"> {{f.Type}}, </p>
                         <ng-container *ngFor="let k of keyRelationships; let n=index;">
                             <ng-container *ngFor="let t2 of tables; let n=index;">
                                     <ng-container *ngFor="let f2 of t2.Fields; let j=index;">
@@ -93,10 +100,13 @@
 				<p id="add-field" (click)="varform=t.Id"> + Add field </p>
 				<p id="add-keys" (click)="varform=t.Id*(-1)"> + Add key relationships </p>
 				<p id="delete-field-toggle" (click)="varform=t.Id*(-2)"> x Delete fields / keys</p>
-	<!--           Form to assign an annotation to table      -->
+	<!--           Form to assign an annotation to table or field     -->
 				<form [formGroup]="annotationBaseTableForm" (ngSubmit)="addAnnotationBaseTable()"  *ngIf="varform === 5.5">
 					<select name="annotations" formControlName="BaseId">
-						  	<option [value]="t.Id">{{t.Name}}</option>  
+						  	<option [value]="t.Id">{{t.Name}}</option>
+							<ng-container *ngFor="let f6 of t.Fields; let i=index;">
+								<option [value]="f6.Id">{{t.Name}}:{{f6.Name}}</option>
+							</ng-container>
 					</select> 
 					<select name="annotations" formControlName="AnnotationId">
 						<ng-container *ngFor="let a of annotations; let i=index;">
