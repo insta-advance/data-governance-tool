@@ -30,5 +30,3 @@ This version works with the actual backend (localhost:5000/api/)
 
 * Datastore. database, schema, table renaming (PUT)
 * Editing fields and keys (PUT)
-* Adding, deleting, editing and assigning annotations to fields, files, collections and tables
-* CSS refactoring and documentation
