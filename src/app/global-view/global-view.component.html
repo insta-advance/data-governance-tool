@@ -14,6 +14,45 @@
 		<span class="breadcrumbs-divider">|</span>
 		<button (click)="closeDatastore()" class="close">x Close datastore</button>
 	</div> 
+	<div class="annotation-list">
+	<!--           Annotations panel           -->
+		<p class="add-annotation" (click)="varform=1.5">+ New annotation</p>
+		<span class="breadcrumbs-divider">|</span>		
+		<p class="add-annotation" (click)="varform=2.5"> Assign annotation to file</p>
+		<span class="breadcrumbs-divider">|</span>
+		<p class="add-annotation" (click)="varform=3.5"> Manage annotations</p>
+	</div>
+	<!--           Form to add annotations           -->
+	<form [formGroup]="annotationForm" (ngSubmit)="addAnnotation()"  *ngIf="varform === 1.5">
+      		<input  type="text" placeholder="Description" formControlName="Description">
+		<button [disabled]="annotationForm.pristine || annotationForm.invalid"> Add annotation </button>
+	</form>
+	<!--           Form to assign annotation to file           -->
+    	<form [formGroup]="annotationBaseForm" (ngSubmit)="addAnnotationBase()"  *ngIf="varform === 2.5">
+		<select name="annotations" formControlName="BaseId">
+			<ng-container *ngFor="let str of datastore.StructuredFiles; let i=index;">
+				<ng-container *ngFor="let unstr of datastore.UnstructuredFiles; let i=index;">
+				  	<option [value]="unstr.Id">{{unstr.FilePath}}</option>  
+				  	<option [value]="str.Id">{{str.FilePath}}</option>
+				</ng-container>
+			</ng-container>
+		</select> 
+		<select name="annotations" formControlName="AnnotationId">
+			<ng-container *ngFor="let a of annotations; let i=index;">
+			  	<option [value]="a.Id">{{a.Description}}</option>  
+			</ng-container>
+		</select> 
+		<button [disabled]="annotationBaseForm.pristine || annotationBaseForm.invalid"> Assign annotation</button>
+	</form>
+	<div class="annotation-list-manage">
+	<!--           Display all annotations          -->
+		<ng-container  *ngIf="varform === 3.5">
+			<p>List of annotations</p>
+			<ng-container *ngFor="let a of annotations; let i=index;">
+					<p class="annotation-manage" (click)="varform=2.5"> {{a.Description}}|<button (click)="deleteAnnotation(a.Id)" class="delete-annotation"> Delete </button></p>
+			</ng-container>
+		</ng-container>
+	</div>
 	<!--           Form to add postgres db           -->
 	 <form [formGroup]="postgresDatabaseForm" (ngSubmit)="addPostgresDatabase()" *ngIf="varform === 1">
 		<input  type="text" placeholder="PostgreSQL database name" formControlName="Name">
@@ -76,7 +115,7 @@
 			<div class="table-list">
 				<ng-container *ngFor="let c of collections; let i=index;">
 					<div *ngIf="c.DatabaseId==mdb.Id" class="table">
-						<p class="table-name">[{{c.Id}}] {{c.Name}} |  <button (click)="deleteCollection(c.Id)">Delete</button></p>
+						<p class="table-name">[{{c.Id}}] {{c.Name}}</p>
 						<div *ngFor="let f of c.Fields; let j=index;">
 							<div class="table-fields">        
 							    <p class="field-id"> {{f.Id}}</p>
@@ -94,13 +133,27 @@
 	<div *ngFor="let str of datastore.StructuredFiles; let h=index;">
 		<div class="file">
 			<h2 class="file-title"> Structured File | <button (click)="deleteStructFile(str.Id)">Delete</button></h2>
+			<ng-container *ngFor="let ab of annotationBases; let i=index;">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+					<ng-container *ngIf="str.Id===ab.BaseId && ab.AnnotationId===a.Id">
+						<p class="file-annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="delete-annotation">Remove</button></p>		
+					</ng-container>
+				</ng-container>
+			</ng-container>
 			<p class="file-path">{{str.FilePath}}</p>
 		</div>
     	</div>
 	<!--           Display unstructured files           -->
 	<div *ngFor="let unstr of datastore.UnstructuredFiles; let h=index;">
 		<div class="file">
-			<h2 class="file-title"> Untructured File | <button (click)="deleteStructFile(str.Id)">Delete</button></h2>
+			<h2 class="file-title"> Untructured File | <button (click)="deleteUnstructFile(unstr.Id)">Delete</button></h2>
+			<ng-container *ngFor="let ab of annotationBases; let i=index;">
+				<ng-container *ngFor="let a of annotations; let i=index;">
+					<ng-container *ngIf="unstr.Id===ab.BaseId && ab.AnnotationId===a.Id">
+						<p class="file-annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="delete-annotation">Remove</button></p>		
+					</ng-container>
+				</ng-container>
+			</ng-container>
 			<p class="file-path">{{unstr.FilePath}}</p>
 		</div>
     	</div>

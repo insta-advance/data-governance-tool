@@ -27,7 +27,7 @@ h2 button{
 	border:0;
 	background-color:#838384;
 	margin:0;
-	padding:0;
+	padding-left:5px;
 	color:white;
 }
 button:hover{
@@ -107,21 +107,20 @@ button:hover{
 }
 .annotation-list-manage p{
 
-    margin:0;
-padding-left:8px;
+	margin:0;
+	padding-left:8px;
  
 
 }
 .annotation-list button, .delete-annotation{
-    	border:0;
-    background-color: white;
+	border:0;
+	background-color: white;
 	border-radius:0;
-
 }
 .annotation-list button:hover, .delete-annotation{
-    cursor: pointer;
+	cursor: pointer;
 	text-decoration: underline;
-    transition: 200ms;
+	transition: 200ms;
 }
 .annotation-manage
 {
@@ -303,10 +302,36 @@ a:hover{
     font-size: 1em;
     display:grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
     margin: 10px 0 10px 0;
     grid-gap:0;
     padding: 0;
+}
+
+.table .add-annotation{
+   	grid-row: auto;
+	background-color:#838384;
+	padding: 0 0 0 5px;
+	margin:0;
+	font-size:0.9em;
+	font-weight:400;
+	color:white;
+}
+.table .table-annotation{
+	border: 3px solid grey;
+	margin:0;
+	padding:2px;
+}
+.table .delete-annotation{
+	padding: 2px;
+	margin:0;
+	background-color: white;
+	color:black;	
+	text-decoration:none;
+}
+
+.table .delete-annotation:hover{
+	text-decoration:underline;
 }
 .table-name{
     font-size: 1em;
@@ -316,11 +341,13 @@ a:hover{
     background-color: #838384;
     padding: 7px;
     margin:0;
+	display:flex;
+	align-items: center;
 }
 .table-fields{
     grid-column: 1;
     display:grid;
-    grid-template-columns: 30px max-content max-content max-content max-content 1fr max-content max-content max-content;
+    grid-template-columns: auto max-content max-content max-content max-content 1fr max-content max-content max-content;
     grid-row-gap: 10px;
     background-color: #f9f9f9;
 

@@ -14,21 +14,29 @@ body{
 }
 
 .header{
-	background-color: #39396d;
-	color: white;
-
-	font-weight: 300;
-	font-size: 1.5em;
+	border-bottom: 5px solid #39396d;
+	font-weight: bold;
+	font-size: 0.9em;
 	grid-row:1;
 	grid-column: 1;
 	display:grid;
-	grid-template-columns:1fr;
+	grid-template-columns:auto 1fr;
 	grid-template-rows:auto;
+	grid-column-gap:15px;
+	align-items: center;
+}
+.header img{
+	grid-column:1;
+	height:50px;
+	width:auto;
+	margin:0;
+	padding:10px 0 10px 70px;
 }
 .header p{
-	padding: 0 0 0 30px;
+	color:#39396d;
 	margin:0;
-	line-height:2;
+	grid-column:2;
+	padding:25px 10px 10px 0;
 }
 
 .content-body{

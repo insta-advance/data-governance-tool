@@ -60,8 +60,18 @@
 	<!--           Display tables          -->
 	<div class="table-list">
 		<ng-container *ngFor="let t of tables; let i=index;">
+		
 			<div *ngIf="t.SchemaId==schema.Id" class="table">
-				<p class="table-name">[{{t.Id}}] {{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button></p>
+				<div class="table-name">[{{t.Id}}] {{t.Name}} |  <button (click)="deleteTable(t.Id)">Delete</button> |  <p class="add-annotation" (click)="varform=5.5"> Assign annotation</p></div>
+			<!--           Display table annotations          -->
+				<ng-container *ngFor="let ab of annotationBases; let i=index;">
+					<ng-container *ngFor="let a of annotations; let i=index;">
+						<ng-container *ngIf="t.Id===ab.BaseId && ab.AnnotationId===a.Id">
+							<p class="table-annotation"> {{a.Description}} |<button (click)="deleteAnnotationBase(ab.Id)" class="delete-annotation">Remove</button></p>		
+						</ng-container>
+					</ng-container>
+				</ng-container>
+		<!--           Display  table fields          -->
 				<div *ngFor="let f of t.Fields; let j=index;">
 					<div class="table-fields">        
 					    <p class="field-id"> {{f.Id}}</p>
@@ -70,7 +80,6 @@
                         <ng-container *ngFor="let k of keyRelationships; let n=index;">
                             <ng-container *ngFor="let t2 of tables; let n=index;">
                                     <ng-container *ngFor="let f2 of t2.Fields; let j=index;">
-                                           
                                             <div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
                                     </ng-container>
                             </ng-container>
@@ -84,6 +93,18 @@
 				<p id="add-field" (click)="varform=t.Id"> + Add field </p>
 				<p id="add-keys" (click)="varform=t.Id*(-1)"> + Add key relationships </p>
 				<p id="delete-field-toggle" (click)="varform=t.Id*(-2)"> x Delete fields / keys</p>
+	<!--           Form to assign an annotation to table      -->
+				<form [formGroup]="annotationBaseTableForm" (ngSubmit)="addAnnotationBaseTable()"  *ngIf="varform === 5.5">
+					<select name="annotations" formControlName="BaseId">
+						  	<option [value]="t.Id">{{t.Name}}</option>  
+					</select> 
+					<select name="annotations" formControlName="AnnotationId">
+						<ng-container *ngFor="let a of annotations; let i=index;">
+						  	<option [value]="a.Id">{{a.Description}}</option>  
+						</ng-container>
+					</select> 
+					<button [disabled]="annotationBaseTableForm.pristine || annotationBaseTableForm.invalid"> Assign annotation </button>
+				</form>
 	<!--           Form to add a field          -->
 				<form [formGroup]="fieldForm" (ngSubmit)="addPostgresField()"  *ngIf="varform === t.Id">
 					<input  type="text" placeholder="Field name" formControlName="Name" >
@@ -105,16 +126,28 @@
 				<form [formGroup]="keyForm" (ngSubmit)="addKeyRelationship()"  *ngIf="varform === t.Id*(-1)">
 
 					<select  formControlName="FromId">
+						<ng-container *ngFor="let str of datastore.StructuredFiles; let i=index;">
+							<ng-container *ngFor="let unstr of datastore.UnstructuredFiles; let i=index;">
+									<option [value]="str.Id">{{str.FilePath}}</option>
+									<option [value]="unstr.Id">{{unstr.FilePath}}</option>
+							</ng-container>
+						</ng-container>
 						<ng-container *ngFor="let t3 of tables; let n=index;">
 							<ng-container *ngFor="let f3 of t3.Fields; let n=index;">
-								<option [value]="f3.Id">{{t3.Name}}:{{f3.Name}}</option>
+										<option [value]="f3.Id">{{t3.Name}}:{{f3.Name}}</option>
 							</ng-container>
 						</ng-container>
 					</select> 
 					<select  formControlName="ToId">
+						<ng-container *ngFor="let str of datastore.StructuredFiles; let i=index;">
+							<ng-container *ngFor="let unstr of datastore.UnstructuredFiles; let i=index;">
+									<option [value]="str.Id">{{str.FilePath}}</option>
+									<option [value]="unstr.Id">{{unstr.FilePath}}</option>
+							</ng-container>
+						</ng-container>
 						<ng-container *ngFor="let t3 of tables; let n=index;">
 							<ng-container *ngFor="let f3 of t3.Fields; let n=index;">
-								<option [value]="f3.Id">{{t3.Name}}:{{f3.Name}}</option>
+										<option [value]="f3.Id">{{t3.Name}}:{{f3.Name}}</option>
 							</ng-container>
 						</ng-container>
 					</select> 

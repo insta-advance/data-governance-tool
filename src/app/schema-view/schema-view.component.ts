@@ -42,6 +42,8 @@ export class SchemaViewComponent implements OnInit {
 	BaseId: number=null;
     	AnnotationId: number=null;
 
+    annotationBaseTableForm: FormGroup;
+
     annotationForm: FormGroup;
 	Description: string='';
 
@@ -62,13 +64,13 @@ export class SchemaViewComponent implements OnInit {
         this.tableForm = this.formBuilder.group({
             'SchemaId' : this.schid,
             'Fields' : [],
-            'Name' : ['',[Validators.required,Validators.minLength(3)]],
+            'Name' : ['',[Validators.required,Validators.minLength(1)]],
 	   });
         this.fieldForm = this.formBuilder.group({
             'Type' : ['',[Validators.required]],
             'StructuredId' : [],
             'Fields' : [],
-            'Name' : ['',[Validators.required,Validators.minLength(3)]],
+            'Name' : ['',[Validators.required,Validators.minLength(1)]],
 	   });
         this.keyForm = this.formBuilder.group({
             'FromId' : ['',[Validators.required]],
@@ -79,9 +81,13 @@ export class SchemaViewComponent implements OnInit {
             'BaseId' :  this.schid,
            'AnnotationId' : ['',[Validators.required]],
        });  
+      this.annotationBaseTableForm = this.formBuilder.group({
+            'BaseId' :  ['',[Validators.required]],
+           'AnnotationId' : ['',[Validators.required]],
+       });
       
       this.annotationForm = this.formBuilder.group({
-            'Description' : ['',[Validators.required,Validators.minLength(3)]],
+            'Description' : ['',[Validators.required,Validators.minLength(1)]],
        });
     }
 
@@ -140,13 +146,22 @@ export class SchemaViewComponent implements OnInit {
         });
     }
 
-    addAnnotationBase() {
+	addAnnotationBase() {
 		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
- 	  	        this.getSchemaData(this.schid);
+	  	        this.getSchemaData(this.schid);
 			this.getKeyRelationshipData();
 			this.getTablesData();
-		        this.getAnnotationBases();
-		        this.getAnnotations();
+			this.getAnnotationBases();
+			this.getAnnotations();
+		});
+	}
+	addAnnotationBaseTable() {
+		this.rest.addAnnotationBase(this.annotationBaseTableForm.value).subscribe((data: {}) => {
+	  	        this.getSchemaData(this.schid);
+			this.getKeyRelationshipData();
+			this.getTablesData();
+			this.getAnnotationBases();
+			this.getAnnotations();
 		});
 	}
     

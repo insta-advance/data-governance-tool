@@ -40,8 +40,13 @@ export class GlobalViewComponent implements OnInit {
 
 	mongoDatabaseForm: FormGroup;
 	Collections:  string='';
- 
 
+     	annotationBaseForm: FormGroup;
+	BaseId: number=null;
+    	AnnotationId: number=null;
+
+    	annotationForm: FormGroup;
+	Description: string='';
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
@@ -65,25 +70,32 @@ export class GlobalViewComponent implements OnInit {
             'Type' : 'PostgreSQL',
             'Schemas' : [],
             'DatastoreId' : this.stid,
-            'Name' : ['',[Validators.required,Validators.minLength(3)]],
+            'Name' : ['',[Validators.required,Validators.minLength(1)]],
           });
 
         this.mongoDatabaseForm = this.formBuilder.group({
             'Type' : 'MongoDB',
             'Collections' : [],
             'DatastoreId' : this.stid,
-            'Name' : ['',[Validators.required,Validators.minLength(3)]],
+            'Name' : ['',[Validators.required,Validators.minLength(1)]],
           });
 
         this.structFileForm = this.formBuilder.group({
-            'FilePath' : ['',[Validators.required,Validators.minLength(3)]],
+            'FilePath' : ['',[Validators.required,Validators.minLength(1)]],
             'DatastoreId' : this.stid,
           });
 
         this.unstructFileForm = this.formBuilder.group({
-            'FilePath' : ['',[Validators.required,Validators.minLength(3)]],
+            'FilePath' : ['',[Validators.required,Validators.minLength(1)]],
             'DatastoreId' : this.stid,
           });
+      this.annotationBaseForm = this.formBuilder.group({
+            'BaseId' :  ['',[Validators.required]],
+           'AnnotationId' : ['',[Validators.required]],
+       });
+      this.annotationForm = this.formBuilder.group({
+            'Description' : ['',[Validators.required,Validators.minLength(1)]],
+       });
     }
 
 	getKeyRelationshipData() {
@@ -170,6 +182,34 @@ export class GlobalViewComponent implements OnInit {
         });
     }
 
+	addAnnotationBase() {
+		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
+			this.getDatastoreData(this.stid);
+			this.getPostgresDatabasesData();
+			this.getMongoDatabasesData();
+			this.getSchemasData();
+			this.getTablesData();
+			this.getStructFileData();
+			this.getUnstructFileData();
+			this.getAnnotationBases();
+			this.getAnnotations();
+		});
+	}
+    
+    addAnnotation() {
+		this.rest.addAnnotation(this.annotationForm.value).subscribe((data: {}) => {
+			this.getDatastoreData(this.stid);
+			this.getPostgresDatabasesData();
+			this.getMongoDatabasesData();
+			this.getSchemasData();
+			this.getTablesData();
+			this.getStructFileData();
+			this.getUnstructFileData();
+			this.getAnnotationBases();
+			this.getAnnotations();          
+		});
+	}      
+
     
 	addPostgresDatabase() {
 	  this.rest.addPostgresDatabase(this.postgresDatabaseForm.value).subscribe((data: {}) => {
@@ -180,6 +220,8 @@ export class GlobalViewComponent implements OnInit {
 		this.getTablesData();
 		this.getStructFileData();
 		this.getUnstructFileData();
+	        this.getAnnotationBases();
+	        this.getAnnotations(); 
 	});
 	}
 
@@ -192,6 +234,8 @@ export class GlobalViewComponent implements OnInit {
 		this.getTablesData();
 		this.getStructFileData();
 		this.getUnstructFileData();
+	        this.getAnnotationBases();
+	        this.getAnnotations(); 
 	});
 	}
 
@@ -204,6 +248,8 @@ export class GlobalViewComponent implements OnInit {
 		this.getTablesData();
 		this.getStructFileData();
 		this.getUnstructFileData();
+	        this.getAnnotationBases();
+	        this.getAnnotations(); 
 	});
 	}
 
@@ -216,6 +262,8 @@ export class GlobalViewComponent implements OnInit {
 		this.getTablesData();
 		this.getStructFileData();
 		this.getUnstructFileData();
+	        this.getAnnotationBases();
+	        this.getAnnotations();  
 	});
 	}
 
@@ -228,6 +276,8 @@ export class GlobalViewComponent implements OnInit {
 		this.getTablesData();
 		this.getStructFileData();
 		this.getUnstructFileData();
+	        this.getAnnotationBases();
+	        this.getAnnotations();  
 	});
 	}
 
@@ -241,8 +291,38 @@ export class GlobalViewComponent implements OnInit {
 		this.getTablesData();
 		this.getStructFileData();
 		this.getUnstructFileData();
+	        this.getAnnotationBases();
+	        this.getAnnotations();  
 	});
 	}
+
+    	deleteAnnotation(id) {
+		this.rest.deleteAnnotation(id).subscribe((data: {}) => {
+			this.getDatastoreData(this.stid);
+			this.getPostgresDatabasesData();
+			this.getMongoDatabasesData();
+			this.getSchemasData();
+			this.getTablesData();
+			this.getStructFileData();
+			this.getUnstructFileData();   
+		        this.getAnnotationBases();
+		        this.getAnnotations();  
+		});
+	}
+ 
+    	deleteAnnotationBase(id) {
+		this.rest.deleteAnnotationBase(id).subscribe((data: {}) => {
+			this.getDatastoreData(this.stid);
+			this.getPostgresDatabasesData();
+			this.getMongoDatabasesData();
+			this.getSchemasData();
+			this.getTablesData();
+			this.getStructFileData();
+			this.getUnstructFileData();  
+		        this.getAnnotationBases();
+		        this.getAnnotations();    
+		});
+	}  
     	closeDatastore(){
 		this.router.navigate(['']);
 	}
