@@ -84,12 +84,12 @@
 						</ng-container>
 						<p class="field-name"> {{f.Name}}, </p>
 						<p class="field-type"> {{f.Type}}, </p>
-                        <ng-container *ngFor="let k of keyRelationships; let n=index;">
-                            <ng-container *ngFor="let t2 of tables; let n=index;">
-                                    <ng-container *ngFor="let f2 of t2.Fields; let j=index;">
-                                            <div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
-                                    </ng-container>
-                            </ng-container>
+						<ng-container *ngFor="let k of keyRelationships; let n=index;">
+						    <ng-container *ngFor="let t2 of tables; let n=index;">
+						            <ng-container *ngFor="let f2 of t2.Fields; let j=index;">
+						                    <div class="rel-to" *ngIf="k.ToId==f.Id  && f2.Id==k.FromId && t2.Id==f2.StructuredId">FK from {{t2.Name}}:{{f2.Name}}</div>
+						            </ng-container>
+						    </ng-container>
                         <button id="delete-key-relationship" *ngIf="varform == t.Id*(-2) && k.ToId == f.Id" (click)="deleteKeyRelationship(k.Id)"> Delete KR</button>
                         </ng-container>
                         <button id="delete-field" *ngIf="varform === t.Id*(-2)" (click)="deleteField(f.Id)"> Delete field</button>
@@ -168,6 +168,7 @@
 					<button [disabled]="keyForm.pristine || keyForm.invalid"> Add Relationship </button>
 					<button (click)="varform=0" id="cancel"> Cancel </button>
 				</form>
+	
 			</div>
 		</ng-container>
 	</div>

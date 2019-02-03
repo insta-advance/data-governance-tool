@@ -47,6 +47,8 @@ export class SchemaViewComponent implements OnInit {
     annotationForm: FormGroup;
 	Description: string='';
 
+
+
     constructor(public rest:RestService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
@@ -145,7 +147,6 @@ export class SchemaViewComponent implements OnInit {
           this.annotations = data;
         });
     }
-
 	addAnnotationBase() {
 		this.rest.addAnnotationBase(this.annotationBaseForm.value).subscribe((data: {}) => {
 	  	        this.getSchemaData(this.schid);
