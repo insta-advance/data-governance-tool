@@ -1,8 +1,8 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;*/
+using System.Data;
 using DataGovernanceTool.Data.Access;
 using Microsoft.EntityFrameworkCore;
 using DataGovernanceTool.Data;
@@ -17,7 +17,13 @@ namespace DataGovernanceTool.Data.Access
         public DataGovernanceDBContext(DbContextOptions<DataGovernanceDBContext> options)
             : base(options) 
         {
-            this.Database.EnsureCreated();
+            if(this.Database.EnsureCreated())
+            {
+                this.Database.ExecuteSqlCommand("ALTER TABLE \"Datastores\" ADD CONSTRAINT datastores_nonempty_name CHECK (char_length(\"Name\") > 0)");
+                this.Database.ExecuteSqlCommand("ALTER TABLE \"Bases\" ADD CONSTRAINT files_non_empty_filepath CHECK (char_length(\"FilePath\") > 0)");
+                this.Database.ExecuteSqlCommand("ALTER TABLE \"Bases\" ADD CONSTRAINT bases_name_not_empty CHECK (char_length(\"Name\") > 0)");
+                this.Database.ExecuteSqlCommand("ALTER TABLE \"Bases\" ADD CONSTRAINT field_type_not_empty CHECK (char_length(\"Field_Type\") > 0)");
+            }
         }
         /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -109,6 +115,12 @@ namespace DataGovernanceTool.Data.Access
                 .HasOne(t => t.PrimaryKey)            
                 .WithOne(c => c.TablePrimary)
                 .HasForeignKey<CompositeKey>(c => c.TableId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Table>()
+                .HasOne(t => t.Schema)
+                .WithMany(s => s.Tables)
+                .HasForeignKey(t => t.SchemaId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UnstructuredFile>()
@@ -146,31 +158,29 @@ namespace DataGovernanceTool.Data.Access
             /* Dirty hack to achieve unique (Name, StructuredId) because */
             /* because HasAlternativeKey() does not work on derived classes!*/
             modelBuilder.Entity<Field>()
-                 .HasIndex(f => new {f.Name, f.StructuredId})
-                 .IsUnique()
-                 .HasName("asdf");
+                .HasIndex(f => new {f.Name, f.StructuredId})
+                .IsUnique();
 
             /* Datastore can have one unique filename. */
             modelBuilder.Entity<File>()
-                 .HasIndex(u => new {u.FilePath, u.DatastoreId})
-                 .IsUnique();
+                .HasIndex(u => new {u.FilePath, u.DatastoreId})
+                .IsUnique();
 
             modelBuilder.Entity<Collection>()
-                 .HasIndex(c => new {c.Name, c.DatabaseId})
-                 .IsUnique();
+                .HasIndex(c => new {c.Name, c.DatabaseId})
+                .IsUnique();
 
             modelBuilder.Entity<Schema>()
-                 .HasIndex(s => new {s.Name, s.DatabaseId})
-                 .IsUnique();
+                .HasIndex(s => new {s.Name, s.DatabaseId})
+                .IsUnique();
 
             modelBuilder.Entity<Database>()
-                 .HasIndex(d => new {d.Name, d.DatastoreId})
-                 .IsUnique();
+                .HasIndex(d => new {d.Name, d.DatastoreId})
+                .IsUnique();
             
-             modelBuilder.Entity<Datastore>()
-                .HasAlternateKey(ds => ds.Name);
-
-                 
+            modelBuilder.Entity<Datastore>()
+                .HasIndex(ds => ds.Name)
+                .IsUnique();
         }
 
     }

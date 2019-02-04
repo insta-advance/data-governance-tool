@@ -8,7 +8,6 @@ namespace DataGovernanceTool.Data.Models.Metadata.Structure
 {
     public class Table : Structured
     {
-        public string TableName { get; set; }
         public Schema Schema { get; set; }
         public int SchemaId { get; set; }
         public CompositeKey PrimaryKey { get; set; }

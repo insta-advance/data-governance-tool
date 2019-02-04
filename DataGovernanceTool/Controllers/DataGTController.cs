@@ -23,15 +23,7 @@ namespace DataGovernanceTool.Controllers
         {
             _context = context;
 
-            if (_context.Collections.Count() == 0)
-            {
-                // Create a new DataGTItem if collection is empty,
-                // which means you can't delete all DataGTItems.
-                //_context.Collections.Add(new Collection { Name = "DataGTCollection1" });
-                //_context.SaveChanges();
-            }
-            
-            if (_context.Schemas.Count() == 0)
+            if (_context.Datastores.Count() == 0)
             {
                 _context.Datastores.Add( new Datastore {
                     Name = "Store1",
@@ -92,16 +84,6 @@ namespace DataGovernanceTool.Controllers
                 _context.SaveChanges();
             }
    
-            if (_context.PostgresDatabases.Count() == 0)
-            {
-                _context.PostgresDatabases.Add( 
-                    new PostgresDatabase
-                    {
-                        Type = "SqlServer",
-                        Schemas = new List<Schema>(_context.Schemas.ToList()),
-                    });
-                _context.SaveChanges();
-            }
         }
 
         [HttpGet]
@@ -617,7 +599,7 @@ namespace DataGovernanceTool.Controllers
                 for(int i = 0; i<data.jsonTables.Count;i++){
                     var item = _context.Tables.Find(data.jsonTables.ElementAt(i).Id);
                     if(item != null){
-                        item.TableName = data.jsonTables.ElementAt(i).TableName;
+                        item.Name = data.jsonTables.ElementAt(i).Name;
                         item.Schema = data.jsonTables.ElementAt(i).Schema;
                         _context.Tables.Update(item);
                     }

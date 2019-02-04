@@ -63,7 +63,39 @@ Fix: Common base table File from which Structured-/UnstructuredFiles are derived
 API is missing a way to get the fields of a composite key:w.
 
 Fixed by adding business logic that includes the fields in GET requests.
- 
+
+---
+
+## <span style="color:green">(Solved)</span> Functional issue: Tests.DatastoresManager.NoEmptyName()
+
+Possible to add Datastore with an empty name.
+
+Fix: Added a database constraint. Also for file names, names of a base type and for field types.
+
+---
+
+## <span style="color:green">(Solved)</span> Functional issue: Tests.DatastoresManager.PutValues()
+
+Name is alternate key and cannot be changed in PUT.
+
+Fix: Make it an unique index.
+
+---
+
+## <span style="color:green">(Solved)</span> Functional issue: Tests.DatabasesManager.Delete()
+
+Delete doesn't work because foreign key from table to schema isn't configured.
+
+Fix: add foreign key.
+
+---
+
+## <span style="color:green">(Solved)</span> Functional issue: Deleting a foreign key deletes a table
+
+Deleting a foreign key deletes the table and everything below it's hierarchy.
+
+Fix: correct delete behaviour restrict.
+
 ---
 
 ## <span style="color:red">(TODO)</span> Usability issue: PUT in KeyRelationships/CompositeKeyField

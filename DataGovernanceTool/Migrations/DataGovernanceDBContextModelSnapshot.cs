@@ -111,12 +111,12 @@ namespace DataGT.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Datastores");
                 });
@@ -237,8 +237,7 @@ namespace DataGT.Migrations
                     b.HasIndex("StructuredId");
 
                     b.HasIndex("Name", "StructuredId")
-                        .IsUnique()
-                        .HasName("asdf");
+                        .IsUnique();
 
                     b.ToTable("Field");
 
@@ -267,8 +266,6 @@ namespace DataGT.Migrations
                     b.HasBaseType("DataGovernanceTool.Data.Models.Metadata.Structure.Structured");
 
                     b.Property<int>("SchemaId");
-
-                    b.Property<string>("TableName");
 
                     b.HasIndex("SchemaId");
 
@@ -350,7 +347,7 @@ namespace DataGT.Migrations
                     b.HasOne("DataGovernanceTool.Data.Models.Metadata.Structure.Table", "TablePrimary")
                         .WithOne("PrimaryKey")
                         .HasForeignKey("DataGovernanceTool.Data.Models.Metadata.Relationships.CompositeKey", "TableId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("DataGovernanceTool.Data.Models.Metadata.Structure.Schema", b =>

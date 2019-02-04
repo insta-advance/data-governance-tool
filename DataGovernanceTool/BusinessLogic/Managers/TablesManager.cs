@@ -47,7 +47,6 @@ namespace DataGovernanceTool.BusinessLogic.Managers
         {
             var existing = await GetAsync(id);
             existing.Name = entity.Name ?? existing.Name;
-            existing.TableName = entity.TableName ?? existing.TableName;
             existing.SchemaId = entity.SchemaId > 0 ? 
             entity.SchemaId : existing.SchemaId;
 

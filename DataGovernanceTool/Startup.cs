@@ -68,7 +68,7 @@ namespace DataGovernanceTool
             services.AddDbContext<DataGovernanceDBContext>(opt => 
 
             // Docker
-            opt.UseNpgsql(Configuration.GetConnectionString("DockerCommandsConnectionString")));
+            opt.UseNpgsql   (Configuration.GetConnectionString("DockerCommandsConnectionString")));
 
             // NOT Docker
             // opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));

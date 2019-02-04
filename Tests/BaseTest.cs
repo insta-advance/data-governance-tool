@@ -23,7 +23,7 @@ namespace Tests
             //Connect & ensure creation
             DBContext = new DataGovernanceDBContext(
                 new DbContextOptionsBuilder<DataGovernanceDBContext>()
-                .UseNpgsql("Host=localhost;Database=DataGovernanceToolDB;Username=datagovernancetool;Password=datagovernancetool")
+                .UseNpgsql("Host=localhost;Database=DataGovernanceToolTestDB;Username=datagovernancetool;Password=datagovernancetool")
                 .Options);
         }
 
