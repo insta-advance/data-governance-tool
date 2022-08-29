@@ -20,7 +20,7 @@
     <Folder Include="BusinessLogic\Managers\"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.15"/>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.22"/>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4"/>
